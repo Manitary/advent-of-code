@@ -1,5 +1,4 @@
 input:=325489;
-input:=49;
 
 d:=-1;
 repeat

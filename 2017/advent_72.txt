@@ -14,11 +14,9 @@ for item in list do
 end for;
 end function;
 
-tochange:="";
-d:=0;
-
+function investigate(list,suspect)
 for item in list do
-	if #item gt 2 then
+	if item[1] eq suspect then
 		weightlist:=[];
 		for i in [3..#item] do
 			weightlist[i-2]:=weight(list,item[i]);
@@ -26,20 +24,40 @@ for item in list do
 		a,q1:=Maximum(weightlist);
 		b,q2:=Minimum(weightlist);
 		d:=a-b;
-		if Multiplicity(weightlist,a) eq 1 then
-			tochange:=item[q1+2];
-			d:=-d;
-			break;
-		elif Multiplicity(weightlist,b) eq 1 then
-			tochange:=item[q2+2];
-			break;
+		if d eq 0 then
+			return item[1],0;
+		else
+			if Multiplicity(weightlist,a) eq 1 then
+				if investigate(list,item[q1+2]) eq item[q1+2] then
+					return item[q1+2],-d;
+				else
+					return investigate(list,item[q1+2]);
+				end if;
+			elif Multiplicity(weightlist,b) eq 1 then
+				if investigate(list,item[q2+2]) eq item[q2+2] then
+					return item[q2+2],d;
+				else
+					return investigate(list,item[q2+2]);
+				end if;
+			end if;
 		end if;
 	end if;
 end for;
+end function;
+
+tochange:="";
+d:=0;
 
 for item in list do
-	if item[1] eq tochange then
-		StringToInteger(item[2])+d;
-		break;
+	if #item gt 2 then
+		tochange,d:=investigate(list,item[1]);
+		if d ne 0 then
+			for search in list do
+				if search[1] eq tochange then
+					StringToInteger(search[2])+d;
+					break item;
+				end if;
+			end for;
+		end if;
 	end if;
 end for;

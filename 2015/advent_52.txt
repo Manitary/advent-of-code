@@ -9,7 +9,7 @@ for word in list do
 		if word[i] eq word[i+2] then
 			repeating:=true;
 		end if;
-		if i le #word-4 then
+		if i le #word-3 then
 			for j in [i+2..#word-1] do
 				if word[i] eq word[j] and word[i+1] eq word[j+1] then
 					twice:=true;

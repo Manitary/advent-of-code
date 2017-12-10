@@ -1,0 +1,119 @@
+input:="18,1,0,161,255,137,254,252,14,95,165,33,181,168,2,188";
+
+function module(input,n)
+	if input mod n eq 0 then
+		return n;
+	else
+		return input mod n;
+	end if;
+end function;
+
+function binary(n)
+	b:="";
+	for i in [-15..0] do
+		if 2^-i le n then
+			b*:="1";
+			n-:=2^-i;
+		else
+			b*:="0";
+		end if;
+	end for;
+	boolseq:=[b[i] eq "1" : i in [1..#b]];
+return boolseq;
+end function;
+
+function decimal(input)
+	n:=0;
+	for i in [1..#input] do
+		if input[i] then
+			n+:=2^(#input - i);
+		end if;
+	end for;
+	return n;
+end function;
+
+forward hex;
+function convert(d)
+	if d eq 10 then
+		return "a";
+	elif d eq 11 then
+		return "b";
+	elif d eq 12 then
+		return "c";
+	elif d eq 13 then
+		return "d";
+	elif d eq 14 then
+		return "e";
+	elif d eq 15 then
+		return "f";
+	elif d gt 15 then
+		return hex(d);
+	else
+		return IntegerToString(d);
+	end if;
+end function;
+
+function hex(n)
+	h:="";
+	i:=-1;
+	repeat
+		i+:=1;
+	until 16^i gt n;
+	for k in [-i+1..0] do
+		h*:=convert(n div 16^-k);
+		n:=n mod 16^-k;
+	end for;
+	return h;
+end function;	
+
+input:=[BinaryString(input[i]):i in [1..#input]];
+input2:=[];
+for i in [1..#input] do
+	Append(~input2,input[i][1]);
+end for;
+input2 cat:= [17,31,73,47,23];
+list:=[i:i in [0..255]];
+skip:=0;
+position:=1;
+for round in [1..64] do
+	for n in [1..#input2] do
+		length:=input2[n];
+		if length gt 0 then
+			swap:=[];
+			for i in [1..length] do
+				swap[i]:=list[module(position+i-1,#list)];
+			end for;
+			Reverse(~swap);
+			for i in [1..length] do
+				list[module(position+i-1,#list)]:=swap[i];
+			end for;
+		end if;
+	position:=module(position+length+skip,#list);
+	skip+:=1;
+	end for;
+end for;
+
+list_bool:=[binary(list[i]):i in [1..#list]];
+dense_hash:=[];
+for i in [1..16] do
+	x:=[false:i in [1..16]];
+	for j in [1..16] do
+		Xor(~x,list_bool[16*(i-1)+j]);
+	end for;
+	dense_hash[i]:=x;
+end for;
+		
+dense_hash:=[decimal(dense_hash[i]): i in [1..#dense_hash]];
+dense_hash:=[hex(dense_hash[i]): i in [1..#dense_hash]];
+for i in [1..#dense_hash] do
+	if #dense_hash[i] eq 1 then
+		dense_hash[i]:="0" cat dense_hash[i];
+	end if;
+end for;
+
+knot_hash:="";
+for i in [1..#dense_hash] do
+	knot_hash*:=dense_hash[i];
+end for;
+
+knot_hash;

@@ -11,16 +11,16 @@ for item in list do
 	for i in [1..#lights] do
 		if lights[i][1] ge StringToInteger(item[2]) and lights[i][1] le StringToInteger(item[5]) and lights[i][2] ge StringToInteger(item[3]) and lights[i][2] le StringToInteger(item[6]) then
 			case item[1]:
-				when "toggle": lights[i][3]:=(lights[i][3]-1)^2;
-				when "turn on": lights[i][3]:=1;
-				when "turn off": lights[i][3]:=0;
+				when "toggle": lights[i][3]+:=2;
+				when "turn on": lights[i][3]+:=1;
+				when "turn off": if lights[i][3] gt 0 then lights[i][3]-:=1; end if;
 			end case;
 		end if;
 	end for;
 end for;
 
-on:=0;
+brightness:=0;
 for light in lights do
-	on+:=light[3];
+	brightness+:=light[3];
 end for;
-on;
+brightness;

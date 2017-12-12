@@ -9,50 +9,62 @@ function get_value(object,wires,inputs)
 end function;
 
 procedure execute_task(~tasks,task,wires,~inputs)
-to_execute:=true;
-for i in [1..#task-1] do
-	if task[i] in wires then
-		if inputs[Index(wires,task[i])] lt 0 then
-			to_execute:=false;
+	to_execute:=true;
+	for i in [1..#task-1] do
+		if task[i] in wires then
+			if inputs[Index(wires,task[i])] lt 0 then
+				to_execute:=false;
+			end if;
 		end if;
+	end for;
+	if to_execute then
+		if #task eq 2 then
+			inputs[Index(wires,task[2])]:=get_value(task[1],wires,inputs);
+		elif task[1] eq "NOT" then
+			inputs[Index(wires,task[3])]:=65535-get_value(task[2],wires,inputs);		
+		else
+			case task[2]:
+				when "AND":
+					inputs[Index(wires,task[4])]:=BitwiseAnd(get_value(task[1],wires,inputs),get_value(task[3],wires,inputs));
+				when "OR":
+					inputs[Index(wires,task[4])]:=BitwiseOr(get_value(task[1],wires,inputs),get_value(task[3],wires,inputs));
+				when "LSHIFT":
+					inputs[Index(wires,task[4])]:=ShiftLeft(get_value(task[1],wires,inputs),StringToInteger(task[3]));
+				when "RSHIFT":
+					inputs[Index(wires,task[4])]:=ShiftRight(get_value(task[1],wires,inputs),StringToInteger(task[3]));
+			end case;
+		end if;
+		Exclude(~tasks,task);
 	end if;
-end for;
-if to_execute then
-	if #task eq 2 then
-		inputs[Index(wires,task[2])]:=get_value(task[1],wires,inputs);
-	elif task[1] eq "NOT" then
-		inputs[Index(wires,task[3])]:=65535-get_value(task[2],wires,inputs);		
-	else
-		case task[2]:
-			when "AND":
-				inputs[Index(wires,task[4])]:=BitwiseAnd(get_value(task[1],wires,inputs),get_value(task[3],wires,inputs));
-			when "OR":
-				inputs[Index(wires,task[4])]:=BitwiseOr(get_value(task[1],wires,inputs),get_value(task[3],wires,inputs));
-			when "LSHIFT":
-				inputs[Index(wires,task[4])]:=ShiftLeft(get_value(task[1],wires,inputs),StringToInteger(task[3]));
-			when "RSHIFT":
-				inputs[Index(wires,task[4])]:=ShiftRight(get_value(task[1],wires,inputs),StringToInteger(task[3]));
-		end case;
-	end if;
-	Exclude(~tasks,task);
-end if;
 end procedure;
+
+function get_input(list,wires,wire)
+	inputs:=[-1:wire in wires];
+	temp_list:=list;
+	repeat
+		for task in temp_list do
+			execute_task(~temp_list,task,wires,~inputs);
+			if inputs[Index(wires,wire)] ge 0 then
+				break;
+			end if;
+		end for;
+	until inputs[Index(wires,wire)] ge 0;
+	return inputs[Index(wires,wire)];
+end function;
 
 wires:={};
 for item in list do
 	Include(~wires,item[#item]);
 end for;
 wires:=SetToSequence(wires);
-inputs:=[-1:wire in wires];
-temp_list:=list;
 
-repeat
-	for task in temp_list do
-		execute_task(~temp_list,task,wires,~inputs);
-		if inputs[Index(wires,"a")] ge 0 then
-			break;
-		end if;
-	end for;
-until inputs[Index(wires,"a")] ge 0;
+b:=get_input(list,wires,"a");
 
-inputs[Index(wires,"a")];
+for i in [1..#list] do
+	if list[i][#list[i]] eq "b" then
+		list[i]:=[IntegerToString(b),"b"];
+		break;
+	end if;
+end for;
+
+get_input(list,wires,"a");

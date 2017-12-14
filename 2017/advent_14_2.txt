@@ -1,4 +1,4 @@
-input:="18,1,0,161,255,137,254,252,14,95,165,33,181,168,2,188";
+input:="stpzcrnm";
 
 function module(input,n)
 	if input mod n eq 0 then
@@ -8,9 +8,9 @@ function module(input,n)
 	end if;
 end function;
 
-function binary(n)
+function binary(n,range)
 	b:="";
-	for i in [-15..0] do
+	for i in [-range+1..0] do
 		if 2^-i le n then
 			b*:="1";
 			n-:=2^-i;
@@ -63,8 +63,24 @@ function hex(n)
 		h*:=convert(n div 16^-k);
 		n:=n mod 16^-k;
 	end for;
+	if #h eq 0 then
+		h:="0";
+	end if;
 	return h;
-end function;	
+end function;
+
+function HexToBinary(hash)
+	n:=[];
+	for l in [1..#hash] do
+		for digit in [0..15] do
+			if hex(digit) eq hash[l] then
+				Append(~n,binary(digit,4));
+				break;
+			end if;
+		end for;
+	end for;
+	return n;				
+end function;
 
 function generate_knot_hash(input)
 	input:=[BinaryString(input[i]):i in [1..#input]];
@@ -94,7 +110,7 @@ function generate_knot_hash(input)
 		end for;
 	end for;
 
-	list_bool:=[binary(list[i]):i in [1..#list]];
+	list_bool:=[binary(list[i],16):i in [1..#list]];
 	dense_hash:=[];
 	for i in [1..16] do
 		x:=[false:i in [1..16]];
@@ -120,4 +136,45 @@ function generate_knot_hash(input)
 	return knot_hash;
 end function;
 
-generate_knot_hash(input);
+procedure TurnOffAdjacent(~grid,line,column)
+	print line, column;
+	grid[line][column]:=false;
+	for x in [Maximum(line-1,1)..Minimum(line+1,128)] do
+		for y in [Maximum(column-1,1)..Minimum(column+1,128)] do
+			if Abs(line-x)+Abs(column-y) eq 1 and grid[x][y] then
+				TurnOffAdjacent(~grid,x,y);
+			end if;
+		end for;
+	end for;
+end procedure;
+
+lines:=[];
+for line in [0..127] do
+	lines[line+1]:=generate_knot_hash(input cat "-" cat IntegerToString(line));
+end for;
+
+squares:=[];
+for line in [1..128] do
+	squares[line]:=HexToBinary(lines[line]);
+end for;
+
+grid:=[];
+for line in [1..128] do
+	grid[line]:=[];
+	for i in [1..32] do
+		for j in [1..4] do
+			Append(~grid[line],squares[line][i][j]);
+		end for;
+	end for;
+end for;
+
+regions:=0;
+for line in [1..128] do
+	for column in [1..128] do
+		if grid[line][column] then
+			regions+:=1;
+			TurnOffAdjacent(~grid,line,column);
+		end if;
+	end for;
+end for;
+regions;

@@ -1,0 +1,37 @@
+input:=[883,879];
+factor:=[16807,48271];
+q:=2^31-1;
+
+count:=40000000;
+pair:=[];
+
+function module(input,n)
+	if input mod n eq 0 then
+		return n;
+	else
+		return input mod n;
+	end if;
+end function;
+
+function binary(n,range)
+	b:="";
+	for i in [-range+1..0] do
+		if 2^-i le n then
+			b*:="1";
+			n-:=2^-i;
+		else
+			b*:="0";
+		end if;
+	end for;
+	return b;
+end function;
+
+matching:=0;
+for i in [1..count] do
+	input[1]:=module(input[1]*factor[1],q);
+	input[2]:=module(input[2]*factor[2],q);
+	if Substring(binary(input[1],32),17,16) eq Substring(binary(input[2],32),17,16) then
+		matching+:=1;
+	end if;
+end for;
+matching;

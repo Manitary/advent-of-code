@@ -1,7 +1,16 @@
 input:=[883,879];
 factor:=[16807,48271];
 q:=2^31-1;
+
 count:=40000000;
+
+function module(input,n)
+	if input mod n eq 0 then
+		return n;
+	else
+		return input mod n;
+	end if;
+end function;
 
 matching:=0;
 for i in [1..count] do

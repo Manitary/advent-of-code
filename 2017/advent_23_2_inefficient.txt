@@ -1,0 +1,19 @@
+input:=[["set","b","99"],["set","c","b"],["jnz","a","2"],["jnz","1","5"],["mul","b","100"],["sub","b","-100000"],["set","c","b"],["sub","c","-17000"],["set","f","1"],["set","d","2"],["set","e","2"],["set","g","d"],["mul","g","e"],["sub","g","b"],["jnz","g","2"],["set","f","0"],["sub","e","-1"],["set","g","e"],["sub","g","b"],["jnz","g","-8"],["sub","d","-1"],["set","g","d"],["sub","g","b"],["jnz","g","-13"],["jnz","f","2"],["sub","h","-1"],["set","g","b"],["sub","g","c"],["jnz","g","2"],["jnz","1","3"],["sub","b","-17"],["jnz","1","-23"]];
+
+b:=99*100+100000;
+c:=b+17000;
+h:=0;
+
+for n in [b..c by 17] do
+	for d in [2..b] do
+		for e in [2..b] do
+			if d*e le n then
+				if d*e eq n then
+					h+:=1;
+				end if;
+				break e;
+			end if;
+		end for;
+	end for;
+end for;
+h;

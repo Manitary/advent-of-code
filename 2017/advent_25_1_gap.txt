@@ -1,0 +1,107 @@
+list:=[0];
+position:=1;
+next:='A';
+
+update_position:=function()
+	if position > Length(list) then
+		Add(list,0);
+	elif position=0 then
+		Add(list,0,1);
+		position:=1;
+	fi;
+end;
+
+execute_A:=function()
+	if list[position] = 0 then
+		list[position]:=1;
+		position:=position+1;
+		update_position();
+		next:='B';
+	else
+		list[position]:=0;
+		position:=position-1;
+		update_position();
+		next:='B';
+	fi;
+end;
+
+execute_B:=function()
+	if list[position] = 0 then
+		list[position]:=1;
+		position:=position-1;
+		update_position();
+		next:='C';
+	else
+		list[position]:=0;
+		position:=position+1;
+		update_position();
+		next:='E';
+	fi;
+end;
+
+execute_C:=function()
+	if list[position] = 0 then
+		list[position]:=1;
+		position:=position+1;
+		update_position();
+		next:='E';
+	else
+		list[position]:=0;
+		position:=position-1;
+		update_position();
+		next:='D';
+	fi;
+end;
+
+execute_D:=function()
+	if list[position] = 0 then
+		list[position]:=1;
+		position:=position-1;
+		update_position();
+		next:='A';
+	else
+		list[position]:=1;
+		position:=position-1;
+		update_position();
+		next:='A';
+	fi;
+end;
+
+execute_E:=function()
+	if list[position] = 0 then
+		list[position]:=0;
+		position:=position+1;
+		update_position();
+		next:='A';
+	else
+		list[position]:=0;
+		position:=position+1;
+		update_position();
+		next:='F';
+	fi;
+end;
+
+execute_F:=function()
+	if list[position] = 0 then
+		list[position]:=1;
+		position:=position+1;
+		update_position();
+		next:='E';
+	else
+		list[position]:=1;
+		position:=position+1;
+		update_position();
+		next:='A';
+	fi;
+end;
+
+for i in [1..12683008] do
+	if next = 'A' then execute_A();
+	elif next = 'B' then execute_B();
+	elif next = 'C' then execute_C();
+	elif next = 'D' then execute_D();
+	elif next = 'E' then execute_E();
+	elif next = 'F' then execute_F();
+	fi;
+od;
+Print(Sum(list),"\n");

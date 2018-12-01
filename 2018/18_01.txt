@@ -1,0 +1,22 @@
+f:=Open("input1.txt","r");
+freq:=0;
+freq_list:={};
+sol1:=true;
+while true do
+	s:=Gets(f);
+	if IsEof(s) then
+		if sol1 then
+			PrintFile("output1.txt",freq);
+			sol1:=false;
+		end if;
+		Rewind(f);
+		s:=Gets(f);
+	end if;
+	freq+:=StringToInteger(s);
+	if freq in freq_list then
+		PrintFile("output2.txt",freq);
+		break;
+	else
+		Include(~freq_list,freq);
+	end if;
+end while;

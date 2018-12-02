@@ -26,7 +26,7 @@ for n in input do
 end for;
 shift:=freq;
 
-PrintFile("output1.txt",shift);
+PrintFile("day01.txt",shift);
 
 if shift eq 0 then
 	sol2:=0;
@@ -66,4 +66,4 @@ if not(sol2_found) then
 	end for;
 end if;
 
-PrintFile("output2.txt",sol2);
+PrintFile("day01.txt",sol2);

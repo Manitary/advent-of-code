@@ -29,8 +29,10 @@ function splitopt(poly,n,c);
 	end for;
 	polymerge:=&cat(polysplit);
 	react(~polymerge,1,c);
-	return #polymerge;
+	return polymerge;
 end function;
 
-PrintFile("day05.txt",splitopt(poly,5,0));
-PrintFile("day05.txt",Min([splitopt(poly,5,i):i in [97..122]]));
+poly:=splitopt(poly,5,0);
+
+PrintFile("day05.txt",#poly);
+PrintFile("day05.txt",Min([#splitopt(poly,5,i):i in [97..122]]));

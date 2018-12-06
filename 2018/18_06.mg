@@ -18,25 +18,25 @@ min_y:=Min([p[2]:p in points]);
 max_y:=Max([p[2]:p in points]);
 
 best:={1..#points};
-ngbh:=[[]:p in points];
+ngbh:=[0:p in points];
 
 lim:=10000;
-safe:={};
+safe:=0;
 
 for i in [min_x..max_x], j in [min_y..max_y] do
 	c:=[i,j];
 	dist:=[d(c,p):p in points];
 	if &+dist lt lim then
-		Include(~safe,c);
+		safe+:=1;
 	end if;
 	min,pt:=Min(dist);
 	if Multiplicity(dist,min) eq 1 then
-		Append(~ngbh[pt],c);
+		ngbh[pt]+:=1;
 		if i in {min_x,max_x} or j in {min_y,max_y} then
 			Exclude(~best,pt);
 		end if;
 	end if;
 end for;
 
-PrintFile("day06.txt",Max({#ngbh[p]:p in best}));
-PrintFile("day06.txt",#safe);
+PrintFile("day06.txt",Max({ngbh[p]:p in best}));
+PrintFile("day06.txt",safe);

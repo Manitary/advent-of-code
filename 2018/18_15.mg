@@ -1,4 +1,4 @@
-F:=Open("test1.txt","r");
+F:=Open("input15.txt","r");
 
 grid:=[];
 
@@ -44,7 +44,7 @@ E:=EdgeSet(G);
 
 units:=[<m(u[1]),u[2],u[3],u[4]>:u in units];
 
-procedure move(~unit);
+procedure move(~unit,units);
 	dist:=[];
 	if #(Neighbours(unit[1]) meet {u[1]:u in units|u[2] ne unit[2]}) eq 0 then
 		for u in [u:u in units|u ne unit and u[2] ne unit[2]] do
@@ -59,6 +59,8 @@ procedure move(~unit);
 		end for;
 		if #dist gt 0 then
 			close:=Sort([d:d in dist|d[1] eq Min([c[1]:c in dist])])[1];
+			W:=Parent(close[2]);
+			s:=W!unit[1];
 			tile:=Sort([x:x in Neighbours(s)|Reachable(x,close[2]) and Distance(x,close[2]) eq close[1]-1])[1];
 			unit[1]:=V!tile;
 		end if;
@@ -83,17 +85,20 @@ procedure attack(~units,atk,~i,~win)
 	end if;
 end procedure;
 
-procedure play_round(~units,~win)
+procedure play_round(~units,~win,~t)
 	i:=0;
 	while i lt #units do
 		i+:=1;
-		move(~units[i]);
+		move(~units[i],units);
 		attack(~units,units[i],~i,~win);
 		if win then
 			break;
 		end if;
 	end while;
 	Sort(~units);
+	if not(win) or (win and i eq #units) then
+		t+:=1;
+	end if;
 end procedure;
 
 function show_grid(units)
@@ -104,18 +109,38 @@ function show_grid(units)
 	return cc;
 end function;
 
+/*
 win:=false;
 t:=0;
-/*
 repeat
-	t+:=1;
-	play_round(~units,~win);
-	show_grid(grid,units);
+	play_round(~units,~win,~t);
+	show_grid(units);
 until win;
 */
 
-for t in [1..23] do
-	play_round(~units,~win);show_grid(units);units;
-end for;
+elf:=#{u:u in units|u[2] eq "E"};
+old_units:=units;
+elf_atk:=ap;
 
+while true do
+	"NEW GAME STARTING";
+	elf_atk;
+	units:=[<u[1],u[2],u[3],u[2] eq "E" select elf_atk else ap>:u in old_units];
+	win:=false;
+	t:=0;
+	repeat
+		play_round(~units,~win,~t);
+		show_grid(units);
+		if #{u:u in units|u[2] eq "E"} lt elf then
+			break;
+		end if;
+	until win;
+	if win then
+		break;
+	end if;
+	elf_atk+:=1;
+end while;
 
+t;
+show_grid(units);
+t*&+{*c[3]:c in units*};

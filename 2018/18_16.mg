@@ -3,22 +3,11 @@ before:=[];
 opcode:=[];
 after:=[];
 prog:=[];
+str_to_opcode:=func<o|"[" cat &*[o[i] eq " " select "," else o[i]:i in [1..#o]] cat "]">;
 while true do
 	b:=Gets(F);
-	if IsEof(b) then
-		break;
-	end if;
 	if #b lt 2 then
-		while true do
-			o:=Gets(F);
-			if IsEof(o) then
-				break;
-			end if;
-			if #o gt 2 then
-				o:="[" cat &*[o[i] eq " " select "," else o[i]:i in [1..#o]] cat "]";
-				Append(~prog, eval o);
-			end if;
-		end while;
+		break;
 	end if;
 	o:=Gets(F);
 	a:=Gets(F);
@@ -27,8 +16,16 @@ while true do
 	_,_,a:=Regexp("(\\[[0-9 ,]+\\])",a);
 	Append(~before,eval b[1]);
 	Append(~after,eval a[1]);
-	o:="[" cat &*[o[i] eq " " select "," else o[i]:i in [1..#o]] cat "]";
-	Append(~opcode,eval o);
+	Append(~opcode,eval str_to_opcode(o));
+end while;
+while true do
+	s:=Gets(F);
+	if IsEof(s) then
+		break;
+	end if;
+	if #s gt 2 then
+		Append(~prog,eval str_to_opcode(s));
+	end if;
 end while;
 
 bti:=func<b|b select 1 else 0>;
@@ -60,8 +57,7 @@ for i in [1..#before] do
 	end if;
 end for;
 
-count;
-
+PrintFile("day16.txt",count);
 
 for i in [1..#before] do
 	for j in [1..#codes] do
@@ -88,4 +84,4 @@ for o in prog do
 	registers:=codes[Index(codes_num,o[1])](registers,o);
 end for;
 
-registers[1];
+PrintFile("day16.txt",registers[1]);

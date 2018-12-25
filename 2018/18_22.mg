@@ -56,7 +56,7 @@ for x in [1..t[1]], y in [1..t[2]] do
 	compute_erosion(~index,~erosion,x,y);
 end for;
 sol:=&+{*risk(erosion[y,x]):x in [1..t[1]],y in [1..t[2]]|[x,y] ne [1,1] and [x,y] ne t*};
-//PrintFile("day22.txt",sol);
+PrintFile("day22.txt",sol);
 
 tools:=func<r|r eq 0 select {"T","CG"} else (r eq 1 select {"CG","N"} else {"T","N"})>;
 
@@ -97,5 +97,4 @@ nodes[<1,1,"T">]:=0;
 repeat
 	explore(~index,~erosion,~visited,~last,~nodes);
 until last[1] eq target;
-
 PrintFile("day22.txt",nodes[target]);

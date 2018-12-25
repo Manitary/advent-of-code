@@ -62,13 +62,6 @@ function value(grid)
 	return l*w;
 end function;
 
-/*
-for i in [1..10] do
-	area:=evolve(area);
-end for;
-value(area);
-*/
-
 patterns:=[];
 stored_values:=[];
 
@@ -77,7 +70,7 @@ n:=10^9;
 for k in [1..n] do
 	area:=evolve(area);
 	if k eq 10 then
-		value(area);
+		PrintFile("day18.txt",value(area));
 	end if;
 	if area notin patterns then
 		Append(~patterns,area);
@@ -90,5 +83,4 @@ end for;
 
 num_loops:=(n-first+1) div l;
 last:=n-first+1-l*num_loops;
-value(patterns[first+last-1]);
-
+PrintFile("day18.txt",value(patterns[first+last-1]));

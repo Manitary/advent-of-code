@@ -59,6 +59,5 @@ repeat
 	end if;
 until #flow eq 0;
 
-
-#(water join rest)-2; //don't hardcode this
-#rest;
+PrintFile("day17.txt",#(water join rest)-Min({c[2]:c in clay})+1);
+PrintFile("day17.txt",#rest);

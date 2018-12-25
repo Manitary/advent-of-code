@@ -21,5 +21,5 @@ while true do;
 		break;
 	end if;
 end while;
-list[1];
-list[#list];
+PrintFile("day21.txt",list[1]);
+PrintFile("day21.txt",list[#list]);

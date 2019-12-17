@@ -1,4 +1,4 @@
-F:=Open("input13.txt","r");
+F:=Open("input15.txt","r");
 
 program:=eval("[" cat Gets(F) cat "]");
 
@@ -20,7 +20,41 @@ function ChooseMode(value,mode,seq,base)
 	end if;
 end function;
 
-procedure ExecuteCode(~list,~pos,~base,~tiles,~data,~done,~ball,~pad)
+function GetDir(dir)
+	case dir:
+		when 1: return Vector([0,1]);
+		when 2: return Vector([0,-1]);
+		when 3: return Vector([-1,0]);
+		when 4: return Vector([1,0]);
+	end case;
+	print "input error";
+	return false;
+end function;
+
+function PrintMap(coords,map,droid)
+	minX:=Min({v[1]:v in coords});
+	maxX:=Max({v[1]:v in coords});
+	minY:=Min({v[2]:v in coords});
+	maxY:=Max({v[2]:v in coords});
+	for y in [maxY..minY by -1] do
+		line:="";
+		for x in [minX..maxX] do
+			if Vector([x,y]) in coords then
+				if droid eq Vector([x,y]) then
+					line*:="D";
+				else
+					line*:=map[Vector([x,y])];
+				end if;
+			else
+				line*:=" ";
+			end if;
+		end for;
+		print line;
+	end for;
+	return true;
+end function;
+
+procedure ExecuteCode(~list,~pos,~base,~tiles,~data,~done,~dir,~droid,~keys)
 	instruction:=IntegerToString(list[pos]);
 	while #instruction lt 5 do
 		instruction:="0"*instruction;
@@ -35,25 +69,35 @@ procedure ExecuteCode(~list,~pos,~base,~tiles,~data,~done,~ball,~pad)
 			list[list[pos+3]+1+(instruction[1] eq "2" select base else 0)]:=(ChooseMode(list[pos+1],instruction[3],list,base))*(ChooseMode(list[pos+2],instruction[2],list,base));
 			jump:=4;
 		when 3:
-			list[list[pos+1]+1+(instruction[3] eq "2" select base else 0)]:=Sign(ball[1]-pad[1]);;
+			print "Ready for input:";
+			readi input;
+			list[list[pos+1]+1+(instruction[3] eq "2" select base else 0)]:=input;
+			dir:=GetDir(input);
 			jump:=2;
 		when 4:
 			output:=ChooseMode(list[pos+1],instruction[3],list,base);
-			Append(~data,output);
-			if #data eq 3 then
-				if data[1] eq -1 and data[2] eq 0 then
-					print "score:",data[3];
-				else
-					Include(~tiles,data);
-				end if;
-				if data[3] eq 4 then
-					ball:=data;
-				end if;
-				if data[3] eq 3 then
-					pad:=data;
-				end if;
-				data:=[];
-			end if;
+			print "output:",output;
+			case output:
+				when 0:
+					if not IsDefined(data,droid+dir) then
+						data[droid+dir]:="#";
+						Include(~keys,droid+dir);
+					end if;
+				when 1:
+					if not IsDefined(data,droid+dir) then
+						data[droid+dir]:=".";
+						Include(~keys,droid+dir);
+					end if;
+					droid+:=dir;
+				when 2:
+					print "Oxygen found";
+					if not IsDefined(data,droid+dir) then
+						data[droid+dir]:="@";
+						Include(~keys,droid+dir);
+					end if;
+					droid+:=dir;
+			end case;
+			PrintMap(keys,data,droid);
 			jump:=2;
 		when 5:
 			if ChooseMode(list[pos+1],instruction[3],list,base) ne 0 then
@@ -92,21 +136,13 @@ base:=0;
 pos:=1;
 done:=false;
 tiles:={};
-data:=[];
+data:=AssociativeArray();
+data[Vector([0,0])]:=".";
+keys:={Vector([0,0])};
+droid:=Vector([0,0]);
+dir:=0;
 
 repeat
-	ExecuteCode(~list,~pos,~base,~tiles,~data,~done,~ball,~pad);
+	ExecuteCode(~list,~pos,~base,~tiles,~data,~done,~dir,~droid,~keys);
 until done;
-#{t:t in tiles|t[3] eq 2};
 
-list:=program;
-list[1]:=2;
-base:=0;
-pos:=1;
-done:=false;
-tiles:={};
-data:=[];
-
-repeat
-	ExecuteCode(~list,~pos,~base,~tiles,~data,~done,~ball,~pad);
-until done;

@@ -1,5 +1,4 @@
-F:=Open("input13.txt","r");
-
+F:=Open("input17.txt","r");
 program:=eval("[" cat Gets(F) cat "]");
 
 function GetMemory(list,idx)
@@ -20,7 +19,7 @@ function ChooseMode(value,mode,seq,base)
 	end if;
 end function;
 
-procedure ExecuteCode(~list,~pos,~base,~tiles,~data,~done,~ball,~pad)
+procedure ExecuteCode(~list,~pos,~base,~tiles,~data,~done,input,~idx)
 	instruction:=IntegerToString(list[pos]);
 	while #instruction lt 5 do
 		instruction:="0"*instruction;
@@ -35,24 +34,17 @@ procedure ExecuteCode(~list,~pos,~base,~tiles,~data,~done,~ball,~pad)
 			list[list[pos+3]+1+(instruction[1] eq "2" select base else 0)]:=(ChooseMode(list[pos+1],instruction[3],list,base))*(ChooseMode(list[pos+2],instruction[2],list,base));
 			jump:=4;
 		when 3:
-			list[list[pos+1]+1+(instruction[3] eq "2" select base else 0)]:=Sign(ball[1]-pad[1]);;
+			//print "receiving input";
+			list[list[pos+1]+1+(instruction[3] eq "2" select base else 0)]:=input[idx];
+			idx+:=1;
 			jump:=2;
 		when 4:
 			output:=ChooseMode(list[pos+1],instruction[3],list,base);
-			Append(~data,output);
-			if #data eq 3 then
-				if data[1] eq -1 and data[2] eq 0 then
-					print "score:",data[3];
-				else
-					Include(~tiles,data);
-				end if;
-				if data[3] eq 4 then
-					ball:=data;
-				end if;
-				if data[3] eq 3 then
-					pad:=data;
-				end if;
-				data:=[];
+			//print "output:",output;
+			if output eq 10 then
+				Append(~data,[]);
+			else
+				Append(~data[#data],output);
 			end if;
 			jump:=2;
 		when 5:
@@ -91,22 +83,50 @@ list:=program;
 base:=0;
 pos:=1;
 done:=false;
-tiles:={};
-data:=[];
+data:=[[]];
+idx:=1;
 
 repeat
-	ExecuteCode(~list,~pos,~base,~tiles,~data,~done,~ball,~pad);
+	ExecuteCode(~list,~pos,~base,~tiles,~data,~done,0,~idx);
 until done;
-#{t:t in tiles|t[3] eq 2};
+
+alignment:=0;
+for i in [2..#data-3], j in [2..#data[1]-1] do
+	if data[i,j] eq 35 then
+		if {data[a,b]:a in [i-1..i+1],b in [j-1..j+1]|Abs(a-i)+Abs(b-j) eq 1} eq {35} then
+			alignment+:=(i-1)*(j-1);
+		end if;
+	end if;
+end for;
+
+PrintFile("day17.txt",alignment);
+
+/*
+for line in data do
+	if #line gt 0 then
+		print &*[CodeToString(c):c in line];
+	end if;
+end for;
+*/
 
 list:=program;
 list[1]:=2;
 base:=0;
 pos:=1;
 done:=false;
-tiles:={};
-data:=[];
+data:=[[]];
+
+idx:=1;
+
+routine:="A,B,A,C,B,C,B,C,A,C";
+move_A:="R,12,L,6,R,12";
+move_B:="L,8,L,6,L,10";
+move_C:="R,12,L,10,L,6,R,10";
+camera_feed:="n";
+input:=&cat[[StringToCode(c):c in Eltseq(s)] cat [10]:s in [routine,move_A,move_B,move_C,camera_feed]];
 
 repeat
-	ExecuteCode(~list,~pos,~base,~tiles,~data,~done,~ball,~pad);
+	ExecuteCode(~list,~pos,~base,~tiles,~data,~done,input,~idx);
 until done;
+
+PrintFile("day17.txt",data[#data,1]);

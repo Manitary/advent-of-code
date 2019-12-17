@@ -31,6 +31,32 @@ function GetDir(dir)
 	return false;
 end function;
 
+function GetInput(dir)
+	case dir:
+		when Vector([0,1]): return 1;
+		when Vector([0,-1]): return 2;
+		when Vector([-1,0]): return 3;
+		when Vector([1,0]): return 4;
+	end case;
+	print "input error";
+	return false;
+end function;
+
+function ChooseDir(graph,node,keys)
+	r:=-1;
+	repeat
+		r+:=1;
+	until exists(target){v:v in Sphere(node,r)|#({Label(v)[1]+GetDir(i):i in [1..4]} meet keys) lt 4} or r gt Diameter(graph);
+	if r gt Diameter(graph) then
+		return 0;
+	elif r eq 0 then
+		exists(dir){i:i in [1..4]|Label(node)[1]+GetDir(i) notin keys};
+		return dir;
+	else
+		return GetInput(Label(Geodesic(node,target)[2])[1]-Label(node)[1]);
+	end if;
+end function;
+
 function PrintMap(coords,map,droid)
 	minX:=Min({v[1]:v in coords});
 	maxX:=Max({v[1]:v in coords});
@@ -54,7 +80,7 @@ function PrintMap(coords,map,droid)
 	return true;
 end function;
 
-procedure ExecuteCode(~list,~pos,~base,~tiles,~data,~done,~dir,~droid,~keys)
+procedure ExecuteCode(~list,~pos,~base,~tiles,~data,~done,~dir,~droid,~keys,~graph)
 	instruction:=IntegerToString(list[pos]);
 	while #instruction lt 5 do
 		instruction:="0"*instruction;
@@ -69,14 +95,17 @@ procedure ExecuteCode(~list,~pos,~base,~tiles,~data,~done,~dir,~droid,~keys)
 			list[list[pos+3]+1+(instruction[1] eq "2" select base else 0)]:=(ChooseMode(list[pos+1],instruction[3],list,base))*(ChooseMode(list[pos+2],instruction[2],list,base));
 			jump:=4;
 		when 3:
-			print "Ready for input:";
-			readi input;
-			list[list[pos+1]+1+(instruction[3] eq "2" select base else 0)]:=input;
-			dir:=GetDir(input);
-			jump:=2;
+			exists(node){v:v in VertexSet(graph)|Label(v)[1] eq droid};
+			new_dir:=ChooseDir(graph,node,keys);
+			if new_dir eq 0 then
+				done:=true;
+			else
+				list[list[pos+1]+1+(instruction[3] eq "2" select base else 0)]:=new_dir;
+				dir:=GetDir(new_dir);
+				jump:=2;
+			end if;
 		when 4:
 			output:=ChooseMode(list[pos+1],instruction[3],list,base);
-			print "output:",output;
 			case output:
 				when 0:
 					if not IsDefined(data,droid+dir) then
@@ -87,6 +116,9 @@ procedure ExecuteCode(~list,~pos,~base,~tiles,~data,~done,~dir,~droid,~keys)
 					if not IsDefined(data,droid+dir) then
 						data[droid+dir]:=".";
 						Include(~keys,droid+dir);
+						AddVertex(~graph,<droid+dir,".">);
+						exists(node){v:v in VertexSet(graph)|Label(v)[1] eq droid};
+						graph+:={node,VertexSet(graph).NumberOfVertices(graph)};
 					end if;
 					droid+:=dir;
 				when 2:
@@ -94,6 +126,9 @@ procedure ExecuteCode(~list,~pos,~base,~tiles,~data,~done,~dir,~droid,~keys)
 					if not IsDefined(data,droid+dir) then
 						data[droid+dir]:="@";
 						Include(~keys,droid+dir);
+						AddVertex(~graph,<droid+dir,"@">);
+						exists(node){v:v in VertexSet(graph)|Label(v)[1] eq droid};
+						graph+:={node,VertexSet(graph).NumberOfVertices(graph)};
 					end if;
 					droid+:=dir;
 			end case;
@@ -140,9 +175,22 @@ data:=AssociativeArray();
 data[Vector([0,0])]:=".";
 keys:={Vector([0,0])};
 droid:=Vector([0,0]);
+graph:=EmptyGraph(0);
+AddVertex(~graph,<droid,".">);
 dir:=0;
 
 repeat
-	ExecuteCode(~list,~pos,~base,~tiles,~data,~done,~dir,~droid,~keys);
+	ExecuteCode(~list,~pos,~base,~tiles,~data,~done,~dir,~droid,~keys,~graph);
 until done;
 
+V:=VertexSet(graph);
+exists(oxygen){v:v in V|Label(v)[2] eq "@"};
+
+origin:=V.1;
+PrintFile("day15.txt",Distance(origin,oxygen));
+
+r:=0;
+repeat
+	r+:=1;
+until #Sphere(oxygen,r) eq 0;
+PrintFile("day15.txt",r-1);

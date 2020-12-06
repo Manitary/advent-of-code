@@ -80,7 +80,19 @@ while true do
 	Remove(~queue,1);
 	for p in GetNGBHPortals(<pos[1,1],pos[1,2]>,pos[1,3],pos[2]) do
 		if p[1] notin visited then
-			Append(~queue,p);
+			inserted:=false;
+			if #queue gt 0 then
+				for i in [1..#queue] do
+					if queue[i,2] ge p[2] then
+						Insert(~queue,i,p);
+						inserted:=true;
+						break;
+					end if;
+				end for;
+			end if;
+			if not inserted then
+				Append(~queue,p);
+			end if;
 		end if;
 	end for;
 	Sort(~queue,func<u,v|u[2]-v[2]>);

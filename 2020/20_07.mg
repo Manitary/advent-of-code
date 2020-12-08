@@ -32,7 +32,7 @@ while true do
 end while;
 
 V:=VertexSet(G);
-target:= "shiny gold";
+target:="shiny gold";
 
 PrintFile("day07.txt",#{v:v in V|Reachable(v,V!target)}-1);
 

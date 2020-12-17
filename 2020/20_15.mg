@@ -19,10 +19,10 @@ repeat
 		t[last]:=c;
 		last:=new;
 	end if;
-	lastnew:=last notin Keys(t);
+	lastnew:=not IsDefined(t,last);
 	c+:=1;
-	if c mod 10^5 eq 0 then
-		print c;
+	if c eq 2020 then
+		PrintFile("day15.txt",new);
 	end if;
 until c eq 3*10^7;
-new;
+PrintFile("day15.txt",new);

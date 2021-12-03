@@ -1,5 +1,5 @@
 with open('input2.txt') as f:
-	instr = [l.split(' ') for l in f.readlines()]
+	instr = [l.split() for l in f.readlines()]
 
 x = y = a = 0
 

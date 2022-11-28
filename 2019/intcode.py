@@ -1,10 +1,11 @@
 from typing import Union
 from copy import deepcopy
-from collections import deque
+from collections import deque, defaultdict
 
 # Modes
 POSITION = 0
 IMMEDIATE = 1
+RELATIVE = 2
 
 # Opcodes
 ADD = 1
@@ -15,6 +16,7 @@ JUMP_IF_TRUE = 5
 JUMP_IF_FALSE = 6
 LESS_THAN = 7
 EQUALS = 8
+BASE_ADJUST = 9
 HALT = 99
 
 # Role of the parameters for each opcode
@@ -29,12 +31,13 @@ OPCODES = {
     JUMP_IF_FALSE: (READ, READ),
     LESS_THAN: (READ, READ, WRITE),
     EQUALS: (READ, READ, WRITE),
+    BASE_ADJUST: (READ,),
     HALT: (),
 }
 
 class Computer:
     def __init__(self, program: str = None, input_: Union[int, list[int]] = None):
-        self.originalProgram = self.parse(program) if program else {}
+        self.originalProgram = self.parse(program) if program else defaultdict(int)
         if input_ is None:
             self.input = deque()
         elif isinstance(input_, int):
@@ -48,6 +51,7 @@ class Computer:
         self.pointer = 0
         self.output = deque()
         self.running = True
+        self.base = 0
 
     def overwrite(self):
         self.originalProgram = deepcopy(self.program)
@@ -57,7 +61,7 @@ class Computer:
 
     @staticmethod
     def parse(data: str):
-        return {i: int(val) for i, val in enumerate(data.split(','))}
+        return defaultdict(int, {i: int(val) for i, val in enumerate(data.split(','))})
     
     def __getitem__(self, index: int):
         return self.program[index]
@@ -85,8 +89,10 @@ class Computer:
             a = self[self.pointer + 1 + i]
             mode = modes % 10
             modes //= 10
-
-            if mode == POSITION:
+            
+            if mode == RELATIVE:
+                a += self.base
+            if mode in (POSITION, RELATIVE):
                 if kind == READ:
                     a = self[a]
             elif mode == IMMEDIATE:
@@ -125,6 +131,8 @@ class Computer:
             elif opcode == JUMP_IF_FALSE:
                 if not a:
                     self.pointer = b
+            elif opcode == BASE_ADJUST:
+                self.base += a
             elif opcode == HALT:
                 self.pointer -= 1
                 self.halt()

@@ -320,3 +320,35 @@ def test_day7_part2():
                 break
         curr = nextIndex(curr)
     assert bots[-1].pop() == answer
+
+def test_day9_quine():
+    data = "109,1,204,-1,1001,100,1,100,1008,100,16,101,1006,101,0,99"
+    bot = Computer(data)
+    bot.run()
+    assert list(map(int, data.split(','))) == list(bot.output)
+
+def test_day9_big_number_1():
+    data = "1102,34915192,34915192,7,4,7,99,0"
+    bot = Computer(data)
+    bot.run()
+    assert len(str(bot.pop())) == 16
+
+def test_day9_big_number_2():
+    data = "104,1125899906842624,99"
+    bot = Computer(data)
+    bot.run()
+    assert bot.pop() == int(data.split(',')[1])
+
+def test_day9_part1():
+    data = get_data(day=9, year=2019)
+    bot = Computer(data, 1)
+    bot.run()
+    assert len(bot.output) == 1
+    assert bot.pop() == 2594708277
+
+def test_day9_part2():
+    data = get_data(day=9, year=2019)
+    bot = Computer(data, 2)
+    bot.run()
+    assert len(bot.output) == 1
+    assert bot.pop() == 87721

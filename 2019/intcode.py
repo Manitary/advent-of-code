@@ -1,4 +1,5 @@
 from typing import Union
+from copy import deepcopy
 from collections import deque
 
 # Modes
@@ -32,27 +33,43 @@ OPCODES = {
 }
 
 class Computer:
-    def __init__(self, program: str = None, input_: list[int] = None):
-        self.setProgram(program, input_)
+    def __init__(self, program: str = None, input_: Union[int, list[int]] = None):
+        self.originalProgram = self.parse(program) if program else {}
+        if input_ is None:
+            self.input = deque()
+        elif isinstance(input_, int):
+            self.input = deque([input_])
+        elif isinstance(input_, list):
+            self.input = deque(input_)
+        self.reset()
 
-    def setProgram(self, program: str = None, input_: list[int] = None):
-        self.program = self.parse(program) if program else {}
-        self.input = deque(input_ or [])
-        self.output = deque()
+    def reset(self):
+        self.program = deepcopy(self.originalProgram)
         self.pointer = 0
+        self.output = deque()
+        self.running = True
+
+    def overwrite(self):
+        self.originalProgram = deepcopy(self.program)
+
+    def halt(self):
+        self.running = False
 
     @staticmethod
     def parse(data: str):
         return {i: int(val) for i, val in enumerate(data.split(','))}
     
-    def __getitem__(self, index):
+    def __getitem__(self, index: int):
         return self.program[index]
     
-    def __setitem__(self, index, value):
+    def __setitem__(self, index: int, value: int):
         self.program[index] = value
 
-    def push(self, value):
-        self.input.append(value)
+    def push(self, value: Union[int, list[int]]):
+        if isinstance(value, int):
+            self.input.append(value)
+        elif isinstance(value, list):
+            self.input.extend(value)
     
     def pop(self):
         return self.output.popleft()
@@ -80,7 +97,8 @@ class Computer:
         return args
     
     def run(self):
-        while (instruction := self[self.pointer]) != HALT:
+        while self.running:
+            instruction = self[self.pointer]
             opcode = instruction % 100
             modes = instruction // 100
             parameter_kinds = OPCODES[opcode]
@@ -91,8 +109,8 @@ class Computer:
             elif opcode == MULT:
                 self[c] = a * b
             elif opcode == INPUT:
-                while not self.input:
-                    #yield
+                if not self.input:
+                    self.pointer -= 2
                     break
                 self[a] = self.input.popleft()
             elif opcode == OUTPUT:
@@ -107,5 +125,8 @@ class Computer:
             elif opcode == JUMP_IF_FALSE:
                 if not a:
                     self.pointer = b
+            elif opcode == HALT:
+                self.pointer -= 1
+                self.halt()
             else:
                 raise Exception(f"{opcode} opcode not implemented")

@@ -10,7 +10,7 @@ computer = Computer()
 
 ans1, ans2 = None, None
 for noun, verb in product(range(1, 100), range(1, 100)):
-    computer.setProgram(program=data)
+    computer = Computer(program=data)
     computer[1] = noun
     computer[2] = verb
     computer.run()

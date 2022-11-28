@@ -5,13 +5,11 @@ YEAR = 2019
 
 data = get_data(day=DAY, year=YEAR)
 
-computer = Computer()
-
-computer.setProgram(data, input_=[1])
+computer = Computer(program=data, input_=1)
 computer.run()
 ans1 = computer.output[-1]
 
-computer.setProgram(data, input_=[5])
+computer = Computer(program=data, input_=5)
 computer.run()
 ans2 = computer.output[-1]
 

@@ -220,3 +220,103 @@ def test_day5_part2():
         assert bot.pop() == 0
     assert bot.pop() == 13758663
     assert not bot.output
+
+def test_day7_examples_1():
+    data = "3,15,3,16,1002,16,10,16,1,16,15,15,4,15,99,0,0"
+    phases = [4,3,2,1,0]
+    input_ = 0
+    for phase in phases:
+        bot = Computer(data, [phase, input_])
+        bot.run()
+        input_ = bot.pop()
+    assert input_ == 43210
+
+def test_day7_examples_2():
+    data = "3,23,3,24,1002,24,10,24,1002,23,-1,23,101,5,23,23,1,24,23,23,4,23,99,0,0"
+    phases = [0,1,2,3,4]
+    input_ = 0
+    for phase in phases:
+        bot = Computer(data, [phase, input_])
+        bot.run()
+        input_ = bot.pop()
+    assert input_ == 54321
+
+def test_day7_examples_3():
+    data = "3,31,3,32,1002,32,10,32,1001,31,-2,31,1007,31,0,33,1002,33,7,33,1,33,31,31,1,32,31,31,4,31,99,0,0,0"
+    phases = [1,0,4,3,2]
+    input_ = 0
+    for phase in phases:
+        bot = Computer(data, [phase, input_])
+        bot.run()
+        input_ = bot.pop()
+    assert input_ == 65210
+
+def test_day7_part1():
+    data = get_data(day=7, year=2019)
+    phases = [3,1,4,2,0]
+    input_ = 0
+    for phase in phases:
+        bot = Computer(data, [phase, input_])
+        bot.run()
+        input_ = bot.pop()
+    assert input_ == 92663
+
+def test_day7_examples_4():
+    data = "3,26,1001,26,-4,26,3,27,1002,27,2,27,1,27,26,27,4,27,1001,28,-1,28,1005,28,6,99,0,0,5"
+    phases = [9,8,7,6,5]
+    input_ = 0
+    answer = 139629729
+    bots = [Computer(data, phases[i]) for i in range(5)]
+    bots[0].push(input_)
+    curr = 0
+    def nextIndex(i):
+        return (i + 1) % 5
+    while any(bot.running for bot in bots):
+        bots[curr].run()
+        while bots[curr].output:
+            if bots[nextIndex(curr)].running:
+                bots[nextIndex(curr)].push(bots[curr].pop())
+            else:
+                break
+        curr = nextIndex(curr)
+    assert bots[-1].pop() == answer
+
+def test_day7_examples_5():
+    data = "3,52,1001,52,-5,52,3,53,1,52,56,54,1007,54,5,55,1005,55,26,1001,54,-5,54,1105,1,12,1,53,54,53,1008,54,0,55,1001,55,1,55,2,53,55,53,4,53,1001,56,-1,56,1005,56,6,99,0,0,0,0,10"
+    phases = [9,7,8,5,6]
+    input_ = 0
+    answer = 18216
+    bots = [Computer(data, phases[i]) for i in range(5)]
+    bots[0].push(input_)
+    curr = 0
+    def nextIndex(i):
+        return (i + 1) % 5
+    while any(bot.running for bot in bots):
+        bots[curr].run()
+        while bots[curr].output:
+            if bots[nextIndex(curr)].running:
+                bots[nextIndex(curr)].push(bots[curr].pop())
+            else:
+                break
+        curr = nextIndex(curr)
+    assert bots[-1].pop() == answer
+
+def test_day7_part2():
+    data = get_data(day=7, year=2019)
+    phases = [7,8,6,9,5]
+    input_ = 0
+    answer = 14365052
+    bots = [Computer(data, phases[i]) for i in range(5)]
+    bots[0].push(input_)
+    curr = 0
+    def nextIndex(i):
+        return (i + 1) % 5
+    while any(bot.running for bot in bots):
+        bots[curr].run()
+        while bots[curr].output:
+            if bots[nextIndex(curr)].running:
+                bots[nextIndex(curr)].push(bots[curr].pop())
+            else:
+                break
+        curr = nextIndex(curr)
+    assert bots[-1].pop() == answer

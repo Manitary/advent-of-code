@@ -11,10 +11,9 @@ computer = Computer()
 ans1, ans2 = None, None
 for noun, verb in product(range(1, 100), range(1, 100)):
     computer.setProgram(program=data)
-    computer.replace(1, noun)
-    computer.replace(2, verb)
-    *_, = computer.run()
-    
+    computer[1] = noun
+    computer[2] = verb
+    computer.run()
     if noun == 12 and verb == 2:
         ans1 = computer.state
         if ans2:

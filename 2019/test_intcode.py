@@ -1,5 +1,6 @@
-from intcode import Computer, Robot
+from intcode import Computer, Robot, Arcade
 from collections import deque
+from itertools import accumulate
 from aocd import get_data
 
 def test_creation():
@@ -373,3 +374,25 @@ def test_day11_part1():
     robot = Robot(data)
     robot.move()
     assert len(robot.visited) == 1934
+
+def test_arcade_create():
+    arcade = Arcade()
+    assert isinstance(arcade, Arcade)
+    assert not arcade.program
+    assert not arcade.input
+    assert not arcade.output
+    assert arcade.pointer == 0
+
+def test_day13_part1():
+    data = get_data(day=13, year=2019)
+    arcade = Arcade(data)
+    arcade.run()
+    answer = 233
+    assert answer == sum(1 for i in range(2, len(arcade.output), 3) if arcade.output[i] == 2)
+    
+def test_day13_part2():
+    data = get_data(day=13, year=2019)
+    arcade = Arcade(data)
+    arcade[0] = 2
+    arcade.autoplay()
+    assert arcade.score == 11991

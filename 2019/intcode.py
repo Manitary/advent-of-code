@@ -168,3 +168,34 @@ class Robot(Computer):
 
     def rotate(self, value: int):
         self.direction = (self.direction + (RIGHT if value == 1 else LEFT)) % len(DIRECTIONS)
+
+class Arcade(Computer):
+    def __init__(self, program: str = None, input_: Union[int, list[int]] = None):
+        super(Arcade, self).__init__(program=program, input_=input_)
+        self.score = 0
+        self.paddle = None
+        self.ball = None
+    
+    def getTile(self):
+        x, y, t = self.pop(), self.pop(), self.pop()
+        if x == -1 and y == 0:
+            self.score = t
+        elif t == 3:
+            self.paddle = (x, y)
+        elif t == 4:
+            self.ball = (x, y)
+    
+    def autoplay(self):
+        while self.running:
+            self.run()
+            while self.output:
+                self.getTile()
+            self.adjust_paddle()
+    
+    def adjust_paddle(self):
+        if self.paddle[0] == self.ball[0]:
+            self.push(0)
+        elif self.paddle[0] < self.ball[0]:
+            self.push(1)
+        elif self.paddle[0] > self.ball[0]:
+            self.push(-1)

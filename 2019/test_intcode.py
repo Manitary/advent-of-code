@@ -1,4 +1,4 @@
-from intcode import Computer
+from intcode import Computer, Robot
 from collections import deque
 from aocd import get_data
 
@@ -352,3 +352,24 @@ def test_day9_part2():
     bot.run()
     assert len(bot.output) == 1
     assert bot.pop() == 87721
+
+def test_robot_create():
+    robot = Robot()
+    assert isinstance(robot, Robot)
+    assert not robot.program
+    assert not robot.input
+    assert not robot.output
+    assert robot.pointer == 0
+    assert robot.x == 0
+    assert robot.y == 0
+    assert len(robot.visited) == 1
+    assert (0, 0) in robot.visited
+    assert set(robot.visited.values()) == {0}
+    assert robot.running
+    assert robot.visited[(robot.x, robot.y)] == 0
+
+def test_day11_part1():
+    data = get_data(day=11, year=2019)
+    robot = Robot(data)
+    robot.move()
+    assert len(robot.visited) == 1934

@@ -35,6 +35,10 @@ OPCODES = {
     HALT: (),
 }
 
+DIRECTIONS = ((0, 1), (1, 0), (0, -1), (-1, 0))
+RIGHT = 1
+LEFT = -1
+
 class Computer:
     def __init__(self, program: str = None, input_: Union[int, list[int]] = None):
         self.originalProgram = self.parse(program) if program else defaultdict(int)
@@ -138,3 +142,29 @@ class Computer:
                 self.halt()
             else:
                 raise Exception(f"{opcode} opcode not implemented")
+
+class Robot(Computer):
+    def __init__(self, program: str = None, starting_panel: int = 0):
+        super(Robot, self).__init__(program=program)
+        self.x, self.y = 0, 0
+        self.direction = 0
+        self.visited = defaultdict(int, {tuple((0, 0)): starting_panel})
+
+    def move(self):
+        while self.running:
+            self.push(self.visited[self.coordinates])
+            self.run()
+            self.visited[self.coordinates] = self.pop()
+            self.rotate(self.pop())
+            self.advance()
+    
+    @property
+    def coordinates(self):
+        return tuple((self.x, self.y))
+
+    def advance(self):
+        self.x += DIRECTIONS[self.direction][0]
+        self.y += DIRECTIONS[self.direction][1]
+
+    def rotate(self, value: int):
+        self.direction = (self.direction + (RIGHT if value == 1 else LEFT)) % len(DIRECTIONS)

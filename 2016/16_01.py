@@ -7,21 +7,18 @@ data = get_data(day=DAY, year=YEAR).split(", ")
 x, y = 0, 0
 dx, dy = 0, 1
 visited = set()
-ans = None
+ans2 = None
 
 for instr in data:
-    if instr[0] == 'R':
-        dx, dy = dy, -dx
-    else:
-        dx, dy = -dy, dx
-    l = int(instr[1:])
-    for _ in range(l):
+    dx, dy = (dy, -dx) if instr[0] == 'R' else (-dy, dx)
+    for _ in range(int(instr[1:])):
         x += dx
         y += dy
-        if not ans:
+        if not ans2:
             if (x, y) in visited:
-                ans = (x, y)
+                ans2 = x + y
             visited.add((x, y))
+ans1 = x + y
 
-submit(x + y, part="a", day=DAY, year=YEAR)
-submit(ans[0] + ans[1], part="b", day=DAY, year=YEAR)
+submit(ans1, part="a", day=DAY, year=YEAR)
+submit(ans2, part="b", day=DAY, year=YEAR)

@@ -38,6 +38,8 @@ OPCODES = {
 DIRECTIONS = ((0, 1), (1, 0), (0, -1), (-1, 0))
 RIGHT = 1
 LEFT = -1
+NORTH, EAST, SOUTH, WEST = DIRECTIONS
+CARDINALS = (NORTH, SOUTH, WEST, EAST)
 
 class Computer:
     def __init__(self, program: str = None, input_: Union[int, list[int]] = None):
@@ -199,3 +201,22 @@ class Arcade(Computer):
             self.push(1)
         elif self.paddle[0] > self.ball[0]:
             self.push(-1)
+
+class Droid(Computer):
+    def __init__(self, program: str = None):
+        super(Droid, self).__init__(program=program)
+        self.x, self.y = 0, 0
+    
+    def move(self, direction: int):
+        self.push(direction)
+        self.run()
+        output = self.pop()
+        if output > 0:
+            vector = CARDINALS[direction - 1]
+            self.x += vector[0]
+            self.y += vector[1]
+        return output
+    
+    @property
+    def coordinates(self):
+        return (self.x, self.y)

@@ -81,7 +81,9 @@ class Computer:
         elif isinstance(value, list):
             self.input.extend(value)
     
-    def pop(self):
+    def pop(self, amount: int = 1):
+        if amount > 1:
+            return (self.output.popleft() for _ in range(amount))
         return self.output.popleft()
     
     @property

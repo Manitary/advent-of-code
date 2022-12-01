@@ -4,15 +4,15 @@
 
 |Day|Name|Time|Rank|Time|Rank|
 |-|-|-|-|-|-|
-|1|[Inverse captcha](https://adventofcode.com/2017/day/1)|>24h|33069|>24h|27785|
-|2|[Corruption checksum](https://adventofcode.com/2017/day/2)|>24h|26707|>24h|22904|
-|3|[Spiral memory](https://adventofcode.com/2017/day/3)|>24h|18094|>24h|13340|
-|4|[High-entropy passphrases](https://adventofcode.com/2017/day/4)|>24h|16492|>24h|14976|
-|5|[A maze of twisty trampolines, all alike](https://adventofcode.com/2017/day/5)|>24h|13631|>24h|13051|
-|6|[Memory reallocation](https://adventofcode.com/2017/day/6)|13:07:07|8635|13:10:29|8251|
-|7|[Recursive circus](https://adventofcode.com/2017/day/7)|08:38:43|6164|09:21:43|3677|
-|8|[I heard you like registers](https://adventofcode.com/2017/day/8)|06:41:35|4653|06:44:01|4546|
-|9|[Stream processing](https://adventofcode.com/2017/day/9)|>24h|9654|>24h|9481|
+|&nbsp;&nbsp;1|[Inverse captcha](https://adventofcode.com/2017/day/1)|>24h|33069|>24h|27785|
+|&nbsp;&nbsp;2|[Corruption checksum](https://adventofcode.com/2017/day/2)|>24h|26707|>24h|22904|
+|&nbsp;&nbsp;3|[Spiral memory](https://adventofcode.com/2017/day/3)|>24h|18094|>24h|13340|
+|&nbsp;&nbsp;4|[High-entropy passphrases](https://adventofcode.com/2017/day/4)|>24h|16492|>24h|14976|
+|&nbsp;&nbsp;5|[A maze of twisty trampolines, all alike](https://adventofcode.com/2017/day/5)|>24h|13631|>24h|13051|
+|&nbsp;&nbsp;6|[Memory reallocation](https://adventofcode.com/2017/day/6)|13:07:07|8635|13:10:29|8251|
+|&nbsp;&nbsp;7|[Recursive circus](https://adventofcode.com/2017/day/7)|08:38:43|6164|09:21:43|3677|
+|&nbsp;&nbsp;8|[I heard you like registers](https://adventofcode.com/2017/day/8)|06:41:35|4653|06:44:01|4546|
+|&nbsp;&nbsp;9|[Stream processing](https://adventofcode.com/2017/day/9)|>24h|9654|>24h|9481|
 |10|[Knot hash](https://adventofcode.com/2017/day/10)|12:59:42|5047|16:43:03|4992|
 |11|[Hex ed](https://adventofcode.com/2017/day/11)|07:42:33|3563|07:45:23|3339|
 |12|[Digital plumber](https://adventofcode.com/2017/day/12)|06:47:48|3850|06:48:54|3561|

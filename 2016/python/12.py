@@ -33,6 +33,7 @@ def assemBunny(instr):
 registers = {'a': 0, 'b': 0, 'c': 0, 'd': 0}
 ans1 = assemBunny(data)
 
+# This will take forever by problem design, the solution is in 12_2.py
 registers = {'a': 0, 'b': 0, 'c': 1, 'd': 0}
 ans2 = assemBunny(data)
 

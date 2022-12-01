@@ -51,7 +51,7 @@ registers = {'a': 7, 'b': 0, 'c': 0, 'd': 0}
 ans1 = assemBunny(instructions)
 submit(ans1, part="a", day=DAY, year=YEAR)
 
-# This will take forever by problem design, the solution is in 16_23_2.py
+# This will take forever by problem design, the solution is in 23_2.py
 instructions = deepcopy(data)
 registers = {'a': 12, 'b': 0, 'c': 0, 'd': 0}
 ans2 = assemBunny(instructions)

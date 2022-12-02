@@ -1,7 +1,7 @@
 from aocd import get_data, submit
 
-def main():
-    data = sorted([sum(map(int, row.split())) for row in list(get_data().split('\n\n'))])
+def main() -> tuple[int, int]:
+    data = sorted([sum(map(int, row.split())) for row in list(get_data(day=1, year=2022).split('\n\n'))])
     ans1 = data[-1]
     ans2 = sum(data[-3:])
 

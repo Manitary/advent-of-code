@@ -1,6 +1,9 @@
+"""Solve Advent of Code Day 5 Year 2022."""
+
 from aocd import get_data, submit
 
 def main() -> tuple[int, int]:
+    """Return the answers to part 1 and part 2."""
     cargo, instructions = (x.split('\n') for x in get_data(day=5, year=2022).split('\n\n'))
     cargo_size = int(cargo[-1].split()[-1])
     stacks = [[] for _ in range(cargo_size)]
@@ -19,9 +22,9 @@ def main() -> tuple[int, int]:
         stacks2[end-1].extend(stacks2[start-1][-num:])
         del stacks2[start-1][-num:]
 
-    ans1 = ''.join(s[-1] for s in stacks)
-    ans2 = ''.join(s[-1] for s in stacks2)
-    return ans1, ans2
+    part1 = ''.join(s[-1] for s in stacks)
+    part2 = ''.join(s[-1] for s in stacks2)
+    return part1, part2
 
 if __name__ == "__main__":
     ans1, ans2 = main()

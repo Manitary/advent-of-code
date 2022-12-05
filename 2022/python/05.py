@@ -1,15 +1,16 @@
 from aocd import get_data, submit
 
 def main() -> tuple[int, int]:
-    cargo, instructions = get_data(day=5, year=2022).split('\n\n')
-    stacks = [[] for _ in range(9)]
-    for row in cargo.split('\n')[-2::-1]:
+    cargo, instructions = (x.split('\n') for x in get_data(day=5, year=2022).split('\n\n'))
+    cargo_size = int(cargo[-1].split()[-1])
+    stacks = [[] for _ in range(cargo_size)]
+    for row in cargo[-2::-1]:
         crates = row[1::4]
         for i, crate in enumerate(crates):
             if crate != ' ':
                 stacks[i].append(crate)
     stacks2 = [s[:] for s in stacks]
-    for instruction in instructions.split('\n'):
+    for instruction in instructions:
         num, start, end = map(int, instruction.split()[1::2])
         # Part 1
         for _ in range(num):

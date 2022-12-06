@@ -5,7 +5,7 @@
 [![AoC 2019](https://img.shields.io/badge/2019-★_50-44cc11)](https://adventofcode.com/2019)
 [![AoC 2020](https://img.shields.io/badge/2020-★_50-44cc11)](https://adventofcode.com/2020)
 [![AoC 2021](https://img.shields.io/badge/2021-★_50-44cc11)](https://adventofcode.com/2021)
-[![AoC 2022](https://img.shields.io/badge/2022-★_10-c5d208)](https://adventofcode.com/2022)
+[![AoC 2022](https://img.shields.io/badge/2022-★_12-c5d208)](https://adventofcode.com/2022)
 
 # Advent of Code
 

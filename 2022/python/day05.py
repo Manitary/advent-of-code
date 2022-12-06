@@ -16,8 +16,8 @@ def main() -> tuple[int, int]:
     for instruction in instructions:
         num, start, end = map(int, instruction.split()[1::2])
         # Part 1
-        for _ in range(num):
-            stacks[end-1].append(stacks[start-1].pop())
+        stacks[end-1].extend(stacks[start-1][-1:-num-1:-1])
+        del stacks[start-1][-num:]
         # Part 2
         stacks2[end-1].extend(stacks2[start-1][-num:])
         del stacks2[start-1][-num:]

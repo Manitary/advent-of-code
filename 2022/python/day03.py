@@ -1,7 +1,6 @@
 """Solve Advent of Code Day 3 Year 2022."""
 
 from typing import Iterable
-from itertools import starmap
 from aocd import get_data, submit
 
 def item_priority(char: str) -> int:
@@ -20,7 +19,7 @@ def main() -> tuple[int, int]:
     """Return the answers to part 1 and part 2."""
     data = get_data(day=3, year=2022).split()
     part1 = sum(map(string_priority, data))
-    part2 = sum(starmap(group_priority, zip(data[::3], data[1::3], data[2::3])))
+    part2 = sum(map(group_priority, data[::3], data[1::3], data[2::3]))
     return part1, part2
 
 if __name__ == "__main__":

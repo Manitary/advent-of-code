@@ -1,4 +1,5 @@
 from aocd import get_data, submit
+
 DAY = 1
 YEAR = 2016
 
@@ -10,7 +11,7 @@ visited = set()
 ans2 = None
 
 for instr in data:
-    dx, dy = (dy, -dx) if instr[0] == 'R' else (-dy, dx)
+    dx, dy = (dy, -dx) if instr[0] == "R" else (-dy, dx)
     for _ in range(int(instr[1:])):
         x += dx
         y += dy

@@ -1,12 +1,15 @@
 from aocd import get_data, submit
 from itertools import groupby
+
 DAY = 10
 YEAR = 2015
 
 data = get_data(day=DAY, year=YEAR)
 
+
 def say(s):
-    return ''.join(f"{len(tuple(g))}{c}" for c, g in groupby(iter(s)))
+    return "".join(f"{len(tuple(g))}{c}" for c, g in groupby(iter(s)))
+
 
 N1, N2 = 40, 50
 for i in range(N2):

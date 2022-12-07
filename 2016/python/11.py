@@ -2,13 +2,14 @@ from aocd import get_data, submit
 from re import findall
 from itertools import combinations, chain
 from copy import deepcopy
+
 DAY = 11
 YEAR = 2016
 
 data = get_data(day=DAY, year=YEAR).split("\n")
 
-GENERATOR = 'generator'
-MICROCHIP = 'microchip'
+GENERATOR = "generator"
+MICROCHIP = "microchip"
 ELEMENTS = []
 TOP = len(data) - 1
 
@@ -24,27 +25,31 @@ for n, row in enumerate(data):
         floors[-1].add((1 + ELEMENTS.index(f[0])) * (1 if f[1] == GENERATOR else -1))
 num_elements = len(ELEMENTS)
 
+
 def isValid(floor):
     existGenerator = any(x > 0 for x in floor)
     unpairedChip = any(x < 0 and -x not in floor for x in floor)
-    return not(existGenerator and unpairedChip)
+    return not (existGenerator and unpairedChip)
+
 
 def getState(floors, elevator):
-    '''
+    """
     Record the relative position of each microchip/generator pair
     Used to compare floor states that are identical up to permutation of the elements
-    '''
-    positions = [[None]*2 for _ in range(num_elements)]
+    """
+    positions = [[None] * 2 for _ in range(num_elements)]
     for f, floor in enumerate(floors):
         for i in floor:
             positions[abs(i) - 1][0 if i > 0 else 1] = f
     return (elevator,) + tuple(tuple(x) for x in sorted(positions))
+
 
 def isWin(floors):
     for f, floor in enumerate(floors):
         if f < TOP and floor:
             return False
     return True
+
 
 def moves(floors, elevator):
     pairs = tuple(combinations(floors[elevator], 2))
@@ -63,6 +68,7 @@ def moves(floors, elevator):
                     continue
                 yield new_floors, new_elevator
 
+
 def BFS():
     visited = set()
     queue = [(floors, elevator, getState(floors, elevator), 0)]
@@ -77,13 +83,14 @@ def BFS():
                 if new_state not in visited:
                     queue.append((new_floors, new_elevator, new_state, steps + 1))
 
+
 ans1 = BFS()
 
 NEW_ELEMENTS = 2
 for i in range(NEW_ELEMENTS):
     num_elements += 1
     for j in (-1, 1):
-        floors[0].add(j*(num_elements))
+        floors[0].add(j * (num_elements))
 
 ans2 = BFS()
 

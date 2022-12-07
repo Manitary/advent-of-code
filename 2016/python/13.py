@@ -1,9 +1,11 @@
 from aocd import get_data, submit
+
 DAY = 13
 YEAR = 2016
 
 data = get_data(day=DAY, year=YEAR)
 data = int(data)
+
 
 def countOnes(n):
     ans = 0
@@ -12,13 +14,16 @@ def countOnes(n):
         n = n >> 1
     return ans
 
+
 def isOpen(x, y):
     if x < 0 or y < 0:
         return False
-    n = x**2 + 3*x + 2*x*y + y + y**2 + data
+    n = x**2 + 3 * x + 2 * x * y + y + y**2 + data
     return countOnes(n) % 2 == 0
 
+
 visited = set()
+
 
 def ngbh(x, y):
     ans = set()
@@ -29,6 +34,7 @@ def ngbh(x, y):
             else:
                 visited.add(coord)
     return ans
+
 
 start = (1, 1)
 end = (31, 39)

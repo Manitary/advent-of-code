@@ -1,6 +1,7 @@
 from aocd import get_data, submit
 from intcode import Computer
 from itertools import product
+
 DAY = 2
 YEAR = 2019
 
@@ -19,7 +20,7 @@ for noun, verb in product(range(1, 100), range(1, 100)):
         if ans2:
             break
     if computer.state == 19690720:
-        ans2 = 100*noun + verb
+        ans2 = 100 * noun + verb
         if ans1:
             break
 

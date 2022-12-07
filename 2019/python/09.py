@@ -1,5 +1,6 @@
 from aocd import get_data, submit
 from intcode import Computer
+
 DAY = 9
 YEAR = 2019
 

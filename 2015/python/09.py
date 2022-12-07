@@ -1,5 +1,6 @@
 from aocd import get_data, submit
 from itertools import permutations
+
 DAY = 9
 YEAR = 2015
 
@@ -13,7 +14,7 @@ for row in data:
     cities.add(c2)
     dists[frozenset((c1, c2))] = int(d)
 
-ans1, ans2 = float('inf'), 0
+ans1, ans2 = float("inf"), 0
 for path in permutations(cities):
     dist = sum(dists[frozenset(edge)] for edge in zip(path, path[1:]))
     if dist < ans1:

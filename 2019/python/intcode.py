@@ -41,6 +41,7 @@ LEFT = -1
 NORTH, EAST, SOUTH, WEST = DIRECTIONS
 CARDINALS = (NORTH, SOUTH, WEST, EAST)
 
+
 class Computer:
     def __init__(self, program: str = None, input_: Union[int, list[int]] = None):
         self.originalProgram = self.parse(program) if program else defaultdict(int)
@@ -67,11 +68,11 @@ class Computer:
 
     @staticmethod
     def parse(data: str):
-        return defaultdict(int, {i: int(val) for i, val in enumerate(data.split(','))})
-    
+        return defaultdict(int, {i: int(val) for i, val in enumerate(data.split(","))})
+
     def __getitem__(self, index: int):
         return self.program[index]
-    
+
     def __setitem__(self, index: int, value: int):
         self.program[index] = value
 
@@ -80,16 +81,16 @@ class Computer:
             self.input.append(value)
         elif isinstance(value, list):
             self.input.extend(value)
-    
+
     def pop(self, amount: int = 1):
         if amount > 1:
             return (self.output.popleft() for _ in range(amount))
         return self.output.popleft()
-    
+
     @property
     def state(self):
         return self.program[0]
-    
+
     def get_args(self, parameter_kinds: tuple[int], modes: int):
         args = [None] * 3
 
@@ -97,7 +98,7 @@ class Computer:
             a = self[self.pointer + 1 + i]
             mode = modes % 10
             modes //= 10
-            
+
             if mode == RELATIVE:
                 a += self.base
             if mode in (POSITION, RELATIVE):
@@ -109,7 +110,7 @@ class Computer:
             args[i] = a
 
         return args
-    
+
     def run(self):
         while self.running:
             instruction = self[self.pointer]
@@ -147,6 +148,7 @@ class Computer:
             else:
                 raise Exception(f"{opcode} opcode not implemented")
 
+
 class Robot(Computer):
     def __init__(self, program: str = None, starting_panel: int = 0):
         super(Robot, self).__init__(program=program)
@@ -161,7 +163,7 @@ class Robot(Computer):
             self.visited[self.coordinates] = self.pop()
             self.rotate(self.pop())
             self.advance()
-    
+
     @property
     def coordinates(self):
         return tuple((self.x, self.y))
@@ -171,7 +173,10 @@ class Robot(Computer):
         self.y += DIRECTIONS[self.direction][1]
 
     def rotate(self, value: int):
-        self.direction = (self.direction + (RIGHT if value == 1 else LEFT)) % len(DIRECTIONS)
+        self.direction = (self.direction + (RIGHT if value == 1 else LEFT)) % len(
+            DIRECTIONS
+        )
+
 
 class Arcade(Computer):
     def __init__(self, program: str = None, input_: Union[int, list[int]] = None):
@@ -179,7 +184,7 @@ class Arcade(Computer):
         self.score = 0
         self.paddle = None
         self.ball = None
-    
+
     def getTile(self):
         x, y, t = self.pop(), self.pop(), self.pop()
         if x == -1 and y == 0:
@@ -188,14 +193,14 @@ class Arcade(Computer):
             self.paddle = (x, y)
         elif t == 4:
             self.ball = (x, y)
-    
+
     def autoplay(self):
         while self.running:
             self.run()
             while self.output:
                 self.getTile()
             self.adjust_paddle()
-    
+
     def adjust_paddle(self):
         if self.paddle[0] == self.ball[0]:
             self.push(0)
@@ -204,11 +209,12 @@ class Arcade(Computer):
         elif self.paddle[0] > self.ball[0]:
             self.push(-1)
 
+
 class Droid(Computer):
     def __init__(self, program: str = None):
         super(Droid, self).__init__(program=program)
         self.x, self.y = 0, 0
-    
+
     def move(self, direction: int):
         self.push(direction)
         self.run()
@@ -218,7 +224,7 @@ class Droid(Computer):
             self.x += vector[0]
             self.y += vector[1]
         return output
-    
+
     @property
     def coordinates(self):
         return (self.x, self.y)

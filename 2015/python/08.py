@@ -1,19 +1,21 @@
 from aocd import get_data, submit
+
 DAY = 8
 YEAR = 2015
 
 data = get_data(day=DAY, year=YEAR).split()
+
 
 def realCount(s):
     count = 0
     encoded = 6
     i = 1
     while i < len(s) - 1:
-        if s[i] == '\\':
-            if s[i + 1] == '\\' or s[i + 1] == '"':
+        if s[i] == "\\":
+            if s[i + 1] == "\\" or s[i + 1] == '"':
                 i += 2
                 encoded += 4
-            elif s[i + 1] == 'x':
+            elif s[i + 1] == "x":
                 i += 4
                 encoded += 5
         else:
@@ -21,6 +23,7 @@ def realCount(s):
             encoded += 1
         count += 1
     return count, encoded
+
 
 ans1, ans2 = 0, 0
 for row in data:

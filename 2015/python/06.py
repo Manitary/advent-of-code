@@ -1,11 +1,13 @@
 from aocd import get_data, submit
 import re
+
 DAY = 6
 YEAR = 2015
 
 L = 1000
 data = get_data(day=DAY, year=YEAR).split("\n")
 lights = {(x, y): [0, 0] for x in range(L) for y in range(L)}
+
 
 def switch(x, y, instr):
     match instr:
@@ -18,6 +20,7 @@ def switch(x, y, instr):
         case "toggle":
             lights[(x, y)][0] = 1 - lights[(x, y)][0]
             lights[(x, y)][1] += 2
+
 
 regex = r"(turn on|turn off|toggle) (\d+),(\d+) through (\d+),(\d+)"
 for row in data:

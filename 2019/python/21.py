@@ -1,9 +1,11 @@
 from aocd import get_data, submit
 from intcode import Computer
+
 DAY = 21
 YEAR = 2019
 
 data = get_data(day=DAY, year=YEAR)
+
 
 def executeInstructions(instructions: str):
     jumpdroid = Computer(data)
@@ -11,7 +13,8 @@ def executeInstructions(instructions: str):
     jumpdroid.run()
     return jumpdroid.output[-1]
 
-instructions_1 = '''NOT A J
+
+instructions_1 = """NOT A J
 NOT B T
 OR T J
 NOT C T
@@ -20,9 +23,9 @@ NOT D T
 NOT T T
 AND T J
 WALK
-'''
+"""
 
-instructions_2 = '''NOT E J
+instructions_2 = """NOT E J
 NOT H T
 AND T J
 NOT J J
@@ -34,7 +37,7 @@ NOT T T
 AND T J
 AND D J
 RUN
-'''
+"""
 
 ans1 = executeInstructions(instructions_1)
 ans2 = executeInstructions(instructions_2)

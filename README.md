@@ -7,6 +7,8 @@
 [![AoC 2021](https://img.shields.io/badge/2021-★_50-44cc11)](https://adventofcode.com/2021)
 [![AoC 2022](https://img.shields.io/badge/2022-★_14-c5d208)](https://adventofcode.com/2022)
 
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+
 # Advent of Code
 
 [Advent of Code](https://adventofcode.com/) is a yearly event that started in 2015 that consists of an [Advent calendar](https://en.wikipedia.org/wiki/Advent_calendar) of programming puzzles of varying levels of difficulty, which can be solved with your language of choice.

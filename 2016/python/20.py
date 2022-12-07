@@ -1,4 +1,5 @@
 from aocd import get_data, submit
+
 DAY = 20
 YEAR = 2016
 
@@ -11,7 +12,7 @@ MAX = 2**32 - 1
 intervals = []
 for row in data.split():
     ans = []
-    new = list(map(int, row.split('-')))
+    new = list(map(int, row.split("-")))
     added = False
     for i, interval in enumerate(intervals):
         # The +-1 makes contiguous intervals merge

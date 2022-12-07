@@ -1,11 +1,13 @@
 from aocd import get_data, submit
 from collections import defaultdict
+
 DAY = 10
 YEAR = 2016
 
 data = get_data(day=DAY, year=YEAR).split("\n")
 
 queue = []
+
 
 class Bot:
     def __init__(self):
@@ -17,7 +19,7 @@ class Bot:
         self.values.append(value)
         if len(self.values) == 2:
             queue.append(self)
-    
+
     def sortValues(self):
         self.values = sorted(self.values)
 
@@ -26,28 +28,30 @@ class Bot:
         self.low.addValue(self.values[0])
         self.high.addValue(self.values[1])
 
+
 class Output:
     def __init__(self):
         self.value = None
-    
+
     def addValue(self, value):
         self.value = value
+
 
 bots = defaultdict(Bot)
 outputs = defaultdict(Output)
 
 for row in data:
     instr = row.split()
-    if instr[0] == 'value':
+    if instr[0] == "value":
         num = int(instr[-1])
         bots[num].addValue(int(instr[1]))
     else:
         num, low, high = int(instr[1]), int(instr[6]), int(instr[-1])
-        if instr[5] == 'bot':
+        if instr[5] == "bot":
             bots[num].low = bots[low]
         else:
             bots[num].low = outputs[low]
-        if instr[-2] == 'bot':
+        if instr[-2] == "bot":
             bots[num].high = bots[high]
         else:
             bots[num].high = outputs[high]

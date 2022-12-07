@@ -2,18 +2,62 @@ from aocd import get_data, submit
 from intcode import Computer
 from itertools import combinations
 from re import findall
+
 DAY = 25
 YEAR = 2019
 
 data = get_data(day=DAY, year=YEAR)
 
-PATH = ["west", "west", "west", "take coin", "east", "east", "east", "north", "north", "take mutex", "east", "take antenna", "west", "south", "east", "take cake", "east", "north", "take pointer", "south", "west", "west", "south", "east" ,"east", "take tambourine", "east", "take fuel cell", "east", "take boulder", "north"]
+PATH = [
+    "west",
+    "west",
+    "west",
+    "take coin",
+    "east",
+    "east",
+    "east",
+    "north",
+    "north",
+    "take mutex",
+    "east",
+    "take antenna",
+    "west",
+    "south",
+    "east",
+    "take cake",
+    "east",
+    "north",
+    "take pointer",
+    "south",
+    "west",
+    "west",
+    "south",
+    "east",
+    "east",
+    "take tambourine",
+    "east",
+    "take fuel cell",
+    "east",
+    "take boulder",
+    "north",
+]
 
-ITEMS = {"coin", "mutex", "antenna", "cake", "pointer", "tambourine", "fuel cell", "boulder"}
+ITEMS = {
+    "coin",
+    "mutex",
+    "antenna",
+    "cake",
+    "pointer",
+    "tambourine",
+    "fuel cell",
+    "boulder",
+}
+
 
 def speak(droid: Computer):
     if droid.output:
-        return ''.join(list(map(chr, droid.pop(len(droid.output)))))
+        return "".join(list(map(chr, droid.pop(len(droid.output)))))
+
 
 def convertInput(droid: Computer, string: str = None):
     if string:
@@ -21,12 +65,14 @@ def convertInput(droid: Computer, string: str = None):
         droid.run()
         return speak(droid)
 
+
 def dropAll(droid: Computer):
     for item in ITEMS:
         convertInput(droid, f"drop {item}")
 
+
 # Uncomment to play the game manually
-'''
+"""
 droid = Computer(data)
 droid.run()
 print(speak(droid))
@@ -40,7 +86,7 @@ while True:
         print(speak(droid))
     output = convertInput(droid, instruction)
     print(output)
-'''
+"""
 
 droid = Computer(data)
 droid.run()

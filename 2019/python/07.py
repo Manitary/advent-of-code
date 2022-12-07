@@ -1,6 +1,7 @@
 from aocd import get_data, submit
 from intcode import Computer
 from itertools import permutations
+
 DAY = 7
 YEAR = 2019
 

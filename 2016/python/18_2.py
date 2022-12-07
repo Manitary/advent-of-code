@@ -1,7 +1,9 @@
 from aocd import get_data, submit
 import numpy as np
+
 DAY = 18
 YEAR = 2016
+
 
 class Game(object):
     def __init__(self, data):
@@ -27,9 +29,10 @@ class Game(object):
         new = self.newRow()
         self._state[...] = 0
         self._state[1:-1] = new
-    
+
     def numSafe(self):
         return self._length - np.sum(self.state)
+
 
 def solve():
     data = get_data(day=DAY, year=YEAR)
@@ -44,6 +47,7 @@ def solve():
 
     submit(ans1, part="a", day=DAY, year=YEAR)
     submit(ans2, part="b", day=DAY, year=YEAR)
-    
-if __name__ == '__main__':
+
+
+if __name__ == "__main__":
     solve()

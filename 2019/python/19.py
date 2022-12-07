@@ -1,6 +1,7 @@
 from aocd import get_data, submit
 from intcode import Computer
 from itertools import product, count
+
 DAY = 19
 YEAR = 2019
 
@@ -8,11 +9,13 @@ data = get_data(day=DAY, year=YEAR)
 
 drone = Computer(data)
 
+
 def isValid(x, y):
     drone.reset()
     drone.push([x, y])
     drone.run()
     return drone.pop()
+
 
 ans1 = sum([isValid(*coords) for coords in product(range(50), range(50))])
 
@@ -31,11 +34,11 @@ while not ans2:
                         min_x += 1
                     break
                 if isValid(x1 + 99, y + 99):
-                    ans2 = 10000*x1 + y
+                    ans2 = 10000 * x1 + y
                     break
             break
         else:
-            if x > min_x + 5: # Some of the early lines have no valid tiles
+            if x > min_x + 5:  # Some of the early lines have no valid tiles
                 break
     y += 1
 

@@ -3,20 +3,24 @@ from hashlib import md5
 from itertools import count, groupby
 from collections import defaultdict, deque
 from functools import cache
+
 DAY = 14
 YEAR = 2016
 
 data = get_data(day=DAY, year=YEAR)
 
+
 @cache
 def md5hash(s):
     return md5(s.encode()).hexdigest()
+
 
 def rehash(s):
     ans = s
     for _ in range(2016):
         ans = md5hash(ans)
     return ans
+
 
 def solve(part=1):
     keys = set()
@@ -39,8 +43,9 @@ def solve(part=1):
                             keys.add(n)
                             while len(keys) > 64:
                                 keys.remove(max(keys))
-                            if len(keys) == 64 and (m:=max(keys)) + 1000 <= i:
+                            if len(keys) == 64 and (m := max(keys)) + 1000 <= i:
                                 return m
+
 
 ans1 = solve()
 ans2 = solve(2)

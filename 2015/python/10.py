@@ -1,11 +1,13 @@
 from aocd import get_data, submit
+
 DAY = 10
 YEAR = 2015
 
 data = get_data(day=DAY, year=YEAR)
 
+
 def say(s):
-    ans = ''
+    ans = ""
     count = 1
     new = s[0]
     for c in iter(s[1:]):
@@ -17,6 +19,7 @@ def say(s):
             count += 1
     ans += f"{count}{new}"
     return ans
+
 
 for i in range(50):
     data = say(data)

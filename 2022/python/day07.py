@@ -29,8 +29,7 @@ def get_folder_structure(commands: list[str]) -> dict[str, int]:
             case ['$', 'cd', '..']:
                 current_path.pop()
             case ['$', 'cd', folder_name]:
-                if path_to_string(current_path, folder_name) in directories:
-                    current_path.append(folder_name)
+                current_path.append(folder_name)
             case ['$', 'ls']:
                 continue
             case ['dir', folder_name]:

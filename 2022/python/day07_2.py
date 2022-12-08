@@ -19,7 +19,7 @@ class Item(ABC):
     """
 
     name: str
-    parent: Item
+    parent: Item = None
 
     @property
     def path(self) -> str:
@@ -44,13 +44,13 @@ class File(Item):
 
 @dataclass
 class Folder(Item):
-    """Folder(name, parent, subfolders=[], files=[]) -> File
+    """Folder(name, parent, subfolders=[], files=[]) -> Folder
 
     Create a new folder object, containing the given lists of subfolders and files.
     Its parent can only be a Folder object.
     """
 
-    parent: Folder
+    parent: Folder = None
     subfolders: list[Folder] = field(default_factory=list)
     files: list[File] = field(default_factory=list)
 
@@ -79,19 +79,19 @@ class Folder(Item):
                 key=lambda x: x.name,
             )
 
-    def folder_structure(self, level: int = 0) -> str:
+    def structure(self, level: int = 0) -> str:
         """Return a string describing the folder structure."""
         ans = f"{'  '*level}- {self.name} (dir)"
         for folder in self.subfolders:
-            ans += f"\n{folder.folder_structure(level=level+1)}"
+            ans += f"\n{folder.structure(level=level+1)}"
         for file_ in self.files:
             ans += f"\n{'  '*(level+1)}- {file_.name} (file, size={file_.size})"
         return ans
 
 
-def build_folder_structure(commands: list[str]) -> Folder:
+def build_folder_structure(commands: list[str], root_name: str = '/') -> Folder:
     """Return the root folder of the filesystem traversed by the given list of commands."""
-    root = Folder(name="/", parent=None)
+    root = Folder(name=root_name)
     current = root
     for command in commands:
         match command.split():

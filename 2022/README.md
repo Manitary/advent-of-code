@@ -11,3 +11,4 @@
 |&nbsp;&nbsp;5|[Supply stacks](https://adventofcode.com/2022/day/5)|00:29:07|5278|00:47:52|7904|
 |&nbsp;&nbsp;6|[Tuning trouble](https://adventofcode.com/2022/day/6)|00:03:39|933|00:03:58|576|
 |&nbsp;&nbsp;7|[No space left on device](https://adventofcode.com/2022/day/7)|00:25:02|1346|00:36:07|1814|
+|&nbsp;&nbsp;8|[Treetop tree house](https://adventofcode.com/2022/day/8)|00:19:49|3112|00:32:26|2506|

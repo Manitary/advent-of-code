@@ -3,6 +3,17 @@
 from aocd import get_data, submit
 
 
+def sign(num: int) -> int:
+    """Return the sign of the given number."""
+    if num == 0:
+        return 0
+    if num > 0:
+        return 1
+    if num < 0:
+        return -1
+    raise RuntimeError("All comparisons failed: something has gone horribly wrong")
+
+
 def move_coords(coords: tuple[int, int], direction: str) -> tuple[int, int]:
     """Return the new coordinates after moving in the given direction.
 
@@ -22,14 +33,8 @@ def move_coords(coords: tuple[int, int], direction: str) -> tuple[int, int]:
 
 
 def adjust_coordinate(head: int, tail: int) -> int:
-    """Adjust the coordinate of the tail by moving it closer to the head."""
-    if head == tail:
-        return tail
-    if head > tail:
-        return tail + 1
-    if head < tail:
-        return tail - 1
-    raise RuntimeError("All comparisons failed: something has gone horribly wrong")
+    """Adjust a coordinate of the tail by moving it closer to the head."""
+    return tail + sign(head - tail)
 
 
 def follow(head: tuple[int, int], tail: tuple[int, int]) -> tuple[int, int]:

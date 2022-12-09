@@ -7,11 +7,9 @@ def sign(num: int) -> int:
     """Return the sign of the given number."""
     if num == 0:
         return 0
-    if num > 0:
-        return 1
     if num < 0:
         return -1
-    raise RuntimeError("All comparisons failed: something has gone horribly wrong")
+    return 1
 
 
 def move_coords(coords: tuple[int, int], direction: str) -> tuple[int, int]:

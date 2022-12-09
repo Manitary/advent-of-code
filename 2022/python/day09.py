@@ -48,10 +48,17 @@ def follow(head: tuple[int, int], tail: tuple[int, int]) -> tuple[int, int]:
     return (x_tail, y_tail)
 
 
-def get_trail(rope_length: int, moves: list[str]) -> set[tuple[int, int]]:
-    """Return the set of coordinates visited by the tail end of the rope after the given moves."""
+def get_trail(
+    rope_length: int, moves: list[str], index_list: list[int] = None
+) -> dict[int, set[tuple[int, int]]]:
+    """Return a dictionary of sets of coordinates visited by selected nodes after the given moves.
+
+    index_list:
+        A list of nodes to track. If not provided, it defaults to the tail of the rope.
+    """
     rope = [(0, 0)] * rope_length
-    visited = set()
+    index_list = index_list or [rope_length]
+    visited = {i: set() for i in index_list}
     for move in moves:
         direction, num_moves = move.split()
         for _ in range(int(num_moves)):
@@ -60,15 +67,16 @@ def get_trail(rope_length: int, moves: list[str]) -> set[tuple[int, int]]:
                     rope[i] = move_coords(rope[i], direction)
                 else:
                     rope[i] = follow(rope[i - 1], rope[i])
-            visited.add(rope[-1])
+            for i in index_list:
+                visited[i].add(rope[i - 1])
     return visited
 
 
 def main() -> tuple[int, int]:
     """Return the solution to part 1 and part 2."""
     data = get_data(day=9, year=2022).split("\n")
-    part1 = len(get_trail(2, data))
-    part2 = len(get_trail(10, data))
+    trails = get_trail(10, data, [2, 10])
+    part1, part2 = (len(x) for _, x in trails.items())
     return part1, part2
 
 

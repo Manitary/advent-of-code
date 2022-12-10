@@ -1,5 +1,6 @@
 """Solve Advent of Code Day 10 Year 2022."""
 
+from typing import Iterator
 from aocd import get_data, submit
 from advent_of_code_ocr import convert_array_6
 
@@ -49,7 +50,7 @@ class CRT:
         self._width = width
         self._height = height
         self._register = 1
-        self._signals = []
+        self._cycle = 1
         self._pointer = MatrixPointer(rows=height, cols=width)
         self._screen = [[0] * width for _ in range(height)]
 
@@ -63,25 +64,28 @@ class CRT:
             "".join("#" if tile else " " for tile in row) for row in self._screen
         )
 
-    def get_signal_strength(self, cycle: int) -> int:
-        """Return the signal strength at the given cycle."""
-        return cycle * self._signals[cycle - 1]
+    def signal_strength(self) -> int:
+        """Return the signal strength."""
+        return self._cycle * self._register
 
-    def execute(self, instruction: str) -> None:
+    def execute(self, instruction: str) -> Iterator[tuple[int, int]]:
         """Execute the given instruction and update the screen."""
         match instruction.split():
             case ["noop"]:
-                self.update_crt()
-                self.update_signals()
+                yield self.update()
             case ["addx", num]:
                 for _ in range(2):
-                    self.update_crt()
-                    self.update_signals()
+                    yield self.update()
                 self._register += int(num)
+            case _:
+                raise ValueError("Unexpected instruction")
 
-    def update_signals(self) -> None:
-        """Update the list of sent signals with the current value of the register."""
-        self._signals.append(self._register)
+    def update(self) -> tuple[int, int]:
+        """Return the cycle number and signal strength; update the screen."""
+        status = self._cycle, self.signal_strength()
+        self.update_crt()
+        self._cycle += 1
+        return status
 
     def update_crt(self) -> None:
         """Update the screen at the location of the pointer."""
@@ -94,9 +98,12 @@ def main() -> tuple[int, str]:
     """Return the solution to part 1 and part 2."""
     data = get_data(day=10, year=2022).split("\n")
     monitor = CRT(width=40, height=6)
-    for instruction in data:
-        monitor.execute(instruction)
-    part1 = sum(monitor.get_signal_strength(i) for i in range(20, 221, 40))
+    part1 = sum(
+        strength
+        for instruction in data
+        for cycle, strength in monitor.execute(instruction)
+        if not (cycle - 20) % 40
+    )
     part2 = convert_array_6(monitor.screen, fill_pixel=1, empty_pixel=0)
     return part1, part2
 

@@ -13,3 +13,4 @@
 |&nbsp;&nbsp;7|[No space left on device](https://adventofcode.com/2022/day/7)|00:25:02|1346|00:36:07|1814|
 |&nbsp;&nbsp;8|[Treetop tree house](https://adventofcode.com/2022/day/8)|00:19:49|3112|00:32:26|2506|
 |&nbsp;&nbsp;9|[Rope bridge](https://adventofcode.com/2022/day/9)|00:14:45|937|00:21:43|555|
+|10|[Cathode-ray tube](https://adventofcode.com/2022/day/10)|00:10:14|1068|00:20:08|780|

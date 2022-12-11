@@ -7,9 +7,7 @@ from copy import deepcopy
 from math import prod, lcm
 from aocd import get_data, submit
 
-PATTERN_OP = r"Operation: new =((?:\sold|\s\*|\s\+|\s\d+)+)$"
-re.compile(PATTERN_OP)
-
+PATTERN_OP = re.compile(r"Operation: new =((?:\sold|\s\*|\s\+|\s\d+)+)$")
 
 @dataclass
 class Monkey:
@@ -58,7 +56,7 @@ def parse_monkey(monkey_data: str) -> Monkey:
     """
     monkey_data = monkey_data.split("\n")
     starting_items = list(map(int, re.findall(r"(\d+)", monkey_data[1])))
-    operation = eval("lambda old:" + re.findall(PATTERN_OP, monkey_data[2])[0])
+    operation = eval("lambda old:" + PATTERN_OP.findall(monkey_data[2])[0])
     test_value = int(monkey_data[3].split()[-1])
     target_true = int(monkey_data[4].split()[-1])
     target_false = int(monkey_data[5].split()[-1])

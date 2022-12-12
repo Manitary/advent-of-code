@@ -15,3 +15,4 @@
 |&nbsp;&nbsp;9|[Rope bridge](https://adventofcode.com/2022/day/9)|00:14:45|937|00:21:43|555|
 |10|[Cathode-ray tube](https://adventofcode.com/2022/day/10)|00:10:14|1068|00:20:08|780|
 |11|[Monkey in the middle](https://adventofcode.com/2022/day/11)|00:24:32|998|00:28:17|456|
+|12|[Hill climbing algorithm](https://adventofcode.com/2022/day/12)|00:14:00|489|00:15:39|379|

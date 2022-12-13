@@ -5,7 +5,7 @@
 [![AoC 2019](https://img.shields.io/badge/2019-★_50-44cc11)](https://adventofcode.com/2019)
 [![AoC 2020](https://img.shields.io/badge/2020-★_50-44cc11)](https://adventofcode.com/2020)
 [![AoC 2021](https://img.shields.io/badge/2021-★_50-44cc11)](https://adventofcode.com/2021)
-[![AoC 2022](https://img.shields.io/badge/2022-★_24-c5d208)](https://adventofcode.com/2022)
+[![AoC 2022](https://img.shields.io/badge/2022-★_26-c5d208)](https://adventofcode.com/2022)
 
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
@@ -18,30 +18,38 @@ I do not plan to revise solutions using the same language, although it may still
 Some problems may have more than one solution if I am trying a few different approaches e.g. to compare execution time.
 
 ## [2022](https://github.com/Manitary/advent-of-code/tree/master/2022)
-+ Ongoing (Python)
+
+- Ongoing (Python)
 
 ## [2021](https://github.com/Manitary/advent-of-code/tree/master/2021)
-+ 50 &#11088; in Magma
-+ &nbsp;&nbsp;6 &#11088; in Python (1-3)
+
+- 50 &#11088; in Magma
+- &nbsp;&nbsp;6 &#11088; in Python (1-3)
 
 ## [2020](https://github.com/Manitary/advent-of-code/tree/master/2020)
-+ 50 &#11088; in Magma
+
+- 50 &#11088; in Magma
 
 ## [2019](https://github.com/Manitary/advent-of-code/tree/master/2019)
-+ 44 &#11088; in Magma (1-21, 24)
-+ 28 &#11088; in Python (2, 5, 7, 9, 11, 13, 15, 17, 19, 20-23, 25)
+
+- 44 &#11088; in Magma (1-21, 24)
+- 28 &#11088; in Python (2, 5, 7, 9, 11, 13, 15, 17, 19, 20-23, 25)
 
 ## [2018](https://github.com/Manitary/advent-of-code/tree/master/2018)
-+ 50 &#11088; in Magma
+
+- 50 &#11088; in Magma
 
 ## [2017](https://github.com/Manitary/advent-of-code/tree/master/2017)
-+ 43 &#11088; in Magma (1-18, 19p1, 20, 22p1, 23, 24p1)
-+ 10 &#11088; in GAP (19, 21-22, 24-25)
+
+- 43 &#11088; in Magma (1-18, 19p1, 20, 22p1, 23, 24p1)
+- 10 &#11088; in GAP (19, 21-22, 24-25)
 
 ## [2016](https://github.com/Manitary/advent-of-code/tree/master/2016)
-+ 12 &#11088; in Magma (1-4, 6-7)
-+ 50 &#11088; in Python
+
+- 12 &#11088; in Magma (1-4, 6-7)
+- 50 &#11088; in Python
 
 ## [2015](https://github.com/Manitary/advent-of-code/tree/master/2015)
-+ 33 &#11088; in Magma (1-3, 5-7, 9-11, 13-16, 18, 19p1, 20-21)
-+ 50 &#11088; in Python
+
+- 33 &#11088; in Magma (1-3, 5-7, 9-11, 13-16, 18, 19p1, 20-21)
+- 50 &#11088; in Python

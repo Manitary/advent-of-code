@@ -19,6 +19,8 @@ def compare(elt1: list[int] | int, elt2: list[int] | int) -> int:
     which contains that integer as its only value, then retry the comparison.
     """
     match elt1, elt2:
+        case [], []:
+            return 0
         case [] | None, _:
             return -1
         case _, [] | None:
@@ -50,5 +52,6 @@ def main() -> tuple[int, int]:
 
 if __name__ == "__main__":
     ans1, ans2 = main()
+    print(ans1, ans2)
     submit(ans1, part="a")
     submit(ans2, part="b")

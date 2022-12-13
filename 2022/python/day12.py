@@ -1,4 +1,4 @@
-"""Solve Advent of Code Day 11 Year 2022."""
+"""Solve Advent of Code Day 12 Year 2022."""
 
 from typing import Iterator
 from collections import deque

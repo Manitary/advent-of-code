@@ -4,6 +4,8 @@ import re
 from typing import Iterator
 from aocd import get_data, submit
 
+START, DOWN, LEFT, RIGHT = 0, 1, 2, 3
+
 
 def create_rocks(data_rows: str) -> Iterator[tuple[int, int]]:
     """Yield the rocks on the paths of given endpoints.
@@ -40,30 +42,41 @@ def simulate_sand(
     * The number of sand units when the first sand falls of the rocks.
     * The number of sand units when the entrance is blocked by sand, and no more can flow in."""
     sands = set(rocks)
-    count = 0
     lowest_rock = max(rock[1] for rock in rocks)
-    limit = 2 + max(rock[1] for rock in rocks)
+    limit = 2 + lowest_rock
     last_in = None
-    while entrance not in sands:
-        x, y = entrance
+    moves = [START]
+    while moves:
+        # Change where to start the simulation based on the last movement of the previous sand unit.
+        last_move = moves.pop()
+        if last_move == START:
+            x, y = entrance
+        elif last_move == DOWN:
+            y = y - 1
+        elif last_move == LEFT:
+            x, y = x + 1, y - 1
+        elif last_move == RIGHT:
+            x, y = x - 1, y - 1
         while True:
             if (x, y + 1) not in sands and y + 1 < limit:
                 y += 1
+                moves.append(DOWN)
                 continue
             if (x - 1, y + 1) not in sands and y + 1 < limit:
                 x -= 1
                 y += 1
+                moves.append(LEFT)
                 continue
             if (x + 1, y + 1) not in sands and y + 1 < limit:
                 x += 1
                 y += 1
+                moves.append(RIGHT)
                 continue
             break
-        if (not last_in) and y >= lowest_rock:
-            last_in = count
+        if not last_in and y >= lowest_rock:
+            last_in = len(sands) - len(rocks)
         sands.add((x, y))
-        count += 1
-    return last_in, count
+    return last_in, len(sands) - len(rocks)
 
 
 def main() -> tuple[int, int]:

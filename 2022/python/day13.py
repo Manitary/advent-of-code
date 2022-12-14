@@ -1,11 +1,10 @@
 """Solve Advent of Code Day 13 Year 2022."""
 
 import json
-from functools import cmp_to_key
 from math import prod
 from aocd import get_data, submit
 
-DIVIDER_PACKETS = [[[2]], [[6]]]
+DIVIDER_PACKETS_SORTED = [[[2]], [[6]]]
 
 
 def compare(elt1: list[int] | int, elt2: list[int] | int) -> int:
@@ -44,9 +43,14 @@ def main() -> tuple[int, int]:
         for i, (a, b) in enumerate(zip(data[::2], data[1::2]), 1)
         if compare(a, b) <= 0
     )
-    data.extend(DIVIDER_PACKETS)
-    data.sort(key=cmp_to_key(compare))
-    part2 = prod(data.index(packet) + 1 for packet in DIVIDER_PACKETS)
+    indices = [i for i, _ in enumerate(DIVIDER_PACKETS_SORTED, 1)]
+    for packet in data:
+        for i, divider in enumerate(DIVIDER_PACKETS_SORTED):
+            if compare(packet, divider) < 0:
+                for j in range(i, len(indices)):
+                    indices[j] += 1
+                break
+    part2 = prod(indices)
     return part1, part2
 
 

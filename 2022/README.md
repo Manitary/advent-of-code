@@ -17,3 +17,4 @@
 | 11            | [Monkey in the middle](https://adventofcode.com/2022/day/11)    | 00:24:32 | 998  | 00:28:17 | 456  |
 | 12            | [Hill climbing algorithm](https://adventofcode.com/2022/day/12) | 00:14:00 | 489  | 00:15:39 | 379  |
 | 13            | [Distress signal](https://adventofcode.com/2022/day/13)         | 00:20:52 | 1057 | 00:30:22 | 1203 |
+| 14            | [Regolith reservoir](https://adventofcode.com/2022/day/14)      | 00:21:35 | 822  | 00:32:05 | 1297 |

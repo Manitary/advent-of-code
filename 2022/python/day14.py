@@ -15,7 +15,8 @@ def create_rocks(data_rows: str) -> Iterator[tuple[int, int]]:
     ...\n
     $x,$y -> ... -> $x,$y"
     """
-    for row in data_rows.split("\n"):
+    # We use set() here because the input has several duplicate lines.
+    for row in set(data_rows.split("\n")):
         coords = tuple(map(int, re.findall(r"(-?\d+)", row)))
         for x1, y1, x2, y2 in zip(
             coords[::2], coords[1::2], coords[2::2], coords[3::2]
@@ -42,8 +43,10 @@ def simulate_sand(
     * The number of sand units when the first sand falls of the rocks.
     * The number of sand units when the entrance is blocked by sand, and no more can flow in."""
     sands = set(rocks)
-    lowest_rock = max(rock[1] for rock in rocks)
-    limit = 2 + lowest_rock
+    lowest_rock = max(y for _, y in rocks)
+    bottom = 2 + lowest_rock
+    left = -2 + min(x for x, y in rocks)
+    right = 2 + max(x for x, y in rocks)
     last_in = None
     moves = [START]
     while moves:
@@ -58,16 +61,16 @@ def simulate_sand(
         elif last_move == RIGHT:
             x, y = x - 1, y - 1
         while True:
-            if (x, y + 1) not in sands and y + 1 < limit:
+            if (x, y + 1) not in sands and y + 1 < bottom:
                 y += 1
                 moves.append(DOWN)
                 continue
-            if (x - 1, y + 1) not in sands and y + 1 < limit:
+            if (x - 1, y + 1) not in sands and y + 1 < bottom and left < x - 1:
                 x -= 1
                 y += 1
                 moves.append(LEFT)
                 continue
-            if (x + 1, y + 1) not in sands and y + 1 < limit:
+            if (x + 1, y + 1) not in sands and y + 1 < bottom and x + 1 < right:
                 x += 1
                 y += 1
                 moves.append(RIGHT)
@@ -76,7 +79,15 @@ def simulate_sand(
         if not last_in and y >= lowest_rock:
             last_in = len(sands) - len(rocks)
         sands.add((x, y))
-    return last_in, len(sands) - len(rocks)
+    left_height = bottom - min(y for x, y in sands if x == left + 1)
+    right_height = bottom - min(y for x, y in sands if x == right - 1)
+    total = (
+        len(sands)
+        - len(rocks)
+        + (left_height * (left_height - 1) // 2)
+        + (right_height * (right_height - 1) // 2)
+    )
+    return last_in, total
 
 
 def main() -> tuple[int, int]:

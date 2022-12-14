@@ -56,6 +56,5 @@ def main() -> tuple[int, int]:
 
 if __name__ == "__main__":
     ans1, ans2 = main()
-    print(ans1, ans2)
     submit(ans1, part="a")
     submit(ans2, part="b")

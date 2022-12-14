@@ -45,8 +45,8 @@ def simulate_sand(
     sands = set(rocks)
     lowest_rock = max(y for _, y in rocks)
     bottom = 2 + lowest_rock
-    left = -2 + min(x for x, y in rocks)
-    right = 2 + max(x for x, y in rocks)
+    left = -2 + min(x for x, _ in rocks)
+    right = 2 + max(x for x, _ in rocks)
     last_in = None
     moves = [START]
     while moves:

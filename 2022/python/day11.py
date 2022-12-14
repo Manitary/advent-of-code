@@ -19,7 +19,7 @@ class Monkey:
     Attributes:
         items: a list of items held by the monkey.
         operation: the operation applied to the item when the monkey inspects it.
-        worry_control: the operaction applied to the item after the monkey inspected it.
+        worry_control: the operation applied to the item after the monkey inspected it.
         test_value: the number used for divisibility check.
         target_true: the target monkey (or its number) if test_value divides the item.
         target_false: the target monkey (or its number) if test_value does not divide the item.

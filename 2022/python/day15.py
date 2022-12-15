@@ -59,7 +59,7 @@ def interval_merge_and_overlap(
 
 def row_span(
     y: int,
-    sensors: dict(tuple[int, int], int),
+    sensors: dict[tuple[int, int], int],
     bound: list[int] = None,
     merge: bool = False,
 ) -> int:
@@ -93,7 +93,7 @@ def parse_input(data: str) -> tuple[set[tuple[int, int]], dict[tuple[int, int]],
 
 
 def find_unique_hole_in_area(
-    min_row: int, max_row: int, sensors: dict(tuple[int, int], int)
+    min_row: int, max_row: int, sensors: dict[tuple[int, int], int]
 ) -> int:
     """Given the boundaries of a box, return a point not covered by the sensors.
 

@@ -1,6 +1,5 @@
 """Solve Advent of Code Day 15 Year 2022."""
 
-from __future__ import annotations
 import re
 from aocd import get_data, submit
 

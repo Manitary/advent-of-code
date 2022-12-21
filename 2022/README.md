@@ -24,3 +24,4 @@
 | 18            | [Boiling boulders](https://adventofcode.com/2022/day/18)         | 00:18:22 | 2395 | 00:34:05 | 1088 |
 | 19            | [Not enough minerals](https://adventofcode.com/2022/day/19)      | 02:27:32 | 1522 | 02:32:48 | 1073 |
 | 20            | [Grove positioning system](https://adventofcode.com/2022/day/20) | 00:27:56 | 436  | 00:33:36 | 398  |
+| 21            | [Monkey Math](https://adventofcode.com/2022/day/21)              | 00:16:36 | 1685 | 00:43:26 | 1153 |

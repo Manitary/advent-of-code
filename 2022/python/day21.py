@@ -32,8 +32,6 @@ def parse_monkeys(
             monkeys[row[0][:-1]] = {
                 "operation": OPERATORS[row[2]],
                 "args": tuple((row[1], row[3])),
-                "arg_1": row[1],
-                "arg_2": row[3],
             }
 
     def yell(monkey: str) -> int | float:

@@ -24,6 +24,7 @@
 | 18            | [Boiling boulders](https://adventofcode.com/2022/day/18)         | 00:18:22 | 2395 | 00:34:05 | 1088 |
 | 19            | [Not enough minerals](https://adventofcode.com/2022/day/19)      | 02:27:32 | 1522 | 02:32:48 | 1073 |
 | 20            | [Grove positioning system](https://adventofcode.com/2022/day/20) | 00:27:56 | 436  | 00:33:36 | 398  |
-| 21            | [Monkey Math](https://adventofcode.com/2022/day/21)              | 00:16:36 | 1685 | 00:43:26 | 1153 |
-| 22            | [Monkey Math](https://adventofcode.com/2022/day/22)              | 00:38:56 | 680  | 01:20:54 | 140  |
-| 23            | [Monkey Math](https://adventofcode.com/2022/day/23)              | 01:05:01 | 1731 | 01:09:51 | 1617 |
+| 21            | [Monkey math](https://adventofcode.com/2022/day/21)              | 00:16:36 | 1685 | 00:43:26 | 1153 |
+| 22            | [Monkey map](https://adventofcode.com/2022/day/22)               | 00:38:56 | 680  | 01:20:54 | 140  |
+| 23            | [Unstable diffusion](https://adventofcode.com/2022/day/23)       | 01:05:01 | 1731 | 01:09:51 | 1617 |
+| 24            | [Blizzard basin](https://adventofcode.com/2022/day/24)           | 00:47:18 | 750  | 01:06:57 | 965  |

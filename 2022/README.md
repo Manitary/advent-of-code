@@ -28,3 +28,4 @@
 | 22      | [Monkey map](https://adventofcode.com/2022/day/22)               | 00:38:56 | &ensp;680 | 01:20:54 | &ensp;140 |
 | 23      | [Unstable diffusion](https://adventofcode.com/2022/day/23)       | 01:05:01 | 1731      | 01:09:51 | 1617      |
 | 24      | [Blizzard basin](https://adventofcode.com/2022/day/24)           | 00:47:18 | &ensp;750 | 01:06:57 | &ensp;965 |
+| 25      | [Full of hot air](https://adventofcode.com/2022/day/25)          | 00:23:05 | &ensp;947 | 00:23:11 | &ensp;794 |

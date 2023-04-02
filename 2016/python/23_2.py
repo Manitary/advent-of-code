@@ -1,5 +1,5 @@
 from aocd import get_data, submit
-from math import prod
+from math import factorial
 from re import findall
 
 DAY = 23
@@ -14,7 +14,7 @@ d = int(findall(pattern2, data)[-1])
 
 
 def solve(n):
-    return prod(range(1, n + 1)) + c * d
+    return factorial(n) + c * d
 
 
 ans1 = solve(7)

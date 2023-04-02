@@ -60,4 +60,4 @@ submit(ans1, part="a", day=DAY, year=YEAR)
 instructions = deepcopy(data)
 registers = {"a": 12, "b": 0, "c": 0, "d": 0}
 ans2 = assemBunny(instructions)
-submit(ans1, part="a", day=DAY, year=YEAR)
+submit(ans2, part="b", day=DAY, year=YEAR)

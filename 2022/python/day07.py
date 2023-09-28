@@ -40,6 +40,8 @@ def get_folder_structure(commands: list[str]) -> dict[str, int]:
             case [file_size, _]:
                 for i, _ in enumerate(current_path):
                     directories[path_level_to_string(current_path, i)] += int(file_size)
+            case _:
+                raise ValueError("Unmatched case")
 
     return directories
 

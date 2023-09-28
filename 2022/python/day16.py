@@ -1,17 +1,24 @@
 """Solve Advent of Code Day 16 Year 2022."""
 
 import re
-import math
+from collections import defaultdict
 from functools import cache
 from itertools import product
-from collections import defaultdict
+from typing import Callable
+
 from aocd import get_data, submit
 
+Dfs = Callable[[str, tuple[str, ...], int], float]
 
-def parse_input(data: str) -> tuple[dict[str, int], dict[str, dict[str, int]]]:
+
+def parse_input(
+    data: str,
+) -> tuple[tuple[str, ...], dict[str, int], dict[str, dict[str, float]]]:
     """Return the valves and flows (if non-zero), and their travel distance."""
-    valves = {}
-    dists = defaultdict(lambda: defaultdict(lambda: math.inf))
+    valves: dict[str, int] = {}
+    dists: dict[str, dict[str, float]] = defaultdict(
+        lambda: defaultdict(lambda: float("inf"))
+    )
     for row in data.split("\n"):
         valve, *conns = re.findall(r"([A-Z]{2})", row)
         flow_rate = int(re.findall(r"(\d+)", row)[0])
@@ -23,11 +30,12 @@ def parse_input(data: str) -> tuple[dict[str, int], dict[str, dict[str, int]]]:
         dists[i][j] = min(dists[i][j], dists[i][k] + dists[k][j])
     # Filter out 0-flow valves from the list of valves to traverse.
     flows = dict(filter(lambda v: v[1] > 0, valves.items()))
-    valves = tuple(flows.keys())
-    return valves, flows, dists
+    return tuple(flows.keys()), flows, dists
 
 
-def create_dfs(flows, distances) -> callable:
+def create_dfs(
+    flows: dict[str, int], distances: dict[str, dict[str, float]]
+) -> tuple[Dfs, Dfs]:
     """Return the dfs functions to solve both parts with the given input."""
 
     # Check all paths with memoisation.
@@ -35,9 +43,9 @@ def create_dfs(flows, distances) -> callable:
     @cache
     def fun_1(
         current_valve: str,
-        remaining_valves: tuple[str],
+        remaining_valves: tuple[str, ...],
         time_left: int,
-    ) -> int:
+    ) -> float:
         return max(
             (
                 flows[new_valve] * (time_left - distances[current_valve][new_valve] - 1)
@@ -60,9 +68,9 @@ def create_dfs(flows, distances) -> callable:
     @cache
     def fun_2(
         current_valve: str,
-        remaining_valves: tuple[str],
+        remaining_valves: tuple[str, ...],
         time_left: int,
-    ) -> tuple[tuple[int], int]:
+    ) -> float:
         candidates = tuple(
             flows[new_valve] * (time_left - distances[current_valve][new_valve] - 1)
             + fun_2(
@@ -88,9 +96,9 @@ def main() -> tuple[int, int]:
     data = get_data(day=16, year=2022)
     valves, flows, distances = parse_input(data)
     dfs_part1, dfs_part2 = create_dfs(flows, distances)
-    part1 = dfs_part1(current_valve="AA", remaining_valves=valves, time_left=30)
-    part2 = dfs_part2(current_valve="AA", remaining_valves=valves, time_left=26)
-    return part1, part2
+    part1 = dfs_part1("AA", valves, 30)
+    part2 = dfs_part2("AA", valves, 26)
+    return int(part1), int(part2)
 
 
 if __name__ == "__main__":

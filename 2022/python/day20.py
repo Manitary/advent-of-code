@@ -1,7 +1,9 @@
 """Solve Advent of Code Day 20 Year 2022."""
 
-from itertools import chain, repeat
 from collections import deque
+from itertools import chain, repeat
+from typing import Sequence
+
 from aocd import get_data, submit
 
 DECRYPTION_KEY = 811589153
@@ -14,11 +16,11 @@ class Num:
         self.num = n
 
 
-def grove_coordinates(original: list[int], n_mix: int = 1, key: int = 1) -> int:
+def grove_coordinates(original: Sequence[int], n_mix: int = 1, key: int = 1) -> int:
     """Return the grove coordinates of a list of numbers."""
-    original = [Num(x * key) for x in original]
-    nums = deque(original)
-    for n in chain(*repeat(original, n_mix)):
+    original_copy = [Num(x * key) for x in original]
+    nums = deque(original_copy)
+    for n in chain(*repeat(original_copy, n_mix)):
         idx = nums.index(n)
         nums.rotate(-idx)
         nums.popleft()

@@ -1,12 +1,12 @@
 """Solve Advent of Code Day 23 Year 2022."""
 
-from __future__ import annotations
 from collections import defaultdict, deque
 from itertools import count
-from typing import NewType
+from typing import Self
+
 from aocd import get_data, submit
 
-Elf = NewType("Elf", tuple[int, int])
+Elf = tuple[int, int]
 
 INSPECTIONS = deque(
     [
@@ -30,14 +30,15 @@ class Elves:
 
     Attributes:
         elves: a set of elves' positions using coordinates (r, c).
-        directions: a deque of directions each elf checks in order to decide the next move."""
+        directions: a deque of directions each elf checks in order to decide the next move.
+    """
 
     def __init__(self, elves: set[Elf]) -> None:
         self.elves = elves
         self.directions = INSPECTIONS
 
     @classmethod
-    def from_data(cls, grid: str) -> Elves:
+    def from_data(cls, grid: str) -> Self:
         """Create a bunch of elves from a drawn map."""
         return Elves(
             elves={
@@ -89,7 +90,7 @@ class Elves:
     @property
     def planned_moves(self) -> dict[Elf, set[Elf]]:
         """Return a dict: tile -> elves who want to move to the tile."""
-        plans = defaultdict(set)
+        plans: dict[Elf, set[Elf]] = defaultdict(set)
         for elf in self.elves:
             if all(move(*elf, *d) not in self.elves for d in DIRECTIONS):
                 plans[elf].add(elf)

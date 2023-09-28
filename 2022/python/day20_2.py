@@ -1,12 +1,14 @@
 """Solve Advent of Code Day 20 Year 2022."""
 
 from itertools import chain, repeat
+from typing import Sequence
+
 from aocd import get_data, submit
 
 DECRYPTION_KEY = 811589153
 
 
-def grove_coordinates(nums: list[int], n_mix: int = 1, key: int = 1) -> int:
+def grove_coordinates(nums: Sequence[int], n_mix: int = 1, key: int = 1) -> int:
     """Return the grove coordinates of a list of numbers."""
     if key != 1:
         nums = [x * key for x in nums]

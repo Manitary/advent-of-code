@@ -1,15 +1,20 @@
 """Solve Advent of Code Day 24 Year 2022."""
 
-from __future__ import annotations
 from collections import defaultdict
-from typing import NewType
+from typing import Self
+
 from aocd import get_data, submit
 
-Coord = NewType("Coord", tuple[int, int])
-Blizzard = NewType("Blizzard", dict[Coord, set[Coord]])
+Coord = tuple[int, int]
+Blizzard = dict[Coord, set[Coord]]
 
-DIRECTIONS_BLIZZARD = {">": (0, 1), "<": (0, -1), "v": (1, 0), "^": (-1, 0)}
-DIRECTIONS_PLAYER = {(0, 0), (0, 1), (1, 0), (0, -1), (-1, 0)}
+DIRECTIONS_BLIZZARD: dict[str, Coord] = {
+    ">": (0, 1),
+    "<": (0, -1),
+    "v": (1, 0),
+    "^": (-1, 0),
+}
+DIRECTIONS_PLAYER: set[Coord] = {(0, 0), (0, 1), (1, 0), (0, -1), (-1, 0)}
 
 
 class Grid:
@@ -27,13 +32,13 @@ class Grid:
         self, blizzard: Blizzard, walls: set[Coord], rows: int, cols: int
     ) -> None:
         self.blizzard_data = blizzard
-        self.walls = walls | {(-2, 0), (rows + 1, cols - 1)}
+        self.walls: set[Coord] = walls | {(-2, 0), (rows + 1, cols - 1)}
         self.rows = rows
         self.cols = cols
 
     def update(self) -> None:
         """Update the blizzard after one unit of time."""
-        new_blizzard = defaultdict(set)
+        new_blizzard: Blizzard = defaultdict(set)
         for (r, c), directions in self.blizzard_data.items():
             for dr, dc in directions:
                 new_blizzard[((r + dr) % self.rows, (c + dc) % self.cols)].add((dr, dc))
@@ -42,14 +47,14 @@ class Grid:
     @property
     def blizzard(self) -> set[Coord]:
         """Return the coordinates occupied by blizzard."""
-        return self.blizzard_data.keys()
+        return set(self.blizzard_data.keys())
 
     @classmethod
-    def from_data(cls, data: list[str]) -> Grid:
+    def from_data(cls, data: list[str]) -> Self:
         """Create a grid from the given data."""
         rows, cols = len(data) - 2, len(data[0]) - 2
-        walls = set()
-        blizzard = defaultdict(set)
+        walls: set[Coord] = set()
+        blizzard: Blizzard = defaultdict(set)
         for row, line in enumerate(data, -1):
             for col, char in enumerate(line, -1):
                 if char == "#":
@@ -59,20 +64,18 @@ class Grid:
         return Grid(blizzard=blizzard, walls=walls, rows=rows, cols=cols)
 
 
-def bfs(grid: Grid, start: Coord, goal: Coord) -> tuple[int, Blizzard]:
-    """Return the minimum distance from start to goal, and the blizzard after the movement.
+def bfs(grid: Grid, start: Coord, goal: Coord) -> int:
+    """Return the minimum distance from start to goal.
 
-    After each step, the current position(s) cannot overlap with any unit of blizzard."""
+    After each step, the current position(s) cannot overlap with any unit of blizzard.
+    """
     steps = 0
-    queue = {start}
+    queue: set[Coord] = {start}
     while goal not in queue:
         steps += 1
         grid.update()
-        queue = (
-            {(r + dr, c + dc) for r, c in queue for dr, dc in DIRECTIONS_PLAYER}
-            - grid.walls
-            - grid.blizzard
-        )
+        queue = {(r + dr, c + dc) for r, c in queue for dr, dc in DIRECTIONS_PLAYER}
+        queue -= grid.walls | grid.blizzard
     return steps
 
 

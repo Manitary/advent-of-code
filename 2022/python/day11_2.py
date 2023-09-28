@@ -5,6 +5,8 @@ from copy import deepcopy
 from functools import cache
 from math import prod
 from operator import add, mul
+from typing import Callable, TypedDict
+
 from aocd import get_data, submit
 
 OPERATOR_TOKEN = {"+": add, "*": mul}
@@ -12,14 +14,23 @@ INT_REGEX = re.compile(r"(\d+)")
 
 # Monkey attributes.
 ITEMS = "items"
-OPERATION = "op"
+OPERATION = "operation"
 TEST = "test"
 TRUE = "true"
 FALSE = "false"
 INSPECT = "inspect"
 
 
-def create_operation(operation: list[str]) -> callable:
+class Monkey(TypedDict):
+    items: list[int]
+    operation: Callable[[int], int]
+    test: int
+    true: int
+    false: int
+    inspect: int
+
+
+def create_operation(operation: list[str]) -> Callable[[int], int]:
     """Return a lambda function corresponding to the given operation.
 
     Input format:
@@ -33,7 +44,7 @@ def create_operation(operation: list[str]) -> callable:
     return lambda x: operator(x, x if arg_2 == "old" else int(arg_2))
 
 
-def parse_monkey(monkey_data: str) -> dict:
+def parse_monkey(monkey_data: list[str]) -> Monkey:
     """Return a monkey corresponding to the given data.
 
     Input format:
@@ -44,7 +55,6 @@ def parse_monkey(monkey_data: str) -> dict:
             If true: throw to monkey $int
             If false: throw to monkey $int"
     """
-    monkey_data = monkey_data.split("\n")
     starting_items = list(map(int, INT_REGEX.findall(monkey_data[1])))
     operation = create_operation(monkey_data[2].split()[-3:])
     test_value = int(monkey_data[3].split()[-1])
@@ -60,18 +70,20 @@ def parse_monkey(monkey_data: str) -> dict:
     }
 
 
-def monkey_business(monkeys: list[dict], num: int, part: int = 1) -> int:
+def monkey_business(monkeys: list[Monkey], num: int, part: int = 1) -> int:
     """Return the monkey business value of a given list of monkeys after num rounds."""
     # Calculate the appropriate method for keeping worries in check.
     if part == 1:
-        worry_control = lambda x: x // 3
+        worry_control: Callable[[int], int] = lambda x: x // 3
     else:
-        total = prod(monkey[TEST] for monkey in monkeys)
-        worry_control = lambda x: x % total
+        total: int = prod(monkey[TEST] for monkey in monkeys)
+        worry_control: Callable[[int], int] = lambda x: x % total
 
     # Create the corresponding function to compute a step of an item's orbit.
     @cache
-    def result(worry_control: callable, source: int, item: int) -> tuple[int, int]:
+    def result(
+        worry_control: Callable[[int], int], source: int, item: int
+    ) -> tuple[int, int]:
         """Return the target monkey and item, after inspection by the source monkey."""
         new_item = worry_control(monkeys[source][OPERATION](item))
         if new_item % monkeys[source][TEST]:
@@ -99,7 +111,7 @@ def monkey_business(monkeys: list[dict], num: int, part: int = 1) -> int:
 def main() -> tuple[int, int]:
     """Return the solution to part 1 and part 2."""
     data = get_data(day=11, year=2022).split("\n\n")
-    monkeys_1 = [parse_monkey(monkey_data) for monkey_data in data]
+    monkeys_1 = [parse_monkey(monkey_data.split("\n")) for monkey_data in data]
     monkeys_2 = deepcopy(monkeys_1)
     part1 = monkey_business(monkeys=monkeys_1, num=20, part=1)
     part2 = monkey_business(monkeys=monkeys_2, num=10000, part=2)
@@ -108,5 +120,5 @@ def main() -> tuple[int, int]:
 
 if __name__ == "__main__":
     ans1, ans2 = main()
-    submit(ans1, part="a")
-    submit(ans2, part="b")
+    submit(ans1, day=11, year=2022, part="a")
+    submit(ans2, day=11, year=2022, part="b")

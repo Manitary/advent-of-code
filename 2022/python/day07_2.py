@@ -1,9 +1,11 @@
 """Solve Advent of Code Day 7 Year 2022."""
 
 from __future__ import annotations
-from dataclasses import dataclass, field
+
 from abc import ABC
 from bisect import insort
+from dataclasses import dataclass, field
+
 from aocd import get_data, submit
 
 SMALL_SIZE = 100000
@@ -19,7 +21,7 @@ class Item(ABC):
     """
 
     name: str
-    parent: Item = None
+    parent: Item | None = None
 
     @property
     def path(self) -> str:
@@ -39,7 +41,7 @@ class File(Item):
     """
 
     size: int = 0
-    parent: Folder = None
+    parent: Folder | None = None
 
 
 @dataclass
@@ -50,7 +52,7 @@ class Folder(Item):
     Its parent can only be a Folder object.
     """
 
-    parent: Folder = None
+    parent: Folder | None = None
     subfolders: list[Folder] = field(default_factory=list)
     files: list[File] = field(default_factory=list)
 
@@ -89,7 +91,7 @@ class Folder(Item):
         return ans
 
 
-def build_folder_structure(commands: list[str], root_name: str = '/') -> Folder:
+def build_folder_structure(commands: list[str], root_name: str = "/") -> Folder:
     """Return the root folder of the filesystem traversed by the given list of commands."""
     root = Folder(name=root_name)
     current = root
@@ -112,6 +114,8 @@ def build_folder_structure(commands: list[str], root_name: str = '/') -> Folder:
                 current.create_subfolder(folder_name=folder_name)
             case [file_size, file_name]:
                 current.create_file(file_name=file_name, size=int(file_size))
+            case _:
+                raise ValueError("Unmatched case")
 
     return root
 

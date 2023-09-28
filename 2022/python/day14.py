@@ -2,6 +2,7 @@
 
 import re
 from typing import Iterator
+
 from aocd import get_data, submit
 
 START, DOWN, LEFT, RIGHT = 0, 1, 2, 3
@@ -41,14 +42,16 @@ def simulate_sand(
 
     Return:
     * The number of sand units when the first sand falls of the rocks.
-    * The number of sand units when the entrance is blocked by sand, and no more can flow in."""
+    * The number of sand units when the entrance is blocked by sand, and no more can flow in.
+    """
     sands = set(rocks)
     lowest_rock = max(y for _, y in rocks)
     bottom = 2 + lowest_rock
     left = -2 + min(x for x, _ in rocks)
     right = 2 + max(x for x, _ in rocks)
-    last_in = None
+    last_in = 0
     moves = [START]
+    x, y = 0, 0
     while moves:
         # Change where to start the simulation based on the last movement of the previous sand unit.
         last_move = moves.pop()

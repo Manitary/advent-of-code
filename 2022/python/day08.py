@@ -1,19 +1,20 @@
 """Solve Advent of Code Day 8 Year 2022."""
 
 from itertools import product
+
+import numpy as np
 from aocd import get_data, submit
-import numpy
 
 
 def main() -> tuple[int, int]:
     """Return the answers to part 1 and part 2."""
     data = get_data(day=8, year=2022)
-    forest = numpy.array(tuple(tuple(row) for row in data.split("\n")), int)
-    part1 = numpy.zeros(forest.shape, int)
-    part2 = numpy.ones(forest.shape, int)
+    forest = np.array(tuple(tuple(row) for row in data.split("\n")), int)
+    part1 = np.zeros(forest.shape, int)
+    part2 = np.ones(forest.shape, int)
     size_x, size_y = forest.shape
-    part1[0] = part1[-1] = numpy.ones(size_y, int)
-    part1[:, 0] = part1[:, -1] = numpy.ones(size_x, int)
+    part1[0] = part1[-1] = np.ones(size_y, int)
+    part1[:, 0] = part1[:, -1] = np.ones(size_x, int)
     # The outer ring of part2 should be 0s, but it does not affect the results.
     for _ in range(4):
         for x, y in product(range(1, size_x - 1), range(1, size_y - 1)):
@@ -27,29 +28,29 @@ def main() -> tuple[int, int]:
                 part2[x, y] *= next_taller - 1
             else:
                 part2[x, y] *= next_taller
-        forest, part1, part2 = map(numpy.rot90, (forest, part1, part2))
+        forest, part1, part2 = map(np.rot90, (forest, part1, part2))
 
-    return part1.sum(), numpy.amax(part2)
+    return part1.sum(), np.amax(part2)
 
 
-# A more NumPy way, but ~20x slower due to the genexpr calls in the innermost loop.
+# A more np way, but ~20x slower due to the genexpr calls in the innermost loop.
 def main2() -> tuple[int, int]:
     """Return the answers to part 1 and part 2."""
     data = get_data(day=8, year=2022)
-    forest = numpy.array(tuple(tuple(row) for row in data.split("\n")), int)
-    part1 = numpy.zeros(forest.shape, int)
-    part2 = numpy.ones(forest.shape, int)
+    forest = np.array(tuple(tuple(row) for row in data.split("\n")), int)
+    part1 = np.zeros(forest.shape, int)
+    part2 = np.ones(forest.shape, int)
     for _ in range(4):
-        for x, y in numpy.ndindex(forest.shape):
+        for x, y in np.ndindex(forest.shape):
             is_shorter = (forest < forest[x, y])[x, y + 1 :]
             part1[x, y] |= all(is_shorter)
             part2[x, y] *= next(
                 (i + 1 for i, x in enumerate(is_shorter) if not x), len(is_shorter)
             )
 
-        forest, part1, part2 = map(numpy.rot90, (forest, part1, part2))
+        forest, part1, part2 = map(np.rot90, (forest, part1, part2))
 
-    return part1.sum(), numpy.amax(part2)
+    return part1.sum(), np.amax(part2)
 
 
 if __name__ == "__main__":

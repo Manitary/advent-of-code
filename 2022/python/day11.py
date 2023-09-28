@@ -1,11 +1,14 @@
 """Solve Advent of Code Day 11 Year 2022."""
 
-from __future__ import annotations
+
 import re
-from dataclasses import dataclass, field
 from copy import deepcopy
-from math import prod, lcm
+from dataclasses import dataclass, field
+from itertools import chain, repeat
+from math import lcm, prod
 from operator import add, mul
+from typing import Callable, Self
+
 from aocd import get_data, submit
 
 OPERATOR_TOKEN = {"+": add, "*": mul}
@@ -26,11 +29,13 @@ class Monkey:
         inspections: the number of inspections done by the monkey.
     """
 
-    operation: callable
+    operation: Callable[[int], int]
     test_value: int
-    target_true: int | Monkey
-    target_false: int | Monkey
-    worry_control: callable = lambda x: x // 3
+    target_true_num: int
+    target_false_num: int
+    target_true: Self = field(init=False)
+    target_false: Self = field(init=False)
+    worry_control: Callable[[int], int] = lambda x: x // 3
     items: list[int] = field(default_factory=list)
     inspections: int = field(default=0, init=False)
 
@@ -46,7 +51,7 @@ class Monkey:
         self.items = []
 
 
-def create_operation(operation: list[str]) -> callable:
+def create_operation(operation: list[str]) -> Callable[[int], int]:
     """Return a lambda function corresponding to the given operation.
 
     Input format:
@@ -60,7 +65,7 @@ def create_operation(operation: list[str]) -> callable:
     return lambda x: operator(x, x if arg_2 == "old" else int(arg_2))
 
 
-def parse_monkey(monkey_data: str) -> Monkey:
+def parse_monkey(monkey_data: list[str]) -> Monkey:
     """Return a monkey corresponding to the given data.
 
     Input format:
@@ -71,7 +76,6 @@ def parse_monkey(monkey_data: str) -> Monkey:
             If true: throw to monkey $int
             If false: throw to monkey $int"
     """
-    monkey_data = monkey_data.split("\n")
     starting_items = list(map(int, INT_REGEX.findall(monkey_data[1])))
     operation = create_operation(monkey_data[2].split()[-3:])
     test_value = int(monkey_data[3].split()[-1])
@@ -81,8 +85,8 @@ def parse_monkey(monkey_data: str) -> Monkey:
         items=starting_items,
         operation=operation,
         test_value=test_value,
-        target_true=target_true,
-        target_false=target_false,
+        target_true_num=target_true,
+        target_false_num=target_false,
     )
 
 
@@ -95,20 +99,19 @@ def monkey_business(zoo: list[Monkey]) -> int:
     return prod(sorted(monkey.inspections for monkey in zoo)[-2:])
 
 
-def monkey_play(zoo: list[Monkey], num: int) -> int:
+def monkey_play(zoo: list[Monkey], num: int) -> None:
     """Let the monkeys in a given list play a given number of times."""
-    for _ in range(num):
-        for monkey in zoo:
-            monkey.play()
+    for monkey in chain(*repeat(zoo, num)):
+        monkey.play()
 
 
 def main() -> tuple[int, int]:
     """Return the solution to part 1 and part 2."""
     data = get_data(day=11, year=2022).split("\n\n")
-    zoo_1 = [parse_monkey(monkey_data) for monkey_data in data]
+    zoo_1 = [parse_monkey(monkey_data.split("\n")) for monkey_data in data]
     for monkey in zoo_1:
-        monkey.target_false = zoo_1[monkey.target_false]
-        monkey.target_true = zoo_1[monkey.target_true]
+        monkey.target_false = zoo_1[monkey.target_false_num]
+        monkey.target_true = zoo_1[monkey.target_true_num]
     zoo_2 = deepcopy(zoo_1)
     # Part 1
     monkey_play(zoo=zoo_1, num=20)

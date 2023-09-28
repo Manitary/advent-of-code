@@ -2,12 +2,15 @@
 
 import json
 from math import prod
+
 from aocd import get_data, submit
 
-DIVIDER_PACKETS_SORTED = [[[2]], [[6]]]
+ListInt = int | list["ListInt"]
+
+DIVIDER_PACKETS_SORTED: ListInt = [[[2]], [[6]]]
 
 
-def compare(elt1: list[int] | int, elt2: list[int] | int) -> int:
+def compare(elt1: ListInt, elt2: ListInt) -> int:
     """Return the comparison result of the arguments.
 
     Rules:
@@ -43,7 +46,7 @@ def main() -> tuple[int, int]:
         for i, (a, b) in enumerate(zip(data[::2], data[1::2]), 1)
         if compare(a, b) <= 0
     )
-    indices = [i for i, _ in enumerate(DIVIDER_PACKETS_SORTED, 1)]
+    indices = list(range(1, len(DIVIDER_PACKETS_SORTED) + 1))
     for packet in data:
         for i, divider in enumerate(DIVIDER_PACKETS_SORTED):
             if compare(packet, divider) < 0:

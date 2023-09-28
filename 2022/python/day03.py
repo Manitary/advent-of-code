@@ -1,6 +1,7 @@
 """Solve Advent of Code Day 3 Year 2022."""
 
 from typing import Iterable
+
 from aocd import get_data, submit
 
 

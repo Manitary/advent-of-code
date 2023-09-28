@@ -11,7 +11,7 @@ def find_marker(string: str, length: int, start: int = 0) -> tuple[int, int]:
     for i in range(start, len(string) - length):
         if len(set(string[i : i + length])) == length:
             return i, i + length
-    return None
+    raise ValueError("Marker not found")
 
 
 def main() -> tuple[int, int]:

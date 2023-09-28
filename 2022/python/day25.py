@@ -17,9 +17,10 @@ def int_to_snafu(num: int) -> str:
     for snafu_digit, digit in SNAFU.items():
         if num % 5 == digit % 5:
             return int_to_snafu((num - digit) // 5) + snafu_digit
+    raise ValueError(f"Cannot convert {num}")
 
 
-def main() -> tuple[int, int]:
+def main() -> str:
     """Return the solution to part 1."""
     data = get_data(day=25, year=2022)
     return int_to_snafu(sum(map(snafu_to_int, data.split())))

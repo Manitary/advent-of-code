@@ -2,6 +2,8 @@
 
 from aocd import get_data, submit
 
+Coords = tuple[int, int]
+
 
 def sign(num: int) -> int:
     """Return the sign of the given number."""
@@ -12,7 +14,7 @@ def sign(num: int) -> int:
     return 1
 
 
-def move_coords(coords: tuple[int, int], direction: str) -> tuple[int, int]:
+def move_coords(coords: Coords, direction: str) -> Coords:
     """Return the new coordinates after moving in the given direction.
 
     direction:
@@ -35,7 +37,7 @@ def adjust_coordinate(head: int, tail: int) -> int:
     return tail + sign(head - tail)
 
 
-def follow(head: tuple[int, int], tail: tuple[int, int]) -> tuple[int, int]:
+def follow(head: Coords, tail: Coords) -> Coords:
     """Return the new position of the tail after following the head."""
     x_tail, y_tail = tail
     x_head, y_head = head
@@ -47,16 +49,16 @@ def follow(head: tuple[int, int], tail: tuple[int, int]) -> tuple[int, int]:
 
 
 def get_trail(
-    rope_length: int, moves: list[str], index_list: list[int] = None
-) -> dict[int, set[tuple[int, int]]]:
+    rope_length: int, moves: list[str], index_list: list[int] | None = None
+) -> dict[int, set[Coords]]:
     """Return a dictionary of sets of coordinates visited by selected nodes after the given moves.
 
     index_list:
         A list of nodes to track. If not provided, it defaults to the tail of the rope.
     """
-    rope = [(0, 0)] * rope_length
+    rope: list[Coords] = [(0, 0)] * rope_length
     index_list = index_list or [rope_length]
-    visited = {i: set() for i in index_list}
+    visited: dict[int, set[Coords]] = {i: set() for i in index_list}
     for move in moves:
         direction, num_moves = move.split()
         for _ in range(int(num_moves)):
@@ -70,7 +72,7 @@ def get_trail(
     return visited
 
 
-def main() -> tuple[int, int]:
+def main() -> Coords:
     """Return the solution to part 1 and part 2."""
     data = get_data(day=9, year=2022).split("\n")
     trails = get_trail(10, data, [2, 10])

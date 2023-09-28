@@ -1,9 +1,10 @@
 """Solve Advent of Code Day 15 Year 2022."""
 
 import re
+
 import z3
 from aocd import get_data, submit
-from day15 import row_span, parse_input
+from day15 import parse_input, row_span
 
 TARGET_ROW = 2000000
 BOX_MIN, BOX_MAX = 0, 4000000

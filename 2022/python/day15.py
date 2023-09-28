@@ -1,6 +1,7 @@
 """Solve Advent of Code Day 15 Year 2022."""
 
 import re
+
 from aocd import get_data, submit
 
 TARGET_ROW = 2000000
@@ -13,7 +14,7 @@ def interval_merge(
     """Update the (sorted) list of intervals by merging a new interval."""
     if not new_interval:
         return intervals
-    ans = []
+    ans: list[list[int]] = []
     new = new_interval
     idx = len(intervals)
     for i, interval in enumerate(intervals):
@@ -44,8 +45,8 @@ def interval_merge_and_overlap(
     intervals: list[list[int]],
 ) -> tuple[list[list[int]], list[list[int]]]:
     """Return the total merge of the given intervals, and their pairwise overlaps."""
-    final_intervals = []
-    overlaps = []
+    final_intervals: list[list[int]] = []
+    overlaps: list[list[int]] = []
     for i, interval in enumerate(intervals):
         final_intervals = interval_merge(
             intervals=final_intervals, new_interval=interval
@@ -60,11 +61,11 @@ def interval_merge_and_overlap(
 def row_span(
     y: int,
     sensors: dict[tuple[int, int], int],
-    bound: list[int] = None,
+    bound: list[int] | None = None,
     merge: bool = False,
-) -> int:
+) -> list[list[int]]:
     """Return the intervals in a row that are covered by the sensors."""
-    intervals = []
+    intervals: list[list[int]] = []
     for (xs, ys), r in sensors.items():
         if (dy := abs(y - ys)) <= r:
             dx = r - dy
@@ -80,10 +81,10 @@ def row_span(
     return intervals
 
 
-def parse_input(data: str) -> tuple[set[tuple[int, int]], dict[tuple[int, int]], int]:
+def parse_input(data: str) -> tuple[set[tuple[int, int]], dict[tuple[int, int], int]]:
     """Return a set of beacons and a dict of sensors -> radius from the given data."""
-    sensors = {}
-    beacons = set()
+    sensors: dict[tuple[int, int], int] = {}
+    beacons: set[tuple[int, int]] = set()
     nums = list(map(int, re.findall(r"(-?\d+)", data)))
     for i in range(len(nums) // 4):
         xs, ys, xb, yb = nums[4 * i : 4 * i + 4]
@@ -94,7 +95,7 @@ def parse_input(data: str) -> tuple[set[tuple[int, int]], dict[tuple[int, int]],
 
 def find_unique_hole_in_area(
     min_row: int, max_row: int, sensors: dict[tuple[int, int], int]
-) -> int:
+) -> tuple[int, int]:
     """Given the boundaries of a box, return a point not covered by the sensors.
 
     The search runs from min_row to max_row, it returns the first point available,
@@ -156,7 +157,7 @@ def find_unique_hole_in_area(
         else:
             row += 1
         old_overlaps = new_overlaps
-    return None
+    raise ValueError("No valid point found")
 
 
 def main() -> tuple[int, int]:

@@ -3,13 +3,13 @@
 from aocd import get_data, submit
 
 
-def main() -> tuple[int, int]:
+def main() -> tuple[str, str]:
     """Return the answers to part 1 and part 2."""
     cargo, instructions = (
         x.split("\n") for x in get_data(day=5, year=2022).split("\n\n")
     )
     cargo_size = int(cargo[-1].split()[-1])
-    stacks = [[] for _ in range(cargo_size)]
+    stacks: list[list[str]] = [[] for _ in range(cargo_size)]
     for row in cargo[-2::-1]:
         crates = row[1::4]
         for i, crate in enumerate(crates):

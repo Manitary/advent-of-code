@@ -1,7 +1,8 @@
 """Solve Advent of Code Day 17 Year 2022."""
 
-from typing import NewType
 from itertools import cycle
+from typing import Sequence
+
 from aocd import get_data, submit
 
 MIN_X, MAX_X = 1, 7
@@ -14,7 +15,8 @@ SHAPES = (
     {(y, 0) for y in range(4)},  # I, vertical
     {(0, 0), (0, 1), (1, 0), (1, 1)},  # O
 )
-Rock = NewType("Rock", set[tuple[int, int]])
+Rock = set[tuple[int, int]]
+FRock = frozenset[tuple[int, int]]
 
 
 def create_rock(shape: int, max_height: int = 0) -> Rock:
@@ -38,10 +40,10 @@ def rock_shift(rock: Rock, dx: int, rocks: Rock) -> Rock:
     return new
 
 
-def simulate(data: list[int], num_rocks: int) -> int:
+def simulate(data: Sequence[int], num_rocks: int) -> int:
     """Simulate a given number of rocks falling. Return the resulting height."""
     num = 0
-    rocks = set()
+    rocks: Rock = set()
     rock = create_rock(num)
     max_height = 0
     for d in cycle(data):
@@ -57,9 +59,9 @@ def simulate(data: list[int], num_rocks: int) -> int:
     return max_height
 
 
-def flood(rocks: Rock, max_height: int) -> frozenset:
+def flood(rocks: Rock, max_height: int) -> FRock:
     """Return a hashable describing the shape of the surface of the rock formation."""
-    visited = set()
+    visited: Rock = set()
     queue = {
         (max_height, x) for x in range(MIN_X, MAX_X + 1) if (max_height, x) not in rocks
     }
@@ -75,20 +77,21 @@ def flood(rocks: Rock, max_height: int) -> frozenset:
                     and new not in rocks
                 ):
                     queue.add(new)
-    visited = frozenset({(y - max_height, x) for y, x in visited})
-    return visited
+    return frozenset({(y - max_height, x) for y, x in visited})
 
 
-def simulate2(data: list[int], num_rocks: int) -> int:
+def simulate2(data: Sequence[int], num_rocks: int) -> int:
     """Simulate a given number of rocks falling. Return the resulting height.
 
     This time, keep track of possible cycles in the mountain of rocks to skip calculations.
-    It will not work if the rocks accumulate on one side, leaving a growing gap on the other."""
+    It will not work if the rocks accumulate on one side, leaving a growing gap on the other.
+    """
     num = 0
-    rocks = set()
+    rocks: Rock = set()
     rock = create_rock(num)
     max_height = 0
-    history = {}
+    h_gain = 0
+    history: dict[tuple[int, int, FRock], tuple[int, int]] | None = {}
     i = 0
     while True:
         rock = rock_shift(rock, data[i], rocks)
@@ -101,7 +104,11 @@ def simulate2(data: list[int], num_rocks: int) -> int:
             # 2) current position in the list of instructions
             # 3) shape of the hole from the top (flood fill from maximum height)
             if history is not None:
-                new_state = (num % len(SHAPES), i, flood(rocks, max_height))
+                new_state: tuple[int, int, FRock] = (
+                    num % len(SHAPES),
+                    i,
+                    flood(rocks, max_height),
+                )
                 if new_state in history:
                     old_h, old_n = history[new_state]
                     cycle_length = num - old_n

@@ -101,7 +101,7 @@ def main() -> tuple[int, str]:
     part1 = sum(
         strength
         for instruction in data
-        for cycle, strength in monitor.execute(instruction) # pylint: disable=not-an-iterable
+        for cycle, strength in monitor.execute(instruction)
         if not (cycle - 20) % 40
     )
     part2 = convert_array_6(monitor.screen, fill_pixel=1, empty_pixel=0)

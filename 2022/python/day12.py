@@ -1,8 +1,11 @@
 """Solve Advent of Code Day 12 Year 2022."""
 
-from typing import Iterator
 from collections import deque
+from typing import Iterator
+
 from aocd import get_data, submit
+
+Coords = tuple[int, int]
 
 
 def height(letter: str) -> int:
@@ -14,34 +17,31 @@ def height(letter: str) -> int:
     return ord(letter) - ord("a")
 
 
-def ngbh_orthogonal(coordinates: tuple[int, int]) -> Iterator[tuple[int, int]]:
+def ngbh_orthogonal(coordinates: Coords) -> Iterator[Coords]:
     """Return the orthogonal neighbours of a pair of 2d-coordinates."""
     x, y = coordinates
     for coords in ((x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)):
         yield coords
 
 
-def bfs(
-    grid: dict[tuple[int, int], int], start: set[tuple[int, int]], goal: tuple[int, int]
-) -> int:
+def bfs(grid: dict[Coords, int], start: set[Coords], goal: Coords) -> int:
     """Do a BFS and return the minimum path length from any of the starting points to the goal."""
-    visited = set()
-    queue = deque(((coords, 0) for coords in start))
+    visited: set[Coords] = set()
+    queue: deque[tuple[Coords, int]] = deque(((coords, 0) for coords in start))
     while queue:
         current, steps = queue.popleft()
         if current == goal:
             return steps
-        if current not in visited:
-            visited.add(current)
-            for ngbh in ngbh_orthogonal(current):
-                if (
-                    ngbh not in visited
-                    and 0 <= grid.get(ngbh, -1) <= grid.get(current) + 1
-                ):
-                    queue.append((ngbh, steps + 1))
+        if current in visited:
+            continue
+        visited.add(current)
+        for ngbh in ngbh_orthogonal(current):
+            if ngbh not in visited and 0 <= grid.get(ngbh, -1) <= grid[current] + 1:
+                queue.append((ngbh, steps + 1))
+    raise ValueError("No path found")
 
 
-def main() -> tuple[int, int]:
+def main() -> Coords:
     """Return the solution to part 1 and part 2."""
     data = get_data(day=12, year=2022)
     s_coords = data.index("S")

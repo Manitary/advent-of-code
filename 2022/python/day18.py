@@ -1,9 +1,10 @@
 """Solve Advent of Code Day 18 Year 2022."""
 
-from typing import Iterator, NewType
+from typing import Iterator
+
 from aocd import get_data, submit
 
-Point = NewType("Point", tuple[int, int, int])
+Point = tuple[int, int, int]
 
 
 def ngbh(x: int, y: int, z: int) -> Iterator[Point]:
@@ -27,7 +28,7 @@ def get_exterior(points: set[Point]) -> set[Point]:
     y1 = max(y for _, y, _ in points)
     z0 = min(z for _, _, z in points)
     z1 = max(z for _, _, z in points)
-    exterior = set()
+    exterior: set[Point] = set()
     queue = {(x0 - 1, y0 - 1, z0 - 1)}
     while queue:
         curr = queue.pop()

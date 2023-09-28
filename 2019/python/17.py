@@ -1,21 +1,27 @@
-from aocd import get_data, submit
-from intcode import Computer
 from collections import deque
 from re import match
+from typing import cast
+
+from aocd import get_data, submit
+from intcode import Computer
 
 DAY = 17
 YEAR = 2019
 
-data = get_data(day=DAY, year=YEAR)
+Coords = tuple[int, int]
 
-DIRECTIONS = ((0, -1), (1, 0), (0, 1), (-1, 0))
+DIRECTIONS: tuple[Coords, ...] = ((0, -1), (1, 0), (0, 1), (-1, 0))
 ORIENTATIONS = ("^", ">", "v", "<")
 
 
-def getScaffolding(output: deque[int], display: bool = False) -> set[tuple[int]]:
-    scaffolding = set()
+def getScaffolding(
+    output: deque[int], display: bool = False
+) -> tuple[set[Coords], Coords, str]:
+    scaffolding: set[Coords] = set()
     view = ""
     x, y = 0, 0
+    start = (0, 0)
+    direction = ""
     while output:
         c = output.popleft()
         if c == 10:
@@ -36,7 +42,7 @@ def getScaffolding(output: deque[int], display: bool = False) -> set[tuple[int]]
     return scaffolding, start, direction
 
 
-def neighbours(coords: tuple[int], scaffolding: set[tuple[int]]) -> set[tuple[int]]:
+def neighbours(coords: Coords, scaffolding: set[Coords]) -> set[Coords]:
     x, y = coords
     return {
         coord
@@ -45,13 +51,11 @@ def neighbours(coords: tuple[int], scaffolding: set[tuple[int]]) -> set[tuple[in
     }
 
 
-def nextStep(coords: tuple[int], direction: int) -> tuple[int]:
-    x, y = coords
-    dx, dy = DIRECTIONS[direction]
-    return (x + dx, y + dy)
+def nextStep(coords: Coords, direction: int) -> Coords:
+    return cast(Coords, tuple(map(sum, zip(coords, DIRECTIONS[direction]))))
 
 
-def pathFromEnd(scaffolding: set[tuple[int]], start: tuple[int], direction: int) -> str:
+def pathFromEnd(scaffolding: set[Coords], start: Coords, direction: int) -> str:
     current_tile = start
     current_direction = direction
     path = ""
@@ -74,7 +78,9 @@ def pathFromEnd(scaffolding: set[tuple[int]], start: tuple[int], direction: int)
                 return path
 
 
-def findRoutine(path: str, *functions: str, routine: list[int] = None) -> list[int]:
+def findRoutine(
+    path: str, *functions: str, routine: list[int] | None = None
+) -> list[int]:
     routine = routine or []
     for i, f in enumerate(functions):
         if path.startswith(f):
@@ -89,26 +95,36 @@ def formatString(string: str) -> list[int]:
     return [ord(c) for c in string[:-1]] + [10]
 
 
-computer = Computer(data)
-computer.run()
-scaffolding, start, direction = getScaffolding(computer.output)
-direction = ORIENTATIONS.index(direction)
-path = pathFromEnd(scaffolding, start, direction)
-pattern = r"^(.{1,21})\1*(.{1,21})(?:\1|\2)*(.{1,21})(?:\1|\2|\3)*$"
-m = match(pattern, path)
+def main() -> tuple[int, int]:
+    data = get_data(day=DAY, year=YEAR)
 
-routine = findRoutine(path, *m.groups())
-functions = tuple(formatString(x) for x in m.groups())
-inputs = [routine, *functions, [ord("n"), 10]]
-
-computer.reset()
-computer[0] = 2
-for i in inputs:
-    computer.push(i)
+    computer = Computer(data)
     computer.run()
+    scaffolding, start, direction = getScaffolding(computer.output)
+    direction = ORIENTATIONS.index(direction)
+    path = pathFromEnd(scaffolding, start, direction)
+    pattern = r"^(.{1,21})\1*(.{1,21})(?:\1|\2)*(.{1,21})(?:\1|\2|\3)*$"
+    m = match(pattern, path)
+    if not m:
+        raise ValueError("Pattern not found")
+    routine = findRoutine(path, *m.groups())
+    functions = tuple(formatString(x) for x in m.groups())
+    inputs = [routine, *functions, [ord("n"), 10]]
 
-ans1 = sum([s[0] * s[1] for s in scaffolding if len(neighbours(s, scaffolding)) == 4])
-ans2 = computer.output[-1]
+    computer.reset()
+    computer[0] = 2
+    for i in inputs:
+        computer.push(i)
+        computer.run()
 
-submit(ans1, part="a", day=DAY, year=YEAR)
-submit(ans2, part="b", day=DAY, year=YEAR)
+    part1 = sum(
+        [s[0] * s[1] for s in scaffolding if len(neighbours(s, scaffolding)) == 4]
+    )
+    part2 = computer.output[-1]
+    return part1, part2
+
+
+if __name__ == "__main__":
+    ans1, ans2 = main()
+    submit(ans1, part="a", day=DAY, year=YEAR)
+    submit(ans2, part="b", day=DAY, year=YEAR)

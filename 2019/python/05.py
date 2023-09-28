@@ -4,15 +4,21 @@ from intcode import Computer
 DAY = 5
 YEAR = 2019
 
-data = get_data(day=DAY, year=YEAR)
 
-computer = Computer(program=data, input_=1)
-computer.run()
-ans1 = computer.output[-1]
+def solve(data: str, n: int) -> int:
+    computer = Computer(program=data, input_=n)
+    computer.run()
+    return computer.output[-1]
 
-computer = Computer(program=data, input_=5)
-computer.run()
-ans2 = computer.output[-1]
 
-submit(ans1, part="a", day=DAY, year=YEAR)
-submit(ans2, part="b", day=DAY, year=YEAR)
+def main() -> tuple[int, int]:
+    data = get_data(day=DAY, year=YEAR)
+    part1 = solve(data, 1)
+    part2 = solve(data, 5)
+    return part1, part2
+
+
+if __name__ == "__main__":
+    ans1, ans2 = main()
+    submit(ans1, part="a", day=DAY, year=YEAR)
+    submit(ans2, part="b", day=DAY, year=YEAR)

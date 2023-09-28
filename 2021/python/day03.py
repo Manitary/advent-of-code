@@ -1,5 +1,7 @@
 """Solve Advent of Code Day 1 Year 2021."""
 
+from typing import Callable, Iterable
+
 from aocd import get_data, submit
 
 
@@ -16,7 +18,9 @@ def bit_criterion(numbers: list[str], index: int, priority: int = 1) -> str:
     return str(val)
 
 
-def bit_filter(numbers: list[str], index: int, priority: int = 1) -> callable:
+def bit_filter(
+    numbers: list[str], index: int, priority: int = 1
+) -> Callable[[str], bool]:
     """Return a function that checks whether an input number satisfies the bit filter."""
 
     def is_valid_number(number: str) -> bool:
@@ -28,7 +32,7 @@ def bit_filter(numbers: list[str], index: int, priority: int = 1) -> callable:
     return is_valid_number
 
 
-def binary_to_int(bits: list[str]) -> int:
+def binary_to_int(bits: Iterable[str]) -> int:
     """Return the integer with binary representation given by bits."""
     return int("".join(bits), 2)
 
@@ -45,8 +49,10 @@ def main() -> tuple[int, int]:
 
     oxy = co2 = data
     for i in range(n_bits):
-        oxy = list(filter(bit_filter(oxy, i), oxy)) if len(oxy) > 1 else oxy
-        co2 = list(filter(bit_filter(co2, i, 0), co2)) if len(co2) > 1 else co2
+        oxy: list[str] = list(filter(bit_filter(oxy, i), oxy)) if len(oxy) > 1 else oxy
+        co2: list[str] = (
+            list(filter(bit_filter(co2, i, 0), co2)) if len(co2) > 1 else co2
+        )
 
     part2 = binary_to_int(oxy) * binary_to_int(co2)
 

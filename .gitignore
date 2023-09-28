@@ -1,3 +1,5 @@
 .session
 *.pyc
 *.prof
+.venv
+__pycache__

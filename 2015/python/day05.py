@@ -3,13 +3,11 @@ from aocd import get_data, submit
 DAY = 5
 YEAR = 2015
 
-data = get_data(day=DAY, year=YEAR).split()
-
 VOWELS = {"a", "e", "i", "o", "u"}
 BAD = {"a": "b", "c": "d", "p": "q", "x": "y"}
 
 
-def isNice1(s):
+def is_nice_1(s: str) -> bool:
     vowels = 0
     double = False
     for i, c in enumerate(s):
@@ -25,31 +23,31 @@ def isNice1(s):
     return False
 
 
-def isNice2(s):
+def is_nice_2(s: str) -> bool:
     rule1, rule2 = False, False
-    pairs = {}
-    for i in range(len(s)):
+    pairs: dict[str, int] = {}
+    for i, c in enumerate(s):
         if (not rule1) and i < len(s) - 1:
-            pair = s[i] + s[i + 1]
+            pair = c + s[i + 1]
             if pair in pairs:
                 if pairs[pair] < i - 1:
                     rule1 = True
             else:
                 pairs[pair] = i
         if (not rule2) and i < len(s) - 2:
-            if s[i] == s[i + 2]:
+            if c == s[i + 2]:
                 rule2 = True
         if rule1 and rule2:
             return True
     return False
 
 
-ans1, ans2 = 0, 0
-for word in data:
-    if isNice1(word):
-        ans1 += 1
-    if isNice2(word):
-        ans2 += 1
+def main() -> tuple[int, int]:
+    data = get_data(day=DAY, year=YEAR).split()
+    return sum(map(is_nice_1, data)), sum(map(is_nice_2, data))
 
-submit(ans1, part="a", day=DAY, year=YEAR)
-submit(ans2, part="b", day=DAY, year=YEAR)
+
+if __name__ == "__main__":
+    ans1, ans2 = main()
+    submit(ans1, part="a", day=DAY, year=YEAR)
+    submit(ans2, part="b", day=DAY, year=YEAR)

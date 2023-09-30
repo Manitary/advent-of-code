@@ -38,7 +38,7 @@ Some problems may have more than one solution if I am trying a few different app
 ## [2018](https://github.com/Manitary/advent-of-code/tree/master/2018)
 
 - 50 &#11088; in Magma
-- &nbsp;&nbsp;4 &#11088; in Python (11, 13)
+- &nbsp;&nbsp;6 &#11088; in Python (11, 13, 14)
 
 ## [2017](https://github.com/Manitary/advent-of-code/tree/master/2017)
 

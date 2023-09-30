@@ -6,13 +6,16 @@ import z3
 from aocd import get_data, submit
 from day15 import parse_input, row_span
 
+DAY = 15
+YEAR = 2022
+
 TARGET_ROW = 2000000
 BOX_MIN, BOX_MAX = 0, 4000000
 
 
 def main() -> tuple[int, int]:
     """Return the solution to part 1 and part 2."""
-    data = get_data(day=15, year=2022)
+    data = get_data(day=DAY, year=YEAR)
     beacons, sensors = parse_input(data)
     solver = z3.Solver()
     x = z3.Int("x")
@@ -37,5 +40,5 @@ def main() -> tuple[int, int]:
 
 if __name__ == "__main__":
     ans1, ans2 = main()
-    submit(ans1, part="a")
-    submit(ans2, part="b")
+    submit(ans1, part="a", day=DAY, year=YEAR)
+    submit(ans2, part="b", day=DAY, year=YEAR)

@@ -23,12 +23,9 @@ class Bot:
 
     def add_value(self, value: int) -> Self | None:
         self.values.append(value)
-        if len(self.values) == 2:
-            return self
-        return None
 
     def sort_values(self) -> None:
-        self.values = sorted(self.values)
+        self.values.sort()
 
     def give_values(self) -> None:
         self.sort_values()
@@ -47,9 +44,9 @@ def main() -> tuple[int, int]:
         instr = row.split()
         if instr[0] == "value":
             num = int(instr[-1])
-            val = bots[num].add_value(int(instr[1]))
-            if val is not None:
-                queue.append(val)
+            bots[num].add_value(int(instr[1]))
+            if len(bots[num].values) == 2:
+                queue.append(bots[num])
         else:
             num, low, high = int(instr[1]), int(instr[6]), int(instr[-1])
             if instr[5] == "bot":
@@ -60,7 +57,6 @@ def main() -> tuple[int, int]:
                 bots[num].high = bots[high]
             else:
                 bots[num].high = outputs[high]
-
     pair = {17, 61}
     part1, part2 = 0, 0
     while queue:
@@ -68,6 +64,10 @@ def main() -> tuple[int, int]:
         if (not part1) and set(curr.values) == pair:
             part1 = tuple(bots)[tuple(bots.values()).index(curr)]
         curr.give_values()
+        if isinstance(curr.low, Bot) and len(curr.low.values) == 2:
+            queue.append(curr.low)
+        if isinstance(curr.high, Bot) and len(curr.high.values) == 2:
+            queue.append(curr.high)
         if (not part2) and outputs[0].value and outputs[1].value and outputs[2].value:
             part2 = outputs[0].value * outputs[1].value * outputs[2].value
         if part1 and part2:

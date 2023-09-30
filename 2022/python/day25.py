@@ -1,5 +1,6 @@
 """Solve Advent of Code Day 24 Year 2022."""
 from functools import reduce
+
 from aocd import get_data, submit
 
 SNAFU = {"0": 0, "1": 1, "2": 2, "-": -1, "=": -2}

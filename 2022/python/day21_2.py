@@ -1,17 +1,21 @@
 """Solve Advent of Code Day 21 Year 2022."""
+from operator import add, mul, sub, truediv
 from typing import Callable
-from operator import add, sub, mul, truediv
+
 import sympy
 from aocd import get_data, submit
 
-OPERATORS = {"+": add, "-": sub, "*": mul, "/": truediv}
+DAY = 21
+YEAR = 2022
+
+Num = int | float
+Operation = Callable[[Num, Num], Num]
+Monkey = dict[str, sympy.Symbol | int | tuple[str, ...] | Operation]
+
+OPERATORS: dict[str, Operation] = {"+": add, "-": sub, "*": mul, "/": truediv}
 
 
-def parse_monkeys(
-    data: str,
-) -> dict[
-    str, dict[str, int | str | Callable[[int | float, int | float], int | float]]
-]:
+def parse_monkeys(data: str) -> tuple[dict[str, Monkey], Callable[[str], Num]]:
     """Parse the input.
 
     Format of input rows:
@@ -22,7 +26,7 @@ def parse_monkeys(
     - A dictionary of monkeys with their corresponding data.
     - A function that, given a monkey, returns the number yelled by the monkey.
     """
-    monkeys = {}
+    monkeys: dict[str, Monkey] = {}
     for row in data.split("\n"):
         name, job = row.split(": ")
         try:
@@ -34,7 +38,7 @@ def parse_monkeys(
                 "args": tuple((arg1, arg2)),
             }
 
-    def yell(monkey: str) -> int | float:
+    def yell(monkey: str) -> Num:
         """Return the number yelled by the given monkey."""
         if "num" in monkeys[monkey]:
             return monkeys[monkey]["num"]
@@ -48,7 +52,7 @@ def parse_monkeys(
 def main() -> tuple[int, int]:
     """Return the solution to part 1 and part 2."""
     part1, part2 = 0, 0
-    data = get_data(day=21, year=2022)
+    data = get_data(day=DAY, year=YEAR)
     monkeys, yell = parse_monkeys(data)
     part1 = int(yell("root"))
     x = sympy.Symbol("x")
@@ -61,5 +65,5 @@ def main() -> tuple[int, int]:
 
 if __name__ == "__main__":
     ans1, ans2 = main()
-    submit(ans1, part="a")
-    submit(ans2, part="b")
+    submit(ans1, part="a", day=DAY, year=YEAR)
+    submit(ans2, part="b", day=DAY, year=YEAR)

@@ -7,11 +7,11 @@ DAY = 8
 YEAR = 2016
 
 
-def display(matrix: NDArray[np.uint]) -> str:
+def display(matrix: NDArray[np.int8]) -> str:
     return "\n".join("".join("#" if p else " " for p in row) for row in matrix)
 
 
-def execute(screen: NDArray[np.uint], instr: list[str]) -> None:
+def execute(screen: NDArray[np.int8], instr: list[str]) -> None:
     if instr[0] == "rect":
         x, y = map(int, tuple(instr[1].split("x")))
         screen[:y, :x] = 1
@@ -29,14 +29,14 @@ def execute(screen: NDArray[np.uint], instr: list[str]) -> None:
     return
 
 
-def main() -> tuple[str, str]:
+def main() -> tuple[int, str]:
     data = get_data(day=DAY, year=YEAR).split("\n")
 
-    screen = np.zeros((6, 50), dtype=int)
+    screen = np.zeros((6, 50), dtype=np.int8)
     for row in data:
         execute(screen, row.split())
 
-    part1 = screen.sum()
+    part1: int = screen.sum()
     part2 = convert_array_6(screen, fill_pixel=1, empty_pixel=0)
     return part1, part2
 

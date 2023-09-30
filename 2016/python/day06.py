@@ -9,7 +9,7 @@ YEAR = 2016
 def main() -> tuple[str, str]:
     data = get_data(day=DAY, year=YEAR).split()
 
-    count = [Counter(row) for row in data]
+    count = [Counter(col) for col in zip(*data)]
     part1 = "".join([c.most_common(1)[0][0] for c in count])
     part2 = "".join([c.most_common()[-1][0] for c in count])
     return part1, part2

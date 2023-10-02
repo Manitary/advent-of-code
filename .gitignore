@@ -3,3 +3,5 @@
 *.prof
 .venv
 __pycache__
+target
+input/

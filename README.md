@@ -39,6 +39,7 @@ Some problems may have more than one solution if I am trying a few different app
 
 - 50 &#11088; in Magma
 - &nbsp;&nbsp;6 &#11088; in Python (11, 13, 14)
+- &nbsp;&nbsp;2 &#11088; in Rust (1)
 
 ## [2017](https://github.com/Manitary/advent-of-code/tree/master/2017)
 

@@ -1,5 +1,4 @@
 use itertools::Itertools;
-use std::collections::HashMap;
 use std::error::Error;
 use std::fs;
 
@@ -18,12 +17,16 @@ pub fn part_1(input: &Vec<String>) -> isize {
     let mut two = 0;
     let mut three = 0;
     for word in input {
-        let freq = word.chars().fold(HashMap::new(), |mut counter, c| {
-            *counter.entry(c).or_insert(0) += 1;
+        let freq = word.chars().fold([0u8; 26], |mut counter, c| {
+            counter[c as usize - 'a' as usize] += 1;
             counter
         });
-        two += if freq.values().any(|v| v == &2) { 1 } else { 0 };
-        three += if freq.values().any(|v| v == &3) { 1 } else { 0 };
+        if freq.contains(&2) {
+            two += 1
+        };
+        if freq.contains(&3) {
+            three += 1
+        };
     }
     two * three
 }

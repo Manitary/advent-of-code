@@ -38,8 +38,8 @@ Some problems may have more than one solution if I am trying a few different app
 ## [2018](https://github.com/Manitary/advent-of-code/tree/master/2018)
 
 - 50 &#11088; in Magma
-- 12 &#11088; in Python (1-3, 11, 13, 14)
-- &nbsp;&nbsp;4 &#11088; in Rust (1, 2)
+- 16 &#11088; in Python (1-4, 11, 13, 14, 20)
+- &nbsp;&nbsp;6 &#11088; in Rust (1-3)
 
 ## [2017](https://github.com/Manitary/advent-of-code/tree/master/2017)
 

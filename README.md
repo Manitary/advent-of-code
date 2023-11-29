@@ -6,6 +6,7 @@
 [![AoC 2020](https://img.shields.io/badge/2020-★_50-44cc11)](https://adventofcode.com/2020)
 [![AoC 2021](https://img.shields.io/badge/2021-★_50-44cc11)](https://adventofcode.com/2021)
 [![AoC 2022](https://img.shields.io/badge/2022-★_50-44cc11)](https://adventofcode.com/2022)
+[![AoC 2023](https://img.shields.io/badge/2023-★_0-44cc11)](https://adventofcode.com/2023)
 
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
@@ -16,6 +17,10 @@
 I learned about AoC in 2017, and used it to explore [Magma](http://magma.maths.usyd.edu.au/magma/); this repository contains all my solutions.  
 I do not plan to revise solutions using the same language, although it may still happen if I ever feel like it.  
 Some problems may have more than one solution if I am trying a few different approaches e.g. to compare execution time.
+
+## [2023](https://github.com/Manitary/advent-of-code/tree/master/2023)
+
+- upcoming
 
 ## [2022](https://github.com/Manitary/advent-of-code/tree/master/2022)
 

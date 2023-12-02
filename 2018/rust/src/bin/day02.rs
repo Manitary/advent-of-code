@@ -1,16 +1,12 @@
+use aocd::*;
 use itertools::Itertools;
 use std::error::Error;
-use std::fs;
 
-pub fn main() -> Result<(), Box<dyn Error>> {
-    let input: Vec<String> = fs::read_to_string("input/day02.txt")
-        .unwrap()
-        .lines()
-        .map(|line| line.to_string())
-        .collect();
-    println!("Part 1: {}", part_1(&input));
-    println!("Part 2: {}", part_2(&input).unwrap());
-    Ok(())
+#[aocd(2018, 2)]
+pub fn main() {
+    let input: Vec<String> = input!().lines().map(|line| line.to_string()).collect();
+    submit!(1, part_1(&input));
+    submit!(2, part_2(&input).unwrap());
 }
 
 pub fn part_1(input: &Vec<String>) -> isize {

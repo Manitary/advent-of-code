@@ -1,16 +1,14 @@
+use aocd::*;
 use std::collections::HashSet;
-use std::error::Error;
-use std::fs;
 
-pub fn main() -> Result<(), Box<dyn Error>> {
-    let input: Vec<isize> = fs::read_to_string("input/day01.txt")
-        .unwrap()
+#[aocd(2018, 1)]
+pub fn main() {
+    let input: Vec<isize> = input!()
         .lines()
         .map(|n: &str| n.parse::<isize>().unwrap())
         .collect();
-    println!("Part 1: {}", part_1(&input));
-    println!("Part 2: {}", part_2(&input));
-    Ok(())
+    submit!(1, part_1(&input));
+    submit!(2, part_2(&input));
 }
 
 pub fn part_1(input: &Vec<isize>) -> isize {

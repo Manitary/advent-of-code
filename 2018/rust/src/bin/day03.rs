@@ -1,16 +1,15 @@
+use aocd::*;
 use itertools::enumerate;
 use ndarray::{s, Array2, ArrayBase, Dim, OwnedRepr};
 use regex::Regex;
-use std::error::Error;
-use std::fs;
 
-pub fn main() -> Result<(), Box<dyn Error>> {
-    let input = fs::read_to_string("input/day03.txt").unwrap();
+#[aocd(2018, 3)]
+pub fn main() {
+    let input = input!();
     let rectangles: Vec<[usize; 4]> = parse_input(input);
     let grid = make_grid(&rectangles);
-    println!("Part 1: {}", part_1(&grid));
-    println!("Part 2: {}", part_2(&grid, &rectangles));
-    Ok(())
+    submit!(1, part_1(&grid));
+    submit!(2, part_2(&grid, &rectangles));
 }
 
 fn parse_input(input: String) -> Vec<[usize; 4]> {

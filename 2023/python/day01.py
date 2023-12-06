@@ -2,6 +2,9 @@ import re
 
 from aocd import get_data, submit
 
+DAY = 1
+YEAR = 2023
+
 RE_P2 = re.compile(r"(?=(one|two|three|four|five|six|seven|eight|nine|\d))")
 
 NUM = {
@@ -29,7 +32,7 @@ def p2_num(s: str) -> int:
 
 
 def main() -> tuple[int, int]:
-    data = get_data().splitlines()
+    data = get_data(day=DAY, year=YEAR).splitlines()
     part1 = sum(map(p1_num, data))
     part2 = sum(map(p2_num, data))
     return part1, part2

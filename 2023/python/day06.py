@@ -2,6 +2,9 @@ import math
 
 from aocd import get_data, submit
 
+DAY = 6
+YEAR = 2023
+
 
 def num_winning_times(time: int, distance: int) -> int:
     """Return the number of integer solutions of `(t-x)x > d`."""
@@ -24,7 +27,7 @@ def parse_part_2(data: list[str]) -> tuple[int, int]:
 
 
 def main() -> tuple[int, int]:
-    data = get_data().splitlines()
+    data = get_data(day=DAY, year=YEAR).splitlines()
     part1 = math.prod(num_winning_times(t, d) for t, d in zip(*parse_part_1(data)))
     part2 = num_winning_times(*parse_part_2(data))
     return part1, part2

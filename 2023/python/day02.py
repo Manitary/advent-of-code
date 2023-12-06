@@ -3,12 +3,15 @@ from collections import defaultdict
 
 from aocd import get_data, submit
 
+DAY = 2
+YEAR = 2023
+
 BAG = {"red": 12, "green": 13, "blue": 14}
 
 
 def main() -> tuple[int, int]:
     part1, part2 = 0, 0
-    data = get_data().splitlines()
+    data = get_data(day=DAY, year=YEAR).splitlines()
     for row in data:
         min_bag: dict[str, int] = defaultdict(int)
         game, turns = row.split(":")

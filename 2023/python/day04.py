@@ -1,8 +1,11 @@
 from aocd import get_data, submit
 
+DAY = 4
+YEAR = 2023
+
 
 def main() -> tuple[int, int]:
-    data = get_data().splitlines()
+    data = get_data(day=DAY, year=YEAR).splitlines()
     num_cards = [1] * len(data)
     part1 = 0
     for i, row in enumerate(data):

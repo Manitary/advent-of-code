@@ -3,6 +3,9 @@ from typing import Sequence
 
 from aocd import get_data, submit
 
+DAY = 5
+YEAR = 2023
+
 type Rule = list[tuple[int, int, int]]
 type Rules = list[Rule]
 type Interval = tuple[int, int]
@@ -83,7 +86,7 @@ def solve(intervals: Sequence[int], rules: Rules) -> int:
 
 
 def main() -> tuple[int, int]:
-    data = get_data()
+    data = get_data(day=DAY, year=YEAR)
     seeds, rules = parse_input(data)
     part1 = solve(tuple(itertools.chain(*((x, 1) for x in seeds))), rules)
     part2 = solve(seeds, rules)

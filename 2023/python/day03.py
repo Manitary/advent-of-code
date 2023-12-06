@@ -2,6 +2,9 @@ import functools
 
 from aocd import get_data, submit
 
+DAY = 3
+YEAR = 2023
+
 type Coord = tuple[int, int]
 type NumCoord = tuple[int, int, int]
 
@@ -49,7 +52,7 @@ def _gear_ratio(r: int, c: int, digits: dict[NumCoord, int]) -> int:
 
 
 def main() -> tuple[int, int]:
-    data = get_data().splitlines()
+    data = get_data(day=DAY, year=YEAR).splitlines()
     digits, symbols = parse_input(data)
 
     is_valid_num = functools.partial(_is_valid_num, symbols=set(symbols.keys()))

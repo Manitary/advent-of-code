@@ -9,8 +9,8 @@
 | &ensp;3 | [Gear Ratios](https://adventofcode.com/2023/day/3)                     | 06:11:15 | 29350 | 06:22:12 | 23400 |
 | &ensp;4 | [Scratchcards](https://adventofcode.com/2023/day/4)                    | 06:26:59 | 44479 | 06:31:42 | 34191 |
 | &ensp;5 | [If You Give A Seed A Fertilizer](https://adventofcode.com/2023/day/5) | 07:20:16 | 32538 | 08:36:41 | 16867 |
-| &ensp;6 | [Wait For It](https://adventofcode.com/2023/day)                       | 05:40:41 | 33997 | 05:42:19 | 32551 |
-| &ensp;7 | -                                                                      | -        | -     | -        | -     |
+| &ensp;6 | [Wait For It](https://adventofcode.com/2023/day/6)                     | 05:40:41 | 33997 | 05:42:19 | 32551 |
+| &ensp;7 | [Camel Cards](https://adventofcode.com/2023/day/7)                     | 07:37:19 | 30001 | 07:44:36 | 24069 |
 | &ensp;8 | -                                                                      | -        | -     | -        | -     |
 | &ensp;9 | -                                                                      | -        | -     | -        | -     |
 | 10      | -                                                                      | -        | -     | -        | -     |

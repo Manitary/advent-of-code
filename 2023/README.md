@@ -11,7 +11,7 @@
 | &ensp;5 | [If You Give A Seed A Fertilizer](https://adventofcode.com/2023/day/5) | 07:20:16 | 32538 | 08:36:41 | 16867 |
 | &ensp;6 | [Wait For It](https://adventofcode.com/2023/day/6)                     | 05:40:41 | 33997 | 05:42:19 | 32551 |
 | &ensp;7 | [Camel Cards](https://adventofcode.com/2023/day/7)                     | 07:37:19 | 30001 | 07:44:36 | 24069 |
-| &ensp;8 | -                                                                      | -        | -     | -        | -     |
+| &ensp;8 | [Haunted Wasteland](https://adventofcode.com/2023/day/8)               | 09:05:16 | 39389 | 09:17:44 | 26765 |
 | &ensp;9 | -                                                                      | -        | -     | -        | -     |
 | 10      | -                                                                      | -        | -     | -        | -     |
 | 11      | -                                                                      | -        | -     | -        | -     |

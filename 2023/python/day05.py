@@ -96,5 +96,5 @@ def main() -> tuple[int, int]:
 
 if __name__ == "__main__":
     ans1, ans2 = main()
-    submit(ans1, part="a")
-    submit(ans2, part="b")
+    submit(ans1, part="a", day=DAY, year=YEAR)
+    submit(ans2, part="b", day=DAY, year=YEAR)

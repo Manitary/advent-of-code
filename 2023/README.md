@@ -12,7 +12,7 @@
 | &ensp;6 | [Wait For It](https://adventofcode.com/2023/day/6)                     | 05:40:41 | 33997 | 05:42:19 | 32551 |
 | &ensp;7 | [Camel Cards](https://adventofcode.com/2023/day/7)                     | 07:37:19 | 30001 | 07:44:36 | 24069 |
 | &ensp;8 | [Haunted Wasteland](https://adventofcode.com/2023/day/8)               | 09:05:16 | 39389 | 09:17:44 | 26765 |
-| &ensp;9 | -                                                                      | -        | -     | -        | -     |
+| &ensp;9 | [Mirage Maintenance](https://adventofcode.com/2023/day/9)              | 04:35:31 | 20054 | 04:38:49 | 19092 |
 | 10      | -                                                                      | -        | -     | -        | -     |
 | 11      | -                                                                      | -        | -     | -        | -     |
 | 12      | -                                                                      | -        | -     | -        | -     |

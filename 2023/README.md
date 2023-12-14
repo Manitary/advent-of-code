@@ -15,9 +15,9 @@
 | &ensp;9 | [Mirage Maintenance](https://adventofcode.com/2023/day/9)              | 04:35:31 | 20054 | 04:38:49 | 19092      |
 | 10      | [Pipe Maze](https://adventofcode.com/2023/day/10)                      | 04:11:22 | 12647 | 06:22:55 | &ensp;8227 |
 | 11      | [Cosmic Expansion](https://adventofcode.com/2023/day/11)               | 03:54:10 | 15206 | 03:55:53 | 13205      |
-| 12      | -                                                                      | -        | -     | -        | -          |
-| 13      | -                                                                      | -        | -     | -        | -          |
-| 14      | -                                                                      | -        | -     | -        | -          |
+| 12      | [Hot Springs](https://adventofcode.com/2023/day/12)                    | -        | -     | -        | -          |
+| 13      | [Point of Incidence](https://adventofcode.com/2023/day/13)             | 10:34:24 | 19490 | 11:33:42 | 16313      |
+| 14      | [Parabolic Reflector Dish](https://adventofcode.com/2023/day/14)       | 05:59:39 | 17118 | 06:22:33 | 10847      |
 | 15      | -                                                                      | -        | -     | -        | -          |
 | 16      | -                                                                      | -        | -     | -        | -          |
 | 17      | -                                                                      | -        | -     | -        | -          |

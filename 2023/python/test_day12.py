@@ -7,12 +7,12 @@ def test_all_dot() -> None:
 
 
 def test_no_left_valid() -> None:
-    result = count("..??.?.?", tuple())
+    result = count("..??.?.?", tuple[int]())
     assert result == 1
 
 
 def test_no_left_invalid() -> None:
-    result = count("..?.?#?.", tuple())
+    result = count("..?.?#?.", tuple[int]())
     assert result == 0
 
 

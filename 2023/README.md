@@ -19,7 +19,7 @@
 | 13      | [Point of Incidence](https://adventofcode.com/2023/day/13)             | 10:34:24 | 19490 | 11:33:42 | 16313      |
 | 14      | [Parabolic Reflector Dish](https://adventofcode.com/2023/day/14)       | 05:59:39 | 17118 | 06:22:33 | 10847      |
 | 15      | [Lens Library](https://adventofcode.com/2023/day/15)                   | 08:18:15 | 22905 | 08:56:29 | 19164      |
-| 16      | -                                                                      | -        | -     | -        | -          |
+| 16      | [The Floor Will Be Lava](https://adventofcode.com/2023/day/16)         | 07:59:32 | 14374 | 08:05:58 | 13342      |
 | 17      | -                                                                      | -        | -     | -        | -          |
 | 18      | -                                                                      | -        | -     | -        | -          |
 | 19      | -                                                                      | -        | -     | -        | -          |

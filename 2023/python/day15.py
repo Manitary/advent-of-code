@@ -2,9 +2,11 @@ import enum
 import functools
 import re
 from functools import cache
-from typing import NamedTuple
 
 from aocd import get_data, submit
+
+DAY = 15
+YEAR = 2023
 
 RE_INSTR = re.compile(r"(\w+)(-|=)(\d+)?")
 
@@ -12,47 +14,6 @@ RE_INSTR = re.compile(r"(\w+)(-|=)(\d+)?")
 class OP(enum.StrEnum):
     REMOVE = "-"
     UPDATE = "="
-
-
-Lens = NamedTuple("Lens", [("label", str), ("focal_length", int)])
-
-
-class LabelNotFoundError(Exception):
-    ...
-
-
-class Box:
-    def __init__(self, num: int) -> None:
-        self.number = num
-        self.lenses: list[Lens] = []
-
-    def locate_label(self, label: str) -> int:
-        try:
-            idx = next(i for i, lens in enumerate(self.lenses) if lens.label == label)
-        except StopIteration as e:
-            raise LabelNotFoundError from e
-        return idx
-
-    def remove_label(self, label: str) -> None:
-        try:
-            idx = self.locate_label(label)
-        except LabelNotFoundError:
-            return
-        del self.lenses[idx]
-
-    def update_lens(self, lens: Lens) -> None:
-        try:
-            idx = self.locate_label(lens.label)
-        except LabelNotFoundError:
-            self.lenses.append(lens)
-        else:
-            self.lenses[idx] = lens
-
-    def focusing_power(self) -> int:
-        return sum(
-            (1 + self.number) * i * lens.focal_length
-            for i, lens in enumerate(self.lenses, 1)
-        )
 
 
 def hash_step(value: int, char: str) -> int:
@@ -65,30 +26,33 @@ def hash_label(string: str) -> int:
 
 
 def main() -> tuple[int, int]:
-    data = get_data().strip().split(",")
+    data = get_data(day=DAY, year=YEAR).strip().split(",")
 
     part1 = sum(map(hash_label, data))
 
-    boxes: list[Box] = [Box(i) for i in range(256)]
+    boxes: list[dict[str, int]] = [{} for _ in range(256)]
     for instruction in data:
         match = RE_INSTR.match(instruction)
-        if not match:
-            raise ValueError("Invalid instruction")
+        assert match
         label, op, length = match.groups()
         box = hash_label(label)
         if op == OP.REMOVE:
-            boxes[box].remove_label(label)
+            boxes[box].pop(label, None)
         elif op == OP.UPDATE:
-            boxes[box].update_lens(Lens(label, int(length)))
+            boxes[box][label] = int(length)
         else:
             raise ValueError("Invalid instruction")
 
-    part2 = sum(box.focusing_power() for box in boxes)
+    part2 = sum(
+        i * j * length
+        for i, box in enumerate(boxes, 1)
+        for j, length in enumerate(box.values(), 1)
+    )
 
     return part1, part2
 
 
 if __name__ == "__main__":
     ans1, ans2 = main()
-    submit(ans1, part="a")
-    submit(ans2, part="b")
+    submit(ans1, part="a", day=DAY, year=YEAR)
+    submit(ans2, part="b", day=DAY, year=YEAR)

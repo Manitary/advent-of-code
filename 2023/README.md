@@ -20,7 +20,7 @@
 | 14      | [Parabolic Reflector Dish](https://adventofcode.com/2023/day/14)       | 05:59:39 | 17118 | 06:22:33 | 10847      |
 | 15      | [Lens Library](https://adventofcode.com/2023/day/15)                   | 08:18:15 | 22905 | 08:56:29 | 19164      |
 | 16      | [The Floor Will Be Lava](https://adventofcode.com/2023/day/16)         | 07:59:32 | 14374 | 08:05:58 | 13342      |
-| 17      | -                                                                      | -        | -     | -        | -          |
+| 17      | [Clumsy Crucible](https://adventofcode.com/2023/day/17)                | 12:20:56 | 10543 | 12:51:45 | 9697       |
 | 18      | -                                                                      | -        | -     | -        | -          |
 | 19      | -                                                                      | -        | -     | -        | -          |
 | 20      | -                                                                      | -        | -     | -        | -          |

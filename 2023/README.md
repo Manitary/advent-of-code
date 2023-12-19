@@ -22,7 +22,7 @@
 | 16      | [The Floor Will Be Lava](https://adventofcode.com/2023/day/16)         | 07:59:32 | 14374 | 08:05:58 | 13342      |
 | 17      | [Clumsy Crucible](https://adventofcode.com/2023/day/17)                | 12:20:56 | 10543 | 12:51:45 | 9697       |
 | 18      | [Lavaduct Lagoon](https://adventofcode.com/2023/day/18)                | 07:09:03 | 11512 | 07:44:18 | 7263       |
-| 19      | -                                                                      | -        | -     | -        | -          |
+| 19      | [Aplenty](https://adventofcode.com/2023/day/19)                        | 00:21:59 | 890   | 00:39:58 | 395        |
 | 20      | -                                                                      | -        | -     | -        | -          |
 | 21      | -                                                                      | -        | -     | -        | -          |
 | 22      | -                                                                      | -        | -     | -        | -          |

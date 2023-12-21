@@ -24,7 +24,7 @@
 | 18      | [Lavaduct Lagoon](https://adventofcode.com/2023/day/18)                | 07:09:03 | 11512 | 07:44:18 | 7263       |
 | 19      | [Aplenty](https://adventofcode.com/2023/day/19)                        | 00:21:59 | 890   | 00:39:58 | 395        |
 | 20      | [Pulse Propagation](https://adventofcode.com/2023/day/20)              | 00:45:04 | 767   | 01:03:31 | 399        |
-| 21      | -                                                                      | -        | -     | -        | -          |
+| 21      | [Step Counter](https://adventofcode.com/2023/day/21)                   | 00:10:13 | 793   | 01:33:27 | 257        |
 | 22      | -                                                                      | -        | -     | -        | -          |
 | 23      | -                                                                      | -        | -     | -        | -          |
 | 24      | -                                                                      | -        | -     | -        | -          |

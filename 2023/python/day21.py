@@ -104,7 +104,7 @@ def parse_grid(data: list[str]) -> Grid:
     return Grid(len(data), len(data[0]), rocks, start)
 
 
-def solve_p2(grid: Grid) -> int:
+def solve_p2(grid: Grid, steps: int = 26501365) -> int:
     # Key observations for part 2
     #
     # The grid is 131x131; the starting point is in the middle of the grid: (65, 65).
@@ -126,7 +126,6 @@ def solve_p2(grid: Grid) -> int:
     #
     # Then we count how many of each such grids there are, keeping in mind that s // 131 is even.
 
-    steps = 26501365
     assert grid.width == grid.height
     assert grid.width % 2
     size = grid.width - 1

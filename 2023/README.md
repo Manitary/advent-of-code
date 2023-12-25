@@ -26,6 +26,6 @@
 | 20      | [Pulse Propagation](https://adventofcode.com/2023/day/20)              | 00:45:04 | 767   | 01:03:31 | 399        |
 | 21      | [Step Counter](https://adventofcode.com/2023/day/21)                   | 00:10:13 | 793   | 01:33:27 | 257        |
 | 22      | [Sand Slabs](https://adventofcode.com/2023/day/22)                     | 00:54:02 | 1152  | 01:33:16 | 1521       |
-| 23      | -                                                                      | -        | -     | -        | -          |
-| 24      | -                                                                      | -        | -     | -        | -          |
+| 23      | [A Long Walk](https://adventofcode.com/2023/day/23)                    | 00:38:21 | 1569  | 01:02:19 | 412        |
+| 24      | [Never Tell Me The Odds](https://adventofcode.com/2023/day/24)         | 18:53:18 | 10921 | 19:02:01 | 5845       |
 | 25      | -                                                                      | -        | -     | -        | -          |

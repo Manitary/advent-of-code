@@ -28,4 +28,4 @@
 | 22      | [Sand Slabs](https://adventofcode.com/2023/day/22)                     | 00:54:02 | 1152  | 01:33:16 | 1521       |
 | 23      | [A Long Walk](https://adventofcode.com/2023/day/23)                    | 00:38:21 | 1569  | 01:02:19 | 412        |
 | 24      | [Never Tell Me The Odds](https://adventofcode.com/2023/day/24)         | 18:53:18 | 10921 | 19:02:01 | 5845       |
-| 25      | -                                                                      | -        | -     | -        | -          |
+| 25      | [Snowverload](https://adventofcode.com/2023/day/25)                    | 00:33:59 | 799   | 00:34:00 | 693        |

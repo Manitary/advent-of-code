@@ -1,23 +1,33 @@
 import re
 
-mul = re.compile(r"mul\((\d+),(\d+)\)")
-mul_not = re.compile(r"(?:do\(\)|don't\(\)|mul\((\d+),(\d+)\))")
+from aocd import get_data, submit
+
+DAY = 3
+YEAR = 2024
+
+commands = re.compile(r"(?:do\(\)|don't\(\)|mul\((\d+),(\d+)\))")
 
 
-with open("input.txt") as f:
-    data = f.read()
+def main() -> tuple[int, int]:
+    data = get_data(day=DAY, year=YEAR)
 
-print(sum(int(g.group(1)) * int(g.group(2)) for g in mul.finditer(data)))
+    part1, part2 = 0, 0
+    m = True
+    for g in commands.finditer(data):
+        if g.group(0).startswith("do("):
+            m = True
+        elif g.group(0).startswith("don"):
+            m = False
+        else:
+            prod = int(g.group(1)) * int(g.group(2))
+            part1 += prod
+            if m:
+                part2 += prod
 
-ans = 0
-m = True
-for g in mul_not.finditer(data):
-    if g.group(0).startswith("do("):
-        m = Trsue
-    elif g.group(0).startswith("don"):
-        m = False
-    else:
-        if m:
-            ans += int(g.group(1)) * int(g.group(2))
+    return part1, part2
 
-print(ans)
+
+if __name__ == "__main__":
+    ans1, ans2 = main()
+    submit(ans1, part="a", day=DAY, year=YEAR)
+    submit(ans2, part="b", day=DAY, year=YEAR)

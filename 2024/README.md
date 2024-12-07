@@ -5,12 +5,12 @@
 | Day     | Name                                                      | Time     | Rank  | Time     | Rank  |
 | ------- | --------------------------------------------------------- | -------- | ----- | -------- | ----- |
 | &ensp;1 | [Historian Hysteria](https://adventofcode.com/2024/day/1) | 05:47:00 | 32268 | 05:52:23 | 29857 |
-| &ensp;2 | [-](https://adventofcode.com/2024/day/2)                  | -        | -     | -        | -     |
-| &ensp;3 | [-](https://adventofcode.com/2024/day/3)                  | -        | -     | -        | -     |
-| &ensp;4 | [-](https://adventofcode.com/2024/day/4)                  | -        | -     | -        | -     |
-| &ensp;5 | [-](https://adventofcode.com/2024/day/5)                  | -        | -     | -        | -     |
-| &ensp;6 | [-](https://adventofcode.com/2024/day/6)                  | -        | -     | -        | -     |
-| &ensp;7 | [-](https://adventofcode.com/2024/day/7)                  | -        | -     | -        | -     |
+| &ensp;2 | [Red-Nosed Reports](https://adventofcode.com/2024/day/2)  | 01:04:30 | 14667 | 01:35:17 | 11581 |
+| &ensp;3 | [Mull It Over](https://adventofcode.com/2024/day/3)       | 00:52:24 | 14375 | 00:56:37 | 10277 |
+| &ensp;4 | [Ceres Search](https://adventofcode.com/2024/day/4)       | 01:02:24 | 10871 | 01:18:51 | 9612  |
+| &ensp;5 | [Print Queue](https://adventofcode.com/2024/day/5)        | 01:21:41 | 12945 | 01:27:10 | 9419  |
+| &ensp;6 | [Guard Gallivant](https://adventofcode.com/2024/day/6)    | 01:02:57 | 12945 | 01:17:56 | 5149  |
+| &ensp;7 | [Bridge Repair](https://adventofcode.com/2024/day/7)      | 04:18:45 | 18506 | 04:23:51 | 16657 |
 | &ensp;8 | [-](https://adventofcode.com/2024/day/8)                  | -        | -     | -        | -     |
 | &ensp;9 | [-](https://adventofcode.com/2024/day/9)                  | -        | -     | -        | -     |
 | 10      | [-](https://adventofcode.com/2024/day/10)                 | -        | -     | -        | -     |

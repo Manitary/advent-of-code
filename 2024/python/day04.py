@@ -1,53 +1,61 @@
-with open("input.txt") as f:
-    data = f.read().splitlines()
+import functools
 
-ncol = len(data[0])
-nrow = len(data)
+from aocd import get_data, submit
 
-dirs = ((0, 1), (0, -1), (1, 1), (1, 0), (1, -1), (-1, 1), (-1, 0), (-1, -1))
-
-word = "XMAS"
+DAY = 4
+YEAR = 2024
 
 
-def search(grid: list[str], y: int, x: int):
+DIRS = ((0, 1), (0, -1), (1, 1), (1, 0), (1, -1), (-1, 1), (-1, 0), (-1, -1))
+XMAS = "MAS"
+X_MAS = {"M", "S"}
+
+
+def search_xmas(y: int, x: int, grid: list[str], nr: int, nc: int) -> int:
     ans = 0
-    for d in dirs:
-        for i in range(1, 4):
+    for d in DIRS:
+        for i, w in enumerate(XMAS, 1):
             r = y + i * d[0]
             c = x + i * d[1]
-            if r < 0 or r >= nrow:
+            if r < 0 or r >= nr:
                 break
-            if c < 0 or c >= ncol:
+            if c < 0 or c >= nc:
                 break
-            if grid[r][c] != word[i]:
+            if grid[r][c] != w:
                 break
         else:
             ans += 1
     return ans
 
 
-def search_2(grid: list[str], y: int, x: int):
-    try:
-        assert grid[y][x] == "A"
-        assert y > 0
-        assert x > 0
-        assert {grid[y - 1][x - 1], grid[y + 1][x + 1]} == {"M", "S"}
-        assert {grid[y + 1][x - 1], grid[y - 1][x + 1]} == {"M", "S"}
-        return 1
-    except (AssertionError, IndexError):
-        return 0
+def search_x_mas(y: int, x: int, grid: list[str], nr: int, nc: int) -> bool:
+    if x == 0 or y == 0 or x == nr - 1 or y == nc - 1:
+        return False
+    if {grid[y - 1][x - 1], grid[y + 1][x + 1]} == X_MAS and {
+        grid[y + 1][x - 1],
+        grid[y - 1][x + 1],
+    } == X_MAS:
+        return True
+    return False
 
 
-def main():
-    ans = 0
-    ans2 = 0
+def main() -> tuple[int, int]:
+    data = get_data(day=DAY, year=YEAR).splitlines()
+    search_1 = functools.partial(search_xmas, grid=data, nr=len(data), nc=len(data[0]))
+    search_2 = functools.partial(search_x_mas, grid=data, nr=len(data), nc=len(data[0]))
+
+    part1, part2 = 0, 0
     for r, row in enumerate(data):
-        for c, col in enumerate(row):
-            ans2 += search_2(data, r, c)
-            if col != "X":
-                continue
-            ans += search(data, r, c)
-    return ans, ans2
+        for c, tile in enumerate(row):
+            if tile == "A":
+                part2 += search_2(r, c)
+            elif tile == "X":
+                part1 += search_1(r, c)
+
+    return part1, part2
 
 
-print(main())
+if __name__ == "__main__":
+    ans1, ans2 = main()
+    submit(ans1, part="a", day=DAY, year=YEAR)
+    submit(ans2, part="b", day=DAY, year=YEAR)
